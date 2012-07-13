@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Dominik "Elysium" Schöni
+ * @author Dominik Schöni
  * @copyright 2008
  */
  
@@ -14,11 +14,11 @@ header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT
  // Include Path
  
 if (strpos($_SERVER["HTTP_HOST"], "elysian") !== false){
-	$path = "C:/Apache22/htdocs/sbftool/";
+	$path = "C:/Apache22/htdocs/ibftool/";
 } elseif (strpos($_SERVER["HTTP_HOST"], "84.75.38.246") !== false){
-	$path = "C:/Apache22/htdocs/sbftool/";
+	$path = "C:/Apache22/htdocs/ibftool/";
 } else {
-	$path = "D:/xampplite/xampplite/htdocs/sbftool/";	
+	$path = "D:/Development/GitHub/IBFTool/";	
 }
 
 /*
@@ -26,7 +26,7 @@ if (strpos($_SERVER["HTTP_HOST"], "elysian") !== false){
  * 
  * 
  * 
- * Münster-MLA: Path-Variable hier konfigurieren, sollte zum "sbftool"-Ordner auf dem Server zeigen.
+ * Münster-MLA: Path-Variable hier konfigurieren, sollte zum "ibftool"-Ordner auf dem Server zeigen.
  * $path  "/";
  * 
  * 
@@ -41,13 +41,13 @@ require_once 'Zend/Loader/Autoloader.php';
 require_once 'ZendX/JQuery.php';
 
 $autoloader = Zend_Loader_Autoloader::getInstance();
-$autoloader->registerNamespace('Sbftool_');
+$autoloader->registerNamespace('ibftool_');
 $autoloader->registerNamespace('PHPExcel_');
 $autoloader->setFallbackAutoloader(true);
 
 Zend_Session::start();			
 
-$config = Sbftool_Starter::start($path."application/config/db_config.ini");
+$config = ibftool_Starter::start($path."application/config/db_config.ini");
 
 // Zend Layout initialisieren
 Zend_Layout::startMvc();
@@ -66,14 +66,14 @@ $front->throwExceptions(true);
 
 //Menu
 $front->registerPlugin(new Zend_Controller_Plugin_ActionStack());
-$front->registerPlugin(new Sbftool_Controller_Plugin_Menu());
+$front->registerPlugin(new ibftool_Controller_Plugin_Menu());
 
 //JQuery von ZenX
 $view = new Zend_View();
 $view->setEncoding("ISO-8859-1");
 $view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
-$view->jQuery()->setLocalPath("/sbftool/_files/js/jquery.js");
-$view->jQuery()->setUiLocalPath("/sbftool/_files/js/jquery-ui.js");
+$view->jQuery()->setLocalPath("/ibftool/_files/js/jquery.js");
+$view->jQuery()->setUiLocalPath("/ibftool/_files/js/jquery-ui.js");
 $view->jQuery()->enable();
 $view->jQuery()->uiEnable();
  
@@ -81,11 +81,11 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
-$treatment = new Sbftool_Controller_Action_Helper_Treatment();
+$treatment = new ibftool_Controller_Action_Helper_Treatment();
 Zend_Controller_Action_HelperBroker::addHelper($treatment);
 
 //Cache deaktivieren
-$cachepath = $path . '/application/data/cache';
+$cachepath = $path . '/cache';
 $cache = Zend_Cache::factory(
          'Core',
          'File',
@@ -98,8 +98,8 @@ Zend_Translate::setCache($cache);
 
 // Auth und Acl
 $auth = Zend_Auth::getInstance();
-$acl  = new Sbftool_Controller_Plugin_Auth_Acl();
-$front->registerPlugin(new Sbftool_Controller_Plugin_Auth_AccessControl($auth, $acl));
+$acl  = new ibftool_Controller_Plugin_Auth_Acl();
+$front->registerPlugin(new ibftool_Controller_Plugin_Auth_AccessControl($auth, $acl));
 $front->setParam('auth', $auth);
 
 $front->dispatch();

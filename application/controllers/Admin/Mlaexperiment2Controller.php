@@ -38,14 +38,14 @@ class Admin_Mlaexperiment2Controller extends Zend_Controller_Action {
 		$config = Zend_Registry::get('config')->db;
 		$prefix = $config->table_prefix;
 
-		$users = $db->query("SELECT id, email FROM sbftool_users INNER JOIN sbftool_treatments_has_users thu ON thu.users_id = id WHERE thu.completed = 1");
+		$users = $db->query("SELECT id, email FROM ibftool_users INNER JOIN ibftool_treatments_has_users thu ON thu.users_id = id WHERE thu.completed = 1");
 		$results = $db->query("SELECT
 				u.userhash,
 				u.email,
 				r.round,
 				r.treatments_id,
 				r.money
-				FROM sbftool_mlaexperiment_results r INNER JOIN sbftool_users u ON r.users_id = u.id
+				FROM ibftool_mlaexperiment_results r INNER JOIN ibftool_users u ON r.users_id = u.id
 				WHERE r.round = 36 ORDER BY u.userhash
 				");
 

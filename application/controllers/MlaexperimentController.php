@@ -2,13 +2,13 @@
 class MlaexperimentController extends Zend_Controller_Action {
 
 	public function preDispatch() {
-		if (Sbftool_Controller_Action_Helper_Treatment::getCurrentModule() != "mlaexperiment") {
+		if (ibftool_Controller_Action_Helper_Treatment::getCurrentModule() != "mlaexperiment") {
 			$this->_helper->redirector("index", "module");
 		}
 	}
 
 	public function indexAction() {
-		//var_dump(Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId());
+		//var_dump(ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId());
 	}
 
 	public function introduction1Action() {
@@ -50,7 +50,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 	}
 
 	public function roundAction() {
-		$this->view->headLink()->appendStylesheet('/sbftool/_files/css/mlaexperiment.css');
+		$this->view->headLink()->appendStylesheet('/ibftool/_files/css/mlaexperiment.css');
 
 		$doc = $this->getConfigDoc();
 
@@ -63,7 +63,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 		$user = $user->current();
 
 		$rounds = new MLAExperiment_Rounds();
-		$played_rounds = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC");
+		$played_rounds = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC");
 
 		/*
 		 * Check whether rounds have been played. Redirect to final site.
@@ -81,7 +81,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 		 * Process POST from previous Round
 		*/
 
-		$form = new Sbftool_Form_MLAExperiment();
+		$form = new ibftool_Form_MLAExperiment();
 		$form->setAction($this->getFrontController()->getBaseUrl() . "/mlaexperiment/process/");
 		$form->getElement("round")->setValue($played_rounds->count());
 
@@ -96,7 +96,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 		if (($played_rounds->count() % $cycle_length == 0) && ($played_rounds->count() != 0)) {
 			$this->view->assign("result", true);
 
-			$rows = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", $cycle_length);
+			$rows = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", $cycle_length);
 			$outcome = 0;
 
 			foreach($rows as $row) {
@@ -111,13 +111,13 @@ class MlaexperimentController extends Zend_Controller_Action {
 		$this->view->assign("cycle_length", $cycle_length);
 		$this->view->assign("form", $form);
 
-		$lastround = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", 1);
+		$lastround = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", 1);
 		//echo $lastround->current()->money;
 
 	}
 
 	public function processAction() {
-		$form = new Sbftool_Form_MLAExperiment();
+		$form = new ibftool_Form_MLAExperiment();
 		$doc = $this->getConfigDoc();
 
 		$roundstoplay = $doc->getElementsByTagName("rounds")->item(0)->nodeValue;
@@ -125,7 +125,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 		$cycle_length = $doc->getElementsByTagName("cycle_length")->item(0)->nodeValue;
 
 		$table = new MLAExperiment_Rounds();
-		$lastround = $table->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", 1);
+		$lastround = $table->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", 1);
 
 		$money = 0;
 
@@ -177,15 +177,15 @@ class MlaexperimentController extends Zend_Controller_Action {
 				$data = array(
 						'users_id' =>  Zend_Auth::getInstance()->getIdentity()->id,
 						'round'	=> $values["round"]+1,
-						"treatments_id" => Sbftool_Controller_Action_Helper_Treatment::getID(),
-						"treatments_has_module_id" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId(),
+						"treatments_id" => ibftool_Controller_Action_Helper_Treatment::getID(),
+						"treatments_has_module_id" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId(),
 						'investment' => $values["amount"]/100,
 						'yield' => $yield,
 						'money' => $money+$outcome,
 						'outcome' => $outcome
 				);
 
-				$row = $table->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID(), "round = ?" => $values["round"]+1, "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()));
+				$row = $table->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID(), "round = ?" => $values["round"]+1, "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()));
 
 				if (empty($row)) {
 					$row = $table->createRow($data);
@@ -210,7 +210,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 		$cycle_length = $doc->getElementsByTagName("cycle_length")->item(0)->nodeValue;
 
 		$table = new MLAExperiment_Rounds();
-		$row_last = $table->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC");
+		$row_last = $table->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC");
 
 		$playedrounds = $row_last->count();
 
@@ -218,7 +218,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 		if ($playedrounds == $cycle_length) {
 			$money_past = $doc->getElementsByTagName("money")->item(0)->nodeValue;
 		} else {
-			$row_past = $table->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", 1, 3);
+			$row_past = $table->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", 1, 3);
 			$money_past = $row_past->current()->money;
 		}
 
@@ -235,7 +235,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 	}
 
 	private function getConfigDoc() {
-		$config = Sbftool_Controller_Action_Helper_Treatment::getCurrentConfig();
+		$config = ibftool_Controller_Action_Helper_Treatment::getCurrentConfig();
 		$doc = new DOMDocument();
 		$doc->loadXML($config);
 
@@ -257,7 +257,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 		$this->view->assign("rounds", $roundstoplay);
 		$this->view->assign("money", $startingmoney);
 
-		$rows = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", $cycle_length);
+		$rows = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", $cycle_length);
 		$outcome = 0;
 
 		foreach($rows as $row) {
@@ -267,7 +267,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 		// Display results
 		$this->view->assign("outcome", $outcome);
 
-		$result = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", 1);
+		$result = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", 1);
 		$this->view->assign("result", $result->current()->money);
 	}
 
@@ -286,7 +286,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 		$this->view->assign("rounds", $roundstoplay);
 		$this->view->assign("money", $startingmoney);
 
-		$rows = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC");
+		$rows = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID(), "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC");
 		$outcome = 0;
 
 		foreach($rows as $row) {
@@ -298,12 +298,12 @@ class MlaexperimentController extends Zend_Controller_Action {
 
 		//echo $outcome;
 
-		$result = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_has_module_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", 1);
+		$result = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "treatments_has_module_id = ?" => ibftool_Controller_Action_Helper_Treatment::getCurrentModuleId()), "round DESC", 1);
 		$this->view->assign("result", $result->current()->money);
 	}
 
 	public function leaveAction() {
-		Sbftool_Controller_Action_Helper_Treatment::completeCurrentModule();
+		ibftool_Controller_Action_Helper_Treatment::completeCurrentModule();
 		$this->_helper->redirector("index", "module");
 	}
 

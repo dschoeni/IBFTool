@@ -2,7 +2,7 @@
 class TreatmentController extends Zend_Controller_Action {
 
 	public function preDispatch() {
-		if (Sbftool_Controller_Action_Helper_Treatment::isTreatmentOngoing()) {
+		if (ibftool_Controller_Action_Helper_Treatment::isTreatmentOngoing()) {
 			$this->_redirect("module/");
 		}
 	}
@@ -55,15 +55,15 @@ class TreatmentController extends Zend_Controller_Action {
 		if (!in_array($id, $array)) {
 			$this->_redirect("treatment/");
 		} else {
-			Sbftool_Controller_Action_Helper_Treatment::initialiseTreatment($id);
+			ibftool_Controller_Action_Helper_Treatment::initialiseTreatment($id);
 			$this->_redirect("module/");
 		}
 	}
 
 	public function testAction() {
-		$this->view->assign("current", Sbftool_Controller_Action_Helper_Treatment::getCurrentModule());
-		$this->view->assign("modules", Sbftool_Controller_Action_Helper_Treatment::getModules());
-		$this->view->assign("id", Sbftool_Controller_Action_Helper_Treatment::getID());
+		$this->view->assign("current", ibftool_Controller_Action_Helper_Treatment::getCurrentModule());
+		$this->view->assign("modules", ibftool_Controller_Action_Helper_Treatment::getModules());
+		$this->view->assign("id", ibftool_Controller_Action_Helper_Treatment::getID());
 	}
 
 	public function finAction() {
@@ -73,7 +73,7 @@ class TreatmentController extends Zend_Controller_Action {
 	}
 
 	private function loadTreatment($id) {
-		Sbftool_Controller_Action_Helper_Module::initialiseHelper($id);
+		ibftool_Controller_Action_Helper_Module::initialiseHelper($id);
 		$this->_redirect("module/");
 	}
 

@@ -1,5 +1,5 @@
 <?php
-class TreatmentsHasUsers extends Sbftool_Db_Table_Abstract
+class TreatmentsHasUsers extends ibftool_Db_Table_Abstract
 {
 	protected $_name = 'treatments_has_users';
 

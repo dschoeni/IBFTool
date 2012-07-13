@@ -2,7 +2,7 @@
 class RS_CalculationController extends Zend_Controller_Action {
 
 	public function preDispatch() {
-		if (Sbftool_Controller_Action_Helper_Treatment::getCurrentModule() != "rs_calculation") {
+		if (ibftool_Controller_Action_Helper_Treatment::getCurrentModule() != "rs_calculation") {
 			$this->_redirect("module/");
 		}
 	}
@@ -10,7 +10,7 @@ class RS_CalculationController extends Zend_Controller_Action {
 	public function indexAction() {
 		$money = 10000;
 		$doc = new DOMDocument();
-		$doc->loadXML(Sbftool_Controller_Action_Helper_Treatment::getCurrentConfig());
+		$doc->loadXML(ibftool_Controller_Action_Helper_Treatment::getCurrentConfig());
 
 		$table = new Questionnaire_Results();
 
@@ -41,7 +41,7 @@ class RS_CalculationController extends Zend_Controller_Action {
 			if ($table->fetchRow(array("questionnaire_question_id = ?" => $answerID, "users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id)) == null) {
 				$data = array(
 						'questionnaire_question_id'	=> $answerID,
-						'treatments_id' => Sbftool_Controller_Action_Helper_Treatment::getID(),
+						'treatments_id' => ibftool_Controller_Action_Helper_Treatment::getID(),
 						'users_id' =>  Zend_Auth::getInstance()->getIdentity()->id,
 						'ip' => $_SERVER['REMOTE_ADDR'],
 						'questionnaire_answer' => $realOutput,
@@ -61,7 +61,7 @@ class RS_CalculationController extends Zend_Controller_Action {
 	}
 
 	public function nextAction() {
-		Sbftool_Controller_Action_Helper_Treatment::completeCurrentModule();
+		ibftool_Controller_Action_Helper_Treatment::completeCurrentModule();
 		$this->_redirect("module/");
 	}
 

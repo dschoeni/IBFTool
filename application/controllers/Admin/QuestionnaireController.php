@@ -52,9 +52,9 @@ class Admin_QuestionnaireController extends Zend_Controller_Action {
 		$config = Zend_Registry::get('config')->db;
 		$prefix = $config->table_prefix;
 
-		$users = $db->query("SELECT id, email, userhash, treatments_id FROM sbftool_users u JOIN sbftool_treatments_has_users thu ON u.id = thu.users_id WHERE thu.treatments_id = " . $id . " AND thu.completed = 1 ORDER BY userhash");
-		$results = $db->query("SELECT u.email, q.typ, r.questionnaire_question_id, r.timestamp, r.questionnaire_answer, a.text FROM sbftool_questionnaire_result r INNER JOIN sbftool_users u ON r.users_id = u.id INNER JOIN sbftool_questionnaire_question q ON r.questionnaire_question_id = q.id LEFT OUTER JOIN sbftool_questionnaire_answer a ON r.questionnaire_answer = a.id WHERE r.questionnaire_answer IS NOT NULL ORDER BY u.id, r.questionnaire_question_id");
-		$questions = $db->query("SELECT q.id, q.text FROM sbftool_questionnaire_question q JOIN sbftool_questionnaire_page_has_question phq ON phq.question_id = q.id");
+		$users = $db->query("SELECT id, email, userhash, treatments_id FROM ibftool_users u JOIN ibftool_treatments_has_users thu ON u.id = thu.users_id WHERE thu.treatments_id = " . $id . " AND thu.completed = 1 ORDER BY userhash");
+		$results = $db->query("SELECT u.email, q.typ, r.questionnaire_question_id, r.timestamp, r.questionnaire_answer, a.text FROM ibftool_questionnaire_result r INNER JOIN ibftool_users u ON r.users_id = u.id INNER JOIN ibftool_questionnaire_question q ON r.questionnaire_question_id = q.id LEFT OUTER JOIN ibftool_questionnaire_answer a ON r.questionnaire_answer = a.id WHERE r.questionnaire_answer IS NOT NULL ORDER BY u.id, r.questionnaire_question_id");
+		$questions = $db->query("SELECT q.id, q.text FROM ibftool_questionnaire_question q JOIN ibftool_questionnaire_page_has_question phq ON phq.question_id = q.id");
 		
 		$questions = $questions->fetchAll();
 		$users = $users->fetchAll();

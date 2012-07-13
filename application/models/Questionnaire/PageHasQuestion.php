@@ -1,5 +1,5 @@
 <?php
-class Questionnaire_PageHasQuestion extends Sbftool_Db_Table_Abstract
+class Questionnaire_PageHasQuestion extends ibftool_Db_Table_Abstract
 {
 	protected $_name = 'questionnaire_page_has_question';
 

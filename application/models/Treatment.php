@@ -21,7 +21,7 @@ class Treatment extends Zend_Db_Table_Row {
 	public function generateExcelSheet() {
 		$used_modules = new Modules();
 		$select = $used_modules->select(Zend_Db_Table::SELECT_WITH_FROM_PART);
-		$select->setIntegrityCheck(false)->where('sbftool_treatments_has_module.treatments_id = ?', $id)->join('sbftool_treatments_has_module', 'sbftool_treatments_has_module.module_id = sbftool_module.id');
+		$select->setIntegrityCheck(false)->where('ibftool_treatments_has_module.treatments_id = ?', $id)->join('ibftool_treatments_has_module', 'ibftool_treatments_has_module.module_id = ibftool_module.id');
 		$used_modules = $used_modules->fetchAll($select);
 
 		$this->_helper->actionStack("download", "admin_treatment", "default", array("id" => $id));

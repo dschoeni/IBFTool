@@ -13,8 +13,8 @@ class Admin_MlaexperimentController extends Zend_Controller_Action {
 		$config = Zend_Registry::get('config')->db;
 		$prefix = $config->table_prefix;
 
-		$users = $db->query("SELECT id, email FROM sbftool_users");
-		$results = $db->query("SELECT u.grp, u.email, r.money, r.yield, r.investment, r.round, r.treatments_id, r.outcome FROM sbftool_mlaexperiment_results r INNER JOIN sbftool_users u ON r.users_id = u.id ORDER BY u.id, r.round");
+		$users = $db->query("SELECT id, email FROM ibftool_users");
+		$results = $db->query("SELECT u.grp, u.email, r.money, r.yield, r.investment, r.round, r.treatments_id, r.outcome FROM ibftool_mlaexperiment_results r INNER JOIN ibftool_users u ON r.users_id = u.id ORDER BY u.id, r.round");
 
 		$string = "<tr>";
 		$string .= "<td style='width: 100px'>Subject</td>";

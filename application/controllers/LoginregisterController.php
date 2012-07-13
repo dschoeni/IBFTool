@@ -1,13 +1,13 @@
 <?php
-class LoginregisterController extends Sbftool_Controller_Action {
+class LoginregisterController extends ibftool_Controller_Action {
 	public function indexAction() {
 
 		if (Zend_Auth::getInstance()->hasIdentity()) {
 			$this->_helper->redirector("index", "index");
 		}
 
-		$registration = new Sbftool_Form_Registration();
-		$login = new Sbftool_Form_Login();
+		$registration = new ibftool_Form_Registration();
+		$login = new ibftool_Form_Login();
 
 
 		if (Zend_Registry::getInstance()->get("config")->ibftool->labormodus) {

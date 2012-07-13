@@ -133,7 +133,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		$radio->addErrorMessage("Bitte wählen Sie mindestens eine Antwortmöglichkeit aus");
 		$radio->setValue($this->getAnswerForQuestion());
 
-		$radio->setDecorators(array(new Sbftool_Form_Decorators_RS_DecisiveTable(array("id" => $this->id, "ecu" => $ecu, "firstColumn" => $firstColumn, 'secondColumn' => $secondColumn, 'thirdColumn' => $thirdColumn)), new Zend_Form_Decorator_Errors(), new Sbftool_Form_Decorators_Payout(array("payout" => $this->payout))));
+		$radio->setDecorators(array(new ibftool_Form_Decorators_RS_DecisiveTable(array("id" => $this->id, "ecu" => $ecu, "firstColumn" => $firstColumn, 'secondColumn' => $secondColumn, 'thirdColumn' => $thirdColumn)), new Zend_Form_Decorator_Errors(), new ibftool_Form_Decorators_Payout(array("payout" => $this->payout))));
 		$this->_form->addElement($radio);
 
 		$hidden = new Zend_Form_Element_Hidden("hiddenrs");
@@ -145,7 +145,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 
 	private function generateNoteWithValue() {
 		$answer = $this->getAnswerForQuestionById($this->style);
-		$note = new Sbftool_Form_Element_Note($this->id, array('label' => str_replace("#", "<b>" . $answer . "</b>", $this->text)));
+		$note = new ibftool_Form_Element_Note($this->id, array('label' => str_replace("#", "<b>" . $answer . "</b>", $this->text)));
 		$note->setRequired(false);
 
 		if ($this->style == "bold") {
@@ -154,7 +154,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 			$note->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt', 'class' => "note"));
 		}
 		
-		$note->addDecorator(new Sbftool_Form_Decorators_Payout(array("payout" => $this->payout)));
+		$note->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
 
 		$this->_form->addElement($note);
 	}
@@ -162,11 +162,11 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	private function generateNoteWithValue2() {
 		$answer = $this->getAnswerForQuestionById($this->style);
 	
-		$note = new Sbftool_Form_Element_Note($this->id, array('label' => str_replace("#", "<b>" . round($answer) . "</b>", $this->text)));
+		$note = new ibftool_Form_Element_Note($this->id, array('label' => str_replace("#", "<b>" . round($answer) . "</b>", $this->text)));
 		$note->setRequired(false);
 	
 		$note->addDecorator("Label" ,array("escape"=>false, 'tag' => 'span', 'class' => "note_nopad"));
-		$note->addDecorator(new Sbftool_Form_Decorators_Payout(array("payout" => $this->payout)));
+		$note->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
 	
 		$this->_form->addElement($note);
 	}
@@ -177,11 +177,11 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		$result = new Questionnaire_Results();
 		$row = $result->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $array[0], "treatments_id = ?" => $array[1]));
 		
-		$note = new Sbftool_Form_Element_Note($this->id, array('label' => str_replace("#", "<b>" . round($row->questionnaire_answer) . "</b>", $this->text)));
+		$note = new ibftool_Form_Element_Note($this->id, array('label' => str_replace("#", "<b>" . round($row->questionnaire_answer) . "</b>", $this->text)));
 		$note->setRequired(false);
 		
 		$note->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt', 'class' => "note"));
-		$note->addDecorator(new Sbftool_Form_Decorators_Payout(array("payout" => $this->payout)));
+		$note->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
 		
 		$this->_form->addElement($note);
 	}
@@ -207,7 +207,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		$radio->addErrorMessage("Bitte wählen Sie mindestens eine Antwortmöglichkeit aus");
 		$radio->setValue($this->getAnswerForQuestion());
 
-		$radio->setDecorators(array(new Sbftool_Form_Decorators_SingleChoiceCaptioned(array("leftCaption"=>$leftString, 'rightCaption' => $rightString)), new Zend_Form_Decorator_Errors(), new Sbftool_Form_Decorators_Payout(array("payout" => $this->payout))));
+		$radio->setDecorators(array(new ibftool_Form_Decorators_SingleChoiceCaptioned(array("leftCaption"=>$leftString, 'rightCaption' => $rightString)), new Zend_Form_Decorator_Errors(), new ibftool_Form_Decorators_Payout(array("payout" => $this->payout))));
 		$this->_form->addElement($radio);
 	}
 
@@ -216,7 +216,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		$radio->setName($this->id);
 		$radio->setLabel($this->text);
 		$radio->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
-		$radio->addDecorator(new Sbftool_Form_Decorators_Payout(array("payout" => $this->payout)));
+		$radio->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
 		$radio->setRequired(true);
 		$radio->addErrorMessage("Bitte wählen Sie mindestens eine Antwortmöglichkeit aus");
 
@@ -246,7 +246,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		$formfield = new Zend_Form_Element_Text("text");
 		$formfield->setName($this->id);
 		$formfield->setLabel($this->text);
-		$formfield->addDecorator(new Sbftool_Form_Decorators_Payout(array("payout" => $this->payout)));
+		$formfield->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
 		$formfield->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
 		$formfield->setRequired(true);
 		
@@ -298,10 +298,10 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		$formfield = new Zend_Form_Element_Text("dnumber");
 		$formfield->setName($this->id);
 		$formfield->setLabel($this->text);
-		$formfield->setDecorators(array(new Sbftool_Form_Decorators_RS_DoubleNumber(), new Sbftool_Form_Decorators_Payout(array("payout" => $this->payout)), new Zend_Form_Decorator_Errors()));
+		$formfield->setDecorators(array(new ibftool_Form_Decorators_RS_DoubleNumber(), new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)), new Zend_Form_Decorator_Errors()));
 		
 		$formfield->setRequired(true);
-		$formfield->addValidator(new Sbftool_Validate_DNumber_NotEmpty());
+		$formfield->addValidator(new ibftool_Validate_DNumber_NotEmpty());
 		
 		$formfield->addErrorMessage("Bitte nur Zahlen eintragen. Um Kommazahlen einzugeben bitte einen Punkt verwenden: z.B. 1.5 (nicht 1,5)");
 		$formfield->autocomplete = "off";
@@ -325,7 +325,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		$formfield->setName($this->id);
 		$formfield->setLabel($this->text);
 		$formfield->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
-		$formfield->addDecorator(new Sbftool_Form_Decorators_Payout(array("payout" => $this->payout)));
+		$formfield->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
 		$formfield->setRequired(true);
 		$formfield->addValidator(new Zend_Validate_Float(new Zend_Locale('en_US')));
 		$formfield->addValidator(new Zend_Validate_Between(0, 100));
@@ -338,10 +338,10 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	}
 
 	private function generateNote() {
-		$note = new Sbftool_Form_Element_Note($this->id, array('label' => $this->text));
+		$note = new ibftool_Form_Element_Note($this->id, array('label' => $this->text));
 		$note->setRequired(false);
 		
-		$note->addDecorator(new Sbftool_Form_Decorators_Payout(array("payout" => $this->payout)));
+		$note->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
 
 		if ($this->style == "bold") {
 			$note->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt', 'class' => "note_bold"));
@@ -353,7 +353,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	}
 
 	private function generateImage() {
-		$note = new Sbftool_Form_Element_Note($this->id);
+		$note = new ibftool_Form_Element_Note($this->id);
 		$note->setIgnore(true);
 		$note->setLabel("<img src='/_files/images/" . $this->text . "' />");
 		$note->setRequired(false);
@@ -515,7 +515,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 			array_push($answerarray, $answer);
 		}
 
-		if(Sbftool_Controller_Action_Helper_Treatment::getRandom() >= 50) {
+		if(ibftool_Controller_Action_Helper_Treatment::getRandom() >= 50) {
 			$radio->addMultiOption($answerarray[0]["id"], "Option A: " . $answerarray[0]["text"]);
 			$radio->addMultiOption($answerarray[1]["id"], "Option B: " . $answerarray[1]["text"]);
 		} else {
@@ -530,7 +530,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 
 	public function getAnswerForQuestion() {
 		$result = new Questionnaire_Results();
-		$row = $result->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $this->id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID()));
+		$row = $result->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $this->id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID()));
 
 		if ($row == null) {
 			return null;
@@ -563,7 +563,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 
 	public function getAnswerForQuestionById($id) {
 		$result = new Questionnaire_Results();
-		$row = $result->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID()));
+		$row = $result->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID()));
 
 		if ($row == null) {
 			return null;
@@ -574,7 +574,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 
 	public function getAnswersForQuestion($id) {
 		$result = new Questionnaire_Results();
-		$rows = $result->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $id, "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID()));
+		$rows = $result->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID()));
 
 		if ($rows->count() == 0) {
 			return null;

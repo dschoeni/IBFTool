@@ -8,7 +8,7 @@ class RegistrationController extends Zend_Controller_Action {
 	}
 
 	public function indexAction() {
-		$form = new Sbftool_Form_Registration();
+		$form = new ibftool_Form_Registration();
 
 		if (!empty($_POST)) {
 

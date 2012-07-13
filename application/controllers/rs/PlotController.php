@@ -2,7 +2,7 @@
 class RS_PlotController extends Zend_Controller_Action {
 
 	public function preDispatch() {
-		if (Sbftool_Controller_Action_Helper_Treatment::getCurrentModule() != "rs_plot") {
+		if (ibftool_Controller_Action_Helper_Treatment::getCurrentModule() != "rs_plot") {
 			$this->_redirect("module/");
 		}
 	}
@@ -14,7 +14,7 @@ class RS_PlotController extends Zend_Controller_Action {
 		
 		$form = new Zend_Form();
 		$form->setName("data");
-		$form->setAction("/sbftool/rs_plot/summary");
+		$form->setAction("/ibftool/rs_plot/summary");
 		$form->setMethod("post");
 		$form->setEnctype("application/json");
 		
@@ -40,7 +40,7 @@ class RS_PlotController extends Zend_Controller_Action {
 	}
 
 	public function nextAction() {
-		Sbftool_Controller_Action_Helper_Treatment::completeCurrentModule();
+		ibftool_Controller_Action_Helper_Treatment::completeCurrentModule();
 		$this->_redirect("module/");
 	}
 

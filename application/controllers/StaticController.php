@@ -2,13 +2,13 @@
 class StaticController extends Zend_Controller_Action {
 
 	public function preDispatch() {
-		if (Sbftool_Controller_Action_Helper_Treatment::getCurrentModule() != "static") {
+		if (ibftool_Controller_Action_Helper_Treatment::getCurrentModule() != "static") {
 			$this->_redirect("module/");
 		}
 	}
 
 	public function indexAction() {
-		$config = Sbftool_Controller_Action_Helper_Treatment::getCurrentConfig();
+		$config = ibftool_Controller_Action_Helper_Treatment::getCurrentConfig();
 
 		$doc = new DOMDocument();
 		$doc->loadXML($config);
@@ -22,7 +22,7 @@ class StaticController extends Zend_Controller_Action {
 	}
 
 	public function nextAction() {
-		Sbftool_Controller_Action_Helper_Treatment::completeCurrentModule();
+		ibftool_Controller_Action_Helper_Treatment::completeCurrentModule();
 		$this->_redirect("module/");
 	}
 

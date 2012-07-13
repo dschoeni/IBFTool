@@ -2,7 +2,7 @@
 class InvestmentgameassetsController extends Zend_Controller_Action {
 
 	public function preDispatch() {
-		if (Sbftool_Controller_Action_Helper_Treatment::getCurrentModule() != "investmentgameassets") {
+		if (ibftool_Controller_Action_Helper_Treatment::getCurrentModule() != "investmentgameassets") {
 			$this->_helper->redirector("index", "module");
 		}
 	}
@@ -21,7 +21,7 @@ class InvestmentgameassetsController extends Zend_Controller_Action {
 		 * Display corresponding Text
 		*/
 
-		$config = Sbftool_Controller_Action_Helper_Treatment::getCurrentConfig();
+		$config = ibftool_Controller_Action_Helper_Treatment::getCurrentConfig();
 
 		$doc = new DOMDocument();
 		$doc->loadXML($config);
@@ -42,8 +42,8 @@ class InvestmentgameassetsController extends Zend_Controller_Action {
 	}
 
 	public function roundAction() {
-		$config = Sbftool_Controller_Action_Helper_Treatment::getCurrentConfig();
-		$form = new Sbftool_Form_InvestmentGameAssets();
+		$config = ibftool_Controller_Action_Helper_Treatment::getCurrentConfig();
+		$form = new ibftool_Form_InvestmentGameAssets();
 
 		$doc = new DOMDocument();
 		$doc->loadXML($config);
@@ -78,7 +78,7 @@ class InvestmentgameassetsController extends Zend_Controller_Action {
 		 * Process POST from previous Round
 		*/
 
-		$form = new Sbftool_Form_InvestmentGameAssets();
+		$form = new ibftool_Form_InvestmentGameAssets();
 		$form->setAction($this->getFrontController()->getBaseUrl() . "/investmentgameassets/process/");
 
 		if ($played_rounds->count() == 0) {
@@ -115,8 +115,8 @@ class InvestmentgameassetsController extends Zend_Controller_Action {
 	}
 
 	public function processAction() {
-		$form = new Sbftool_Form_InvestmentGameAssets();
-		$config = Sbftool_Controller_Action_Helper_Treatment::getCurrentConfig();
+		$form = new ibftool_Form_InvestmentGameAssets();
+		$config = ibftool_Controller_Action_Helper_Treatment::getCurrentConfig();
 
 		$doc = new DOMDocument();
 		$doc->loadXML($config);
@@ -160,7 +160,7 @@ class InvestmentgameassetsController extends Zend_Controller_Action {
 				$data = array(
 						'users_id' =>  Zend_Auth::getInstance()->getIdentity()->id,
 						'round'	=> $lastround->round+1,
-						'treatments_id' => Sbftool_Controller_Action_Helper_Treatment::getID(),
+						'treatments_id' => ibftool_Controller_Action_Helper_Treatment::getID(),
 						'asset_a_count' => $values["asset_a_count"],
 						'asset_a_value' => $values["asset_a_value"]+($values["asset_a_value"]*$yield_a)/100,
 						'asset_b_count' => $values["asset_b_count"],
@@ -192,7 +192,7 @@ class InvestmentgameassetsController extends Zend_Controller_Action {
 	}
 
 	public function finAction() {
-		$config = Sbftool_Controller_Action_Helper_Treatment::getCurrentConfig();
+		$config = ibftool_Controller_Action_Helper_Treatment::getCurrentConfig();
 
 		$doc = new DOMDocument();
 		$doc->loadXML($config);
@@ -208,7 +208,7 @@ class InvestmentgameassetsController extends Zend_Controller_Action {
 	}
 
 	public function leaveAction() {
-		Sbftool_Controller_Action_Helper_Treatment::completeCurrentModule();
+		ibftool_Controller_Action_Helper_Treatment::completeCurrentModule();
 		$this->_helper->redirector("index", "module");
 
 	}

@@ -16,7 +16,7 @@ $(function()
 });
 function doValidation(id)
 {
-    var url = '/sbftool/questionnaire/validateform'
+    var url = '/ibftool/questionnaire/validateform'
     var data = {};
     $("input").each(function()
     {

@@ -2,7 +2,7 @@
 class QuestionnaireController extends Zend_Controller_Action {
 
 	public function preDispatch() {
-		if (Sbftool_Controller_Action_Helper_Treatment::getCurrentModule() != "questionnaire") {
+		if (ibftool_Controller_Action_Helper_Treatment::getCurrentModule() != "questionnaire") {
 			$this->_helper->redirector("index", "module");
 		}
 
@@ -81,7 +81,7 @@ class QuestionnaireController extends Zend_Controller_Action {
 
 						var_dump($values[$id]);
 
-						$row = $table->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $id,  "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID()));
+						$row = $table->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $id,  "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID()));
 
 						if ($row->count() > 0) {
 							foreach($row as $singlerow) {
@@ -92,7 +92,7 @@ class QuestionnaireController extends Zend_Controller_Action {
 						foreach($values[$id] as $value) {
 							$data = array(
 									'questionnaire_question_id'	=> $id,
-									'treatments_id' => Sbftool_Controller_Action_Helper_Treatment::getID(),
+									'treatments_id' => ibftool_Controller_Action_Helper_Treatment::getID(),
 									'users_id' =>  Zend_Auth::getInstance()->getIdentity()->id,
 									'ip' => $_SERVER['REMOTE_ADDR'],
 									'questionnaire_answer' => $value,
@@ -116,13 +116,13 @@ class QuestionnaireController extends Zend_Controller_Action {
 
 						$data = array(
 								'users_id' =>  Zend_Auth::getInstance()->getIdentity()->id,
-								'treatments_id' => Sbftool_Controller_Action_Helper_Treatment::getID(),
+								'treatments_id' => ibftool_Controller_Action_Helper_Treatment::getID(),
 								'questionnaire_question_id'	=> $id,
 								'questionnaire_answer' => $values[$id],
 								'ip' => $_SERVER['REMOTE_ADDR']
 						);
 
-						$row = $table->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $id,  "treatments_id = ?" => Sbftool_Controller_Action_Helper_Treatment::getID()));
+						$row = $table->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $id,  "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID()));
 
 						if (empty($row)) {
 							$row = $table->createRow($data);
@@ -176,7 +176,7 @@ class QuestionnaireController extends Zend_Controller_Action {
 
 	private function prepareSession($questionnaire_session, $treatment_session) {
 		if (!isset($questionnaire_session->current_page)) {
-			$config = Sbftool_Controller_Action_Helper_Treatment::getCurrentConfig();
+			$config = ibftool_Controller_Action_Helper_Treatment::getCurrentConfig();
 
 			$doc = new DOMDocument();
 			$doc->loadXML($config);
@@ -200,7 +200,7 @@ class QuestionnaireController extends Zend_Controller_Action {
 		if (isset($questionnaire_session->current_page)) {
 
 			if ($questionnaire_session->current_page == end($questionnaire_session->pages) && $questionnaire_session->done == false) {
-				Sbftool_Controller_Action_Helper_Treatment::completeCurrentModule();
+				ibftool_Controller_Action_Helper_Treatment::completeCurrentModule();
 			}
 
 			$questionnaire_session->current_page = $questionnaire_session->pages[$questionnaire_session->page++];

@@ -1,13 +1,13 @@
 <?php
-class LoginController extends Sbftool_Controller_Action {
+class LoginController extends ibftool_Controller_Action {
 	public function indexAction() {
 
 		if (Zend_Auth::getInstance()->hasIdentity()) {
 			$this->_helper->redirector("index", "index");
 		}
 
-		$registration = new Sbftool_Form_Registration();
-		$login = new Sbftool_Form_Login();
+		$registration = new ibftool_Form_Registration();
+		$login = new ibftool_Form_Login();
 
 
 		if (!empty($_POST)) {
@@ -44,7 +44,7 @@ class LoginController extends Sbftool_Controller_Action {
 	 * Hier wird dem Benutzer eine Fehlermeldung angezeigt, falls sein Login fehlschlägt.
 	 */
 	public function errorAction(){
-		$this->view->assign("form", new Sbftool_Form_Login());
+		$this->view->assign("form", new ibftool_Form_Login());
 	}
 }
 
