@@ -1,0 +1,22 @@
+<h2>Verfügbare Tests:</h2>
+<?php if ($this->treatments->count() == 0) : ?>
+<p>Im Moment gibt es keine verfügbaren Treatments für Sie.</p>
+<?php endif; ?>
+<?php foreach($this->treatments as $treatment) : ?>
+<h3>
+	<a
+		href="<?php echo $this->url(array("controller" => "treatment", "action" => "load", "id" => $treatment->id)) ?>"><?php echo $treatment->name ?>
+	</a>
+</h3>
+<?php endforeach; ?>
+<br />
+<br />
+<h2>bereits abgeschlossene Tests:</h2>
+<?php if ($this->treatments_completed->count() == 0) : ?>
+<p>Sie haben noch keine Tests abgeschlossen.</p>
+<?php endif; ?>
+<?php foreach($this->treatments_completed as $treatment) : ?>
+<h4>
+	<?php echo $treatment->name ?>
+</h4>
+<?php endforeach; ?>

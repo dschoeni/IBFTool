@@ -1,0 +1,51 @@
+<? 
+$this->headTitle("IBFTool");
+$this->headLink(array('rel' => 'shortcut icon', 'href' => '/favicon.ico'));
+
+$this->headScript()->appendFile('/bootstrap/js/bootstrap.min.js');
+$this->headScript()->appendFile('/bootstrap/js/bootstrap-dropdown.js');
+$this->headLink()->appendStylesheet('/bootstrap/css/bootstrap.min.css');
+//$this->headLink()->appendStylesheet('/css/questionnaire.css');
+$this->headLink()->appendStylesheet('/css/jquery-ui.css');
+$this->headLink()->appendStylesheet('/css/style.css');
+
+$this->getHelper('BaseUrl')->setBaseUrl(($_SERVER["SERVER_PORT"] == 80 ? "http://" : "https://") . $_SERVER["HTTP_HOST"]);
+
+?>
+<?= $this->doctype(); ?>
+<html>
+<head>
+<?= $this->headTitle() ?>
+<?= $this->headMeta(); ?>
+<?= $this->headStyle(); ?>
+<?= $this->jQuery(); ?>
+<?= $this->headScript(); ?>
+<?= $this->headLink(); ?>
+</head>
+<body data-offset="50">
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner" style="min-height: 25px">
+			<div class="container">
+				<div class="row">
+					<?= $this->partial("header.phtml") ?>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="container">
+		<div class="content">
+			<div class="row">
+				<?= $this->layout()->content; ?>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container">
+		<div class="row">
+			<?= $this->partial("footer.phtml") ?>
+		</div>
+	</div>
+	<?= $this->inlineScript(); ?>
+</body>
+</html>
