@@ -38,7 +38,7 @@ class ibftool_Controller_Plugin_Auth_AccessControl extends Zend_Controller_Plugi
 					$storage = $this->_auth->getStorage();
 
 					// die gesamte Tabellenzeile in der Session speichern,
-					// wobei das Passwort unterdrückt wird
+					// wobei das Passwort unterdrï¿½ckt wird
 
 					$users = new Users();
 					$row = $users->fetchRow(array("userhash = ?" => $email));
@@ -69,7 +69,7 @@ class ibftool_Controller_Plugin_Auth_AccessControl extends Zend_Controller_Plugi
 		}
 
 		$module = $request->getControllerName();
-		// Ressourcen = Modul -> kann hier geändert werden!
+		// Ressourcen = Modul -> kann hier geï¿½ndert werden!
 		$resource   = $module;
 		if (!$this->_acl->has($resource)) {
 			$resource = null;
@@ -79,13 +79,13 @@ class ibftool_Controller_Plugin_Auth_AccessControl extends Zend_Controller_Plugi
 
 			if ($this->_auth->hasIdentity()) {
 				// angemeldet, aber keine Rechte -> Fehler!
-				$request->setModuleName('default');
-				$request->setControllerName('error');
+				$request->setModuleName('error');
+				$request->setControllerName('index');
 				$request->setActionName('noaccess');
 			} else {
 				// nicht angemeldet -> Login
-				$request->setModuleName('default');
-				$request->setControllerName('login');
+				$request->setModuleName('login');
+				$request->setControllerName('index');
 				$request->setActionName('index');
 			}
 				

@@ -1,6 +1,6 @@
-<?php
+ <?php
 /**
- * @author Dominik Schöni
+ * @author Dominik Schï¿½ni
  * @copyright 2008
  */
  
@@ -8,8 +8,8 @@
 header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
 
 // Error Reporting
-//error_reporting(E_ALL|E_STRICT);
-//ini_set('display_errors', 'on');
+error_reporting(E_ALL|E_STRICT);
+ini_set('display_errors', 'on');
 
  // Include Path
  
@@ -26,7 +26,7 @@ if (strpos($_SERVER["HTTP_HOST"], "elysian") !== false){
  * 
  * 
  * 
- * Münster-MLA: Path-Variable hier konfigurieren, sollte zum "ibftool"-Ordner auf dem Server zeigen.
+ * Mï¿½nster-MLA: Path-Variable hier konfigurieren, sollte zum "ibftool"-Ordner auf dem Server zeigen.
  * $path  "/";
  * 
  * 
@@ -54,7 +54,6 @@ Zend_Layout::startMvc();
 
 // Frontcontroller Instanz
 $front = Zend_Controller_Front::getInstance();
-$front->setControllerDirectory($path.'application/controllers');
 $front->throwExceptions(true);
 
 // BaseUrl setzen
@@ -66,17 +65,20 @@ $front->throwExceptions(true);
 
 //Menu
 $front->registerPlugin(new Zend_Controller_Plugin_ActionStack());
-$front->registerPlugin(new ibftool_Controller_Plugin_Menu());
+$front->addModuleDirectory('../application/modules');
+
+$view = new Zend_View();
+$view->setEncoding("UTF-8");
+$view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
 
 //JQuery von ZenX
-$view = new Zend_View();
-$view->setEncoding("ISO-8859-1");
-$view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
-$view->jQuery()->setLocalPath("/ibftool/_files/js/jquery.js");
-$view->jQuery()->setUiLocalPath("/ibftool/_files/js/jquery-ui.js");
+$view->jQuery()->setLocalPath("/js/jquery-1.7.2.min.js");
+$view->jQuery()->setUiLocalPath("/js/jquery-ui-1.8.20.custom.min.js");
 $view->jQuery()->enable();
 $view->jQuery()->uiEnable();
- 
+
+Zend_Layout::getMvcInstance()->setLayoutPath($path . "application/layouts/");
+
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
@@ -103,4 +105,5 @@ $front->registerPlugin(new ibftool_Controller_Plugin_Auth_AccessControl($auth, $
 $front->setParam('auth', $auth);
 
 $front->dispatch();
+
 
