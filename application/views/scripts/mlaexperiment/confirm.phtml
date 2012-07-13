@@ -1,0 +1,30 @@
+<h1>Zwischenstand</h1>
+<p>
+	Momentanes Vermögen:
+	<?php echo $this->money_last ?>
+	<br />
+	<?php echo $this->cycle_length ?>
+	Runden davor:
+	<?php echo $this->money_past ?>
+</p>
+
+<div id="forward" class="button" onmouseover="mouseover_forward()"
+	onmouseout="mouseout_forward()">Weiter</div>
+
+<script>
+$('#forward').click(function() {
+		window.location = "<?php echo $this->url(array("controller" => "mlaexperiment", "action" => "round")) ?>";
+ });
+
+function mouseover_forward() { document.getElementById("forward").style.backgroundColor='#ababab'; }
+function mouseout_forward() { document.getElementById("forward").style.backgroundColor='#ffffff'; } 
+</script>
+
+<script>
+function runden(x) {
+	  var k = (Math.round(x * 100) / 100).toString();
+	  k += (k.indexOf('.') == -1)? '.00' : '00';
+	  return k.substring(0, k.indexOf('.') + 3);
+	}
+
+</script>

@@ -1,0 +1,10 @@
+<h1>AdminPanel</h1>
+<h2>Verfügbare Treatments</h2>
+<?php foreach($this->treatments as $module) : ?>
+<h3>
+	<?php echo $module->name ?>
+</h3>
+<p>
+	<?php echo $module->description ?>
+</p>
+<?php endforeach; ?>

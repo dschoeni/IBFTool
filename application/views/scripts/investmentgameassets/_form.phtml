@@ -1,0 +1,29 @@
+<table>
+	<tr>
+		<th></th>
+		<th>Wert</th>
+		<th>Anzahl</th>
+		<th></th>
+	</tr>
+	<tr>
+		<td>Aktie A</td>
+		<td><?php echo $this->element->getElement('asset_a_value'); ?>
+		</td>
+		<td><?php echo $this->element->getElement('asset_a_count'); ?>
+		</td>
+		<td><input type="button" value="Kaufen" onclick="javascript:buy_a()" />
+			<input type="button" value="Verkaufen" onclick="javascript:sell_a()" />
+		</td>
+	</tr>
+	<tr>
+		<td>Aktie B</td>
+		<td><?php echo $this->element->getElement('asset_b_value'); ?>
+		</td>
+		<td><?php echo $this->element->getElement('asset_b_count'); ?>
+		</td>
+		<td><input type="button" value="Kaufen" onclick="javascript:buy_b()" />
+			<input type="button" value="Verkaufen" onclick="javascript:sell_b()" />
+		</td>
+	</tr>
+</table>
+<?php echo $this->element->getElement('Weiter'); ?>

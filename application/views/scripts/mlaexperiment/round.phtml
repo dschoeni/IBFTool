@@ -1,0 +1,108 @@
+
+<h1>Experiment zu Investitionsentscheidungen</h1>
+<br />
+<h1>Investitionsbetrag</h1>
+<p>
+	In der Runde
+	<?php echo $this->round+1?>
+	steht Ihnen folgender Betrag zur Verfügung:
+	<?php echo $this->money ?>0 Euro
+</p>
+
+<div class="wrapper">
+	<div class="left_5050">
+		<div id="formdiv" style="height: 270px;">
+			<h1>Einsatz</h1>
+			<?php echo $this->form ?>
+		</div>
+		<br /> <br />
+		<div id="success">
+			<h1>Erfolg</h1>
+			<?php if ($this->result) : ?>
+			<?php if ($this->outcome == ($this->cycle_length * $this->money)) : ?>
+			<?php if ($this->cycle_length == 1) : ?>
+			Sie haben in der letzten Runde weder einen Gewinn noch einen Verlust
+			gemacht.
+			<?php else : ?>
+			Sie haben in den letzten
+			<?php echo $this->cycle_length ?>
+			Runden weder einen Gewinn noch einen Verlust gemacht.
+			<?php endif;?>
+			<?php else : ?>
+			<?php if ($this->cycle_length == 1) : ?>
+			In der letzten Runde haben Sie einen
+			<?php else : ?>
+			In den letzten
+			<?php echo $this->cycle_length ?>
+			Runden haben Sie insgesamt einen
+			<?php endif;?>
+			<span style="text-decoration: underline; font-weight: bold;"> <?php if ($this->outcome < ($this->cycle_length * $this->money)) : ?>
+					Verlust von <span style="font-size: 1.3em"> <?php echo number_format(abs($this->outcome - ($this->cycle_length*$this->money)), 2) ?>
+					Euro
+			</span> <?php else :?> Gewinn von <span style="font-size: 1.3em"> <?php echo number_format($this->outcome - ($this->cycle_length*$this->money), 2) ?>
+					Euro
+			</span> <?php endif; ?>
+			</span> gemacht.
+
+			<?php endif; ?>
+			<br /> <br />
+
+			<div id="forward_round" class="button"
+				onmouseover="mouseover_forward()" onmouseout="mouseout_forward()">Weiter</div>
+
+			<script>
+document.getElementById('amount').disabled = true;
+$("#investment-slider").slider("option", "disabled", true);
+
+$('#forward_round').click(function() {
+	$("#success").fadeToggle("slow", "linear");
+	document.getElementById('amount').disabled = false;
+	$('#investment-slider').slider( 'option', 'disabled', false );
+});
+		</script>
+
+			<?php endif; ?>
+
+		</div>
+	</div>
+
+	<div class="right_5050">
+		<h1>Risikoprofil der riskanten Anlage</h1>
+		<p>
+			<img src="/sbftool/_files/images/riskprofile_250_small.png" />
+		</p>
+	</div>
+</div>
+
+<div class="clearboth"></div>
+
+<script>
+document.getElementById('Weiter').style.display = 'none';
+$('.ui-slider-handle').hide();
+</script>
+
+<script>
+function runden(x) {
+	  var k = (Math.round(x * 100) / 100).toString();
+	  k += (k.indexOf('.') == -1)? '.00' : '00';
+	  return k.substring(0, k.indexOf('.') + 3);
+	}
+
+function setSliderAmount() {
+	var values = {};
+	$.each($('#mlaexperiment').serializeArray(), function(i, field) {
+	    values[field.name] = field.value;
+	});
+
+	$('.ui-slider-handle').show();
+	document.getElementById('Weiter').style.display = '';
+	document.getElementById('investment').value = values["amount"];
+	$("#investment-slider").slider("values", 0, values["amount"]);
+}
+
+function mouseover_forward() { document.getElementById("forward_round").style.backgroundColor='#ababab'; }
+function mouseout_forward() { document.getElementById("forward_round").style.backgroundColor='#ffffff'; } 
+
+document.getElementById('amount').focus();
+
+</script>

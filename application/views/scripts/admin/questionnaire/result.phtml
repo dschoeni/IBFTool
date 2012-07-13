@@ -1,0 +1,75 @@
+<?php
+/*
+ // Create new PHPExcel object
+//echo date('H:i:s') . " Create new PHPExcel object\n";
+$objPHPExcel = new PHPExcel();
+
+// Set properties
+//echo date('H:i:s') . " Set properties\n";
+$objPHPExcel->getProperties()->setCreator("IBF Tool");
+$objPHPExcel->getProperties()->setLastModifiedBy("IBF Tool");
+$objPHPExcel->getProperties()->setTitle("IBF Tool - Treatment Report");
+$objPHPExcel->getProperties()->setSubject("IBF Tool - Treatment Report");
+$objPHPExcel->getProperties()->setDescription("Generated Report for a Module, by IBF Tool.");
+
+
+// Add some data
+//echo date('H:i:s') . " Add some data\n";
+$objPHPExcel->setActiveSheetIndex(0);
+$objPHPExcel->getActiveSheet()->SetCellValue('A1', utf8_encode('Report für Treatment: ' . $this->treatment->name));
+$objPHPExcel->getActiveSheet()->SetCellValue('A2', utf8_encode('Anzahl Datensätze:'));
+$objPHPExcel->getActiveSheet()->SetCellValue('B2', count($this->users));
+
+$column = 1;
+$row = 3;
+
+foreach($this->questions as $question) {
+$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($column++, $row, utf8_encode($question["text"]));
+}
+
+$column = 0;
+$row = 4;
+
+foreach($this->users as $user) {
+$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($column, $row, $user["email"]);
+
+foreach($this->questions as $question) {
+$column++;
+if (!empty($this->answers[$user["email"]][$question["id"]]) && is_array($this->answers[$user["email"]][$question["id"]])) {
+
+$string = NULL;
+	
+foreach($this->answers[$user["email"]][$question["id"]] as $answer) {
+$string .= "$answer\n";
+}
+	
+$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($column, $row, utf8_encode($string));
+}
+
+}
+
+$row++;
+$column = 0;
+}
+
+
+// Rename sheet
+//echo date('H:i:s') . " Rename sheet\n";
+$objPHPExcel->getActiveSheet()->setTitle('Results');
+
+// Save Excel 2007 file
+//echo date('H:i:s') . " Write to Excel2007 format\n";
+$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+$objWriter->save("_files/excel/" . $this->treatment->id . "_report_" . date("dmY") . ".xlsx");
+
+// Echo done
+echo date('H:i:s') . " Done writing file.\r\n";
+?>
+<h1>Excel Export</h1>
+<p>
+Die Resultate können hier heruntergeladen werden: <a
+href="<?php echo $this->baseUrl("_files/excel/" . $this->treatment->id . "_report_" . date("dmY") . ".xlsx")?>">
+Download </a>
+*/
+?>
+<?php echo $this->result ?>

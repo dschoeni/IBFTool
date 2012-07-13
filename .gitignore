@@ -167,8 +167,8 @@ pip-log.txt
 ## IBFTool Ignore
 ############
 
-.dbdumps
-.docs
+dbdumps
+docs
 application/config/
 userpwlist.xlsx
 

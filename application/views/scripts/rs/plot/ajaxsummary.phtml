@@ -1,0 +1,11 @@
+<script>
+var userData;
+$(document).ready(function(){
+	userData = <?php echo $this->post ?>;
+	//userData = {"0.77":[3400,-2000,1600,-1400,2200,-5400,4400,-1800,6600,1200,1800,1200,0,2800,-5600,-1000,3400,6800,2200,800,-2000]};
+	$('#dialog').dialog();
+	drawCharts();
+	$("#dialog").dialog("close");
+});
+</script>
+<div id="charts"></div>

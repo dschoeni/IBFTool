@@ -1,0 +1,27 @@
+<script>
+var userData;
+
+
+$(document).ready(function(){
+	userData = <?php echo $this->post ?>;
+	//userData = {"0.77":[3400,-2000,1600,-1400,2200,-5400,4400,-1800,6600,1200,1800,1200,0,2800,-5600,-1000,3400,6800,2200,800,-2000]};
+	$("#dialog").dialog();
+});
+
+setTimeout("drawCharts();", 100);
+
+</script>
+<h1>Erfahrungen sammeln</h1>
+	<button style="display: inline-block;" id="back" class="button" onmouseover="mouseover_back()" onmouseout="mouseout_back()">Andere Verteilungen ausprobieren</button>
+	<button style="display: inline-block;" id="next" class="button" onmouseover="mouseover_next()" onmouseout="mouseout_next()">Erfahrungen sammeln beenden</button>
+<div id="charts"></div>
+<div id="dialog" title="Laden...">Ihre gewählten Verteilungen werden berechnet...</div>
+
+<script>
+	$('#back').click(function() {
+		window.location = "<?php echo $this->url(array("controller" => "rs_plot", "action" => "index")) ?>";
+	 });
+	$('#next').click(function() {
+		window.location = "<?php echo $this->url(array("controller" => "rs_plot", "action" => "next")) ?>";
+ 	});
+</script>

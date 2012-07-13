@@ -1,0 +1,66 @@
+<?php echo $this->doctype('XHTML1_TRANSITIONAL'); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<title><?php echo Zend_Registry::getInstance()->get("config")->ibftool->title ?>
+</title>
+
+<?php echo $this->jQuery(); ?>
+
+<?php //$this->headScript()->appendFile($this->baseUrl("/_files/js/curvycorners.js")); ?>
+<?php $this->headScript()->appendFile($this->baseUrl("/_files/js/superfish.js")); ?>
+
+<?php $this->headLink()->appendStylesheet($this->baseUrl("/_files/css/stylesheet.css")); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl("/_files/css/superfish.css")); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl("/_files/css/questionnaire.css")); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl("/_files/css/jquery-ui.css")); ?>
+
+<?php echo $this->headLink(); ?>
+<?php echo $this->headStyle(); ?>
+<?php echo $this->headScript(); ?>
+
+<script> 
+		    $(document).ready(function() { 
+		        $('ul.sf-menu').superfish(); 
+		    }); 
+		</script>
+
+
+</head>
+<body>
+
+	<div class="layout">
+		<div class="menu">
+			<?php echo $this->layout()->menu ?>
+		</div>
+		<div style="clear: both;"></div>
+		<div class="content">
+			<h1 style="margin: 0px 0px 0px 0px">
+				<?php echo Zend_Registry::getInstance()->get("config")->ibftool->title ?>
+			</h1>
+		</div>
+		<br />
+		<div class="content">
+			<?php echo $this->layout()->content ?>
+		</div>
+
+		<div style="clear: both;"></div>
+		<div class="footer">
+			<div class="content">
+				
+				 2012 Institut für Banking und Finance <br /> <img
+					src="<?php echo $this->baseUrl('_files/images/uzh_logo.png')?>" /> 
+					
+				
+				<!-- 2012 <br /> <img src="<?php echo $this->baseUrl('_files/images/wwu_logo_left.gif')?>" /><img src="<?php echo $this->baseUrl('_files/images/wwu_logo_right.gif')?>" />-->
+			</div>
+		</div>
+
+
+	</div>
+
+	<?php echo $this->inlineScript(); ?>
+</body>
+
+</html>

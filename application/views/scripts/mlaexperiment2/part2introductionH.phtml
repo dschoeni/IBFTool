@@ -1,0 +1,33 @@
+<span style="text-align: right; float: right;">Anleitung:<b> Seite 2 von
+		2</b>
+</span>
+<br />
+<p>Sie müssen vor jeder Runde erneut festlegen, welchen Betrag Sie in
+	die riskante Anlageform investieren. Nach jeder Runde erfahren Sie, wie
+	sich die riskante Anlageform entwickelt hat und in welcher Höhe Sie
+	einen Gewinn oder Verlust erwirtschaftet haben.</p>
+<p>Ihre Eingaben können Sie entweder über die Tastatur tätigen oder Sie
+	benutzen die Maus und stellen den Betrag über den Schieberegler ein.
+	Bitte beachten Sie, dass Sie nur ganze Cent-Beträge (ohne Komma)
+	eingeben können.</p>
+
+
+<div id="forward" class="button" style="float: right"
+	onmouseover="mouseover_forward()" onmouseout="mouseout_forward()">Weiter</div>
+<br />
+<br />
+<br />
+<script>
+$('#forward').click(function() {
+	window.location = "<?php echo $this->url(array("controller" => "mlaexperiment2", "action" => "round")) ?>"
+  });
+
+$('#back').click(function() {
+	window.location = "<?php echo $this->url(array("controller" => "mlaexperiment2", "action" => "part1introduction2")) ?>"
+  });
+
+function mouseover_forward() { document.getElementById("forward").style.backgroundColor='#ababab'; }
+function mouseout_forward() { document.getElementById("forward").style.backgroundColor='#ffffff'; } 
+function mouseover_back() { document.getElementById("back").style.backgroundColor='#ababab'; }
+function mouseout_back() { document.getElementById("back").style.backgroundColor='#ffffff'; } 
+</script>
