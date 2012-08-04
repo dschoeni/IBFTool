@@ -1,0 +1,52 @@
+<span style="text-align: right; float: right;">Anleitung:<b> Seite 3 von
+		5</b>
+</span>
+<br />
+<p>Dazu drei kleine Beispiele:</p>
+<p>1. Beispiel:</p>
+<blockquote>Sie investieren nichts in die riskante Anlageform. Dann
+	behalten Sie die 0.40 Euro, machen also weder Gewinn noch Verlust. Das
+	Ergebnis der riskanten Anlageform spielt keine Rolle.</blockquote>
+<p>2. Beispiel:</p>
+<blockquote>Sie investieren die gesamte Vermögensausstattung, also 0.40 Euro, in die riskante Anlageform. Wenn sich diese positiv entwickelt,
+	dann erhalten Sie das 2,5-fache als Gewinn, also 1.00 Euro, und aus
+	Ihren 0.40 Euro werden 1.40 Euro. Entwickelt sich die riskante Anlageform
+	negativ, verlieren Sie die 0.40 Euro und gehen in dieser Runde leer aus.</blockquote>
+<p>3. Beispiel:</p>
+<blockquote>Sie investieren einen Teil, z.B. 0.10 Euro. Wenn sich die
+	Anlage positiv entwickelt, dann erhalten Sie das 2,5-fache als Gewinn,
+	also 0.25 Euro, und aus Ihren 0.10 Euro werden 0.35 Euro. Darüber hinaus
+	haben Sie noch die nicht investierten 0.30 Euro, das macht insgesamt
+	also 0.65 Euro. Entwickelt sich die riskante Anlageform negativ,
+	verlieren Sie die 0.10 Euro und es bleiben Ihnen in dieser Runde
+	lediglich die nicht investierten 0.30 Euro.</blockquote>
+<p>Ihre Gewinn- und Verlustmöglichkeiten hängen demnach von Ihren
+	Investitionsbeträgen ab. Das grösste Gewinn- und Verlustpotenzial
+	ergibt sich bei voller Investition in die riskante Anlage. Investieren
+	Sie nichts, machen Sie zwar keinen Gewinn, erleiden aber auch keinen
+	Verlust, Sie behalten also Ihre Vermögensausstattung. Die erzielten
+	Beträge aus der Anlageform sowie Ihre nicht investierten Beträge werden
+	auf Ihrem Auszahlungskonto gutgeschrieben und stehen nicht zum erneuten
+	Investieren zur Verfügung. Stattdessen werden Sie in jeder Runde erneut
+	mit einem Vermögen von 0.40 Euro ausgestattet.</p>
+
+<div id="forward" class="button" style="float: right"
+	onmouseover="mouseover_forward()" onmouseout="mouseout_forward()">Weiter</div>
+<div id="back" class="button" onmouseover="mouseover_back()"
+	onmouseout="mouseout_back()">Zurück</div>
+
+<script>
+$('#forward').click(function() {
+	window.location = "<?php echo $this->url(array("controller" => "mlaexperiment2", "action" => "part1introduction3")) ?>"
+  });
+  
+$('#back').click(function() {
+	window.location = "<?php echo $this->url(array("controller" => "mlaexperiment2", "action" => "part1introduction")) ?>"
+  });
+
+function mouseover_forward() { document.getElementById("forward").style.backgroundColor='#ababab'; }
+function mouseout_forward() { document.getElementById("forward").style.backgroundColor='#ffffff'; } 
+function mouseover_back() { document.getElementById("back").style.backgroundColor='#ababab'; }
+function mouseout_back() { document.getElementById("back").style.backgroundColor='#ffffff'; } 
+</script>
+

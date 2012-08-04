@@ -1,0 +1,41 @@
+<span style="text-align: right; float: right;">Anleitung:<b> Seite 2 von
+		5</b>
+</span>
+<br />
+<p>Der heutige Teil des Experiments umfasst 36 Runden. In jeder Runde
+	erhalten Sie eine Vermögensausstattung in Höhe von 0.40 Euro. Sie müssen
+	entscheiden, welchen Anteil Sie hiervon in eine riskante Anlageform
+	investieren und welchen Anteil Sie lieber sicher halten, also nicht
+	investieren. Bei den sicher angelegten, also nicht investierten,
+	Beträgen drohen keine Verluste, allerdings können Sie auch keinen
+	Gewinn erzielen. Das Risikoprofil der Anlageform ist in jeder Runde
+	identisch und sieht folgendermassen aus:</p>
+<div style="text-align: center">
+	<img src="/ibftool/_files/images/riskprofile_250_small.png" />
+</div>
+<p>Mit einer Wahrscheinlichkeit von einem Drittel (33,3%) wird eine
+	Rendite von +250% erzielt und mit einer Wahrscheinlichkeit von zwei
+	Dritteln (66,7%) wird eine Rendite von -100% erzielt.</p>
+<p>Das Risikoprofil der Anlageform wird Ihnen während des gesamten
+	Experimentes angezeigt.</p>
+<br />
+
+<div id="forward" class="button" style="float: right"
+	onmouseover="mouseover_forward()" onmouseout="mouseout_forward()">Weiter</div>
+<div id="back" class="button" onmouseover="mouseover_back()"
+	onmouseout="mouseout_back()">Zurück</div>
+
+<script>
+$('#forward').click(function() {
+	window.location = "<?php echo $this->url(array("controller" => "mlaexperiment", "action" => "introduction2")) ?>"
+  });
+
+$('#back').click(function() {
+	window.location = "<?php echo $this->url(array("controller" => "mlaexperiment", "action" => "index")) ?>"
+  });
+
+function mouseover_forward() { document.getElementById("forward").style.backgroundColor='#ababab'; }
+function mouseout_forward() { document.getElementById("forward").style.backgroundColor='#ffffff'; } 
+function mouseover_back() { document.getElementById("back").style.backgroundColor='#ababab'; }
+function mouseout_back() { document.getElementById("back").style.backgroundColor='#ffffff'; } 
+</script>

@@ -1,0 +1,26 @@
+Verf&uuml;gbare Tests:
+<table class="table">
+<tbody>
+<?php if ($this->treatments->count() == 0) : ?>
+<tr><td>Im Moment gibt es keine verf&uuml;gbaren Tests f&uuml;r Sie.</td></tr>
+<?php endif; ?>
+<?php foreach($this->treatments as $treatment) : ?>
+<tr>
+	<td><a href="/treatment/load/id/<?= $this->escape($treatment->id) ?>"><?php echo $treatment->name ?></a></td>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>
+bereits abgeschlossene Tests:
+<table class="table">
+<tbody>
+<?php if ($this->treatments_completed->count() == 0) : ?>
+<tr><td>Sie haben noch keine Tests abgeschlossen.</td></tr>
+<?php endif; ?>
+<?php foreach($this->treatments_completed as $treatment) : ?>
+<tr>
+	<td><?php echo $treatment->name ?></td>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>

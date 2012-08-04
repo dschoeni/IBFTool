@@ -1,0 +1,63 @@
+<h1>Erfahrungen sammeln</h1>
+<p>In diesem Teil der Studie können Sie beobachten welche Erträge Sie
+	unter verschiedenen zufällig gewählten Szenarien erzielen können, je
+	nachdem für welche Vermögensaufteilung Sie sich entscheiden. Sie können
+	mit verschiedenen Vermögensaufteilungen experimentieren ohne die
+	finanziellen Konsequenzen von Ihren Entscheidungen tragen zu müssen.
+	Nutzen Sie also die Gelegenheit, um Ihre nächste Vermögensentscheidung
+	zu verbessern!</p>
+<p>Wählen Sie bitte zuerst durch das Bewegen des Schiebereglers eine
+	Vermögensaufteilung. Mit dem Drücken vom Knopf „Ein neues Szenario
+	ziehen“ können Sie beobachten welchen Ertrag Sie mit Ihrer
+	Vermögensaufteilung unter einem zufällig gewählten Szenario erzielen
+	würden. Bei jedem Knopfdruck wird zufällig ein neues Szenario gewählt.
+	Mit dem Knopf „20 neue Szenarien ziehen“ können Sie beobachten welche
+	Erträge Sie mit Ihrer Vermögensaufteilung unter 20 zufällig gewählten
+	Szenarien erzielen würden. Bei jedem Knopfdruck werden 20 neue
+	Szenarien zufällig gewählt. Die Szenarien werden wiederum aus der Ihnen
+	bekannten Normalverteilung mit Mittelwert 10% und Standardabweichung
+	48% gezogen)</p>
+<p>In der oberen Abbildung wird der Verlust aus dem zuletzt gezogenen
+	Szenario gezeigt. Die Erträge aus allen bisher gezogenen Szenarien
+	sowie deren Häufigkeit wird in der unteren Abbildung gezeigt.</p>
+<p>Mit dem Knopf „Vermögen neu aufteilen“ können Sie eine Aufteilung
+	Ihres Vermögens erneut vornehmen und die Häufigkeit der Erträge
+	betrachten.</p>
+<h2>Vermögen in der risikobehafteten Anlage</h2>
+<div class="left_5050">
+	<!--  
+	<input type="radio" name="risk" value="0.2"> 20% <br /> <input
+		type="radio" name="risk" value="0.4"> 40% <br /> <input type="radio"
+		name="risk" value="0.6"> 60% <br /> <input type="radio" name="risk"
+		value="0.8"> 80% <br /> <input type="radio" name="risk" value="1">
+	100%
+	-->
+	<div style="padding: 50px">
+		Bewegen Sie den Slider oder geben sie den gewünschten Anteil in die
+		Box ein.
+	<div id="plotslider" style="width: 400px"></div>
+	<br> <input type="text" size="2" id="plotamount" value="50">%
+	</div>
+</div>
+<div class="right_5050">
+	<button style="display: inline-block; margin-right: 5px;" id="drawNewScenario" class="button" onmouseover="mouseover_forward()" onmouseout="mouseout_forward()">Ein neues Szenario ziehen</button>
+	<button style="display: inline-block; margin-right: 5px;" id="draw20NewScenario" class="button" onmouseover="mouseover_20()" onmouseout="mouseout_20()">20 neue Szenarien ziehen</button>
+	<button style="display: inline-block;" id="next" class="button" onmouseover="mouseover_next()" onmouseout="mouseout_next()">Weiter</button>
+</div>
+<div id="chart_single"></div>
+<br>
+<br>
+<div id="chart"></div>
+<div id="dialog" style="display: none" title="Achtung">Bitte teilen sie
+	zuerst das Vermögen auf.</div>
+
+<?php echo $this->form ?>;
+
+<script>
+	$('#next').click(function() {
+		sendData();
+		$('#data').submit();
+ 	});
+</script>
+
+

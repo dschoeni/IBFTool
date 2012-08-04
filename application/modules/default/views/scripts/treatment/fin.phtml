@@ -1,0 +1,17 @@
+<h1>IronTrader</h1>
+<p>Vielen Dank für Ihre Teilnahme! Die Gewinner der Auslosung für das
+	Casting und des Investment-Spiels werden zeitnah benachrichtigt.</p>
+<p>Sie sind damit fertig und können den Internet-Browser nun schließen.
+</p>
+<div id="forward" class="button" style="float: left"
+	onmouseover="mouseover_forward()" onmouseout="mouseout_forward()">Zum
+	Login</div>
+
+<script>
+$('#forward').click(function() {
+		window.location = "http://www.bf.uzh.ch/irontrader/index.php/login/";
+ });
+
+function mouseover_forward() { document.getElementById("forward").style.backgroundColor='#ababab'; }
+function mouseout_forward() { document.getElementById("forward").style.backgroundColor='#ffffff'; } 
+</script>
