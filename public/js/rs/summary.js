@@ -21,7 +21,7 @@ function drawCharts() {
 				margin : [ 50, 20, 30, 50 ],
 			},
 			title : {
-				text : 'Verteilung der realisierten Ertr‰ge (' + Math.round(valueArray * 100) + '% Anteil an der Risikoanlage)'
+				text : 'Verteilung der realisierten Ertr√§ge (' + Math.round(valueArray * 100) + '% Anteil an der Risikoanlage)'
 			},
 			subtitle : {
 				text : ''
@@ -81,7 +81,7 @@ function drawCharts() {
 				margin : [ 50, 20, 30, 50 ],
 			},
 			title : {
-				text : 'Verteilung der mˆglichen Ertr‰ge (' + Math.round(valueArray * 100)
+				text : 'Verteilung der m√∂glichen Ertr√§ge (' + Math.round(valueArray * 100)
 						+ '% Anteil an der Risikoanlage)'
 			},
 			subtitle : {
@@ -162,7 +162,7 @@ function drawCharts() {
 		i++;
 	}
 	
-	$("#dialog").dialog("close");
+	$("#dialog").modal("hide");
 	
 }
 

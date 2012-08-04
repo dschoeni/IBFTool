@@ -76,7 +76,8 @@ class Administration_TreatmentController extends Zend_Controller_Action {
 				}
 			}
 		}
-		$this->_helper->redirector("edit", "admin_treatment", "default", array("id" => $id));
+		
+		$this->_redirect("/administration/treatment/edit/" . $id);
 	}
 
 	public function resetAction() {
@@ -95,7 +96,7 @@ class Administration_TreatmentController extends Zend_Controller_Action {
 
 			$used_modules = $used_modules->fetchAll($select);
 
-			$this->_helper->actionStack("redirect", "admin_treatment", "default");
+			$this->_redirect("/administration/treatment/");
 
 			foreach($used_modules as $used_module) {
 				$this->_helper->actionStack("reset", "admin_" . $used_module->prefix, "default", array("id" => $id));
@@ -122,16 +123,16 @@ class Administration_TreatmentController extends Zend_Controller_Action {
 		$treatments = new Treatments();
 		$lastrow = $treatments->fetchRow(null, "order desc");
 
-		$data = array("name" => "Neues Treatment", "order" => $lastrow->order + 1);
+		$data = array("name" => "Neues Treatment", "order" => $lastrow->order + 1, "userlimit" => "0");
 
 		$row = $treatments->createRow($data);
 		$row->save();
 
-		$this->_helper->redirector("index", "admin_treatment", "default");
+		$this->_redirect("/administration/treatment/");
 	}
 
 	public function redirectAction() {
-		$this->_helper->redirector("index", "admin_treatment");
+		$this->_redirect("/administration/treatment/");
 	}
 
 	public function lockAction() {
@@ -146,7 +147,7 @@ class Administration_TreatmentController extends Zend_Controller_Action {
 			$treatment->setLocked();
 		}
 
-		$this->_helper->redirector("index", "admin_treatment", "default");
+		$this->_redirect("/administration/treatment/");
 	}
 
 	public function unlockAction() {
@@ -161,7 +162,7 @@ class Administration_TreatmentController extends Zend_Controller_Action {
 			$treatment->setPublic();
 		}
 
-		$this->_helper->redirector("index", "admin_treatment", "default");
+		$this->_redirect("/administration/treatment/");
 	}
 
 }

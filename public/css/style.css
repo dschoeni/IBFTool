@@ -1,5 +1,5 @@
 body {
-  margin-top: 150px;
+  margin-top: 100px;
   background-color: #ececec;
 }
 .content {
@@ -7,5 +7,8 @@ body {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   background-color: white;
-  padding: 25px 25px 50px 50px;
+  padding: 20px 30px 0px 30px;
+  width: 965px;
+  margin-right: auto;
+  margin-left: auto;
 }

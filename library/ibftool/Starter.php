@@ -21,9 +21,7 @@ class ibftool_Starter {
 		Zend_Registry::set('config', $config);
 
 		$db = Zend_Db::factory($config->database);
-		
 		Zend_Db_Table_Abstract::setDefaultAdapter($db);
-
 		Zend_Registry::set("dbAdapter", $db);
 
 		return $config;

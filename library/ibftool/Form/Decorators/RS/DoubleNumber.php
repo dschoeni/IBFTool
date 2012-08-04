@@ -2,7 +2,7 @@
 class ibftool_Form_Decorators_RS_DoubleNumber extends Zend_Form_Decorator_Abstract
 {
 	protected $_format = '<dt id="%s"><label for="%s">%s</label></dt>';
-	protected $_button = '<input size="2" type="text" name="%s" id="%s" value="%s" autocomplete="off">';
+	protected $_button = '<input class="rs_doublenumber" type="text" name="%s" id="%s" value="%s" autocomplete="off">';
 	
 	public function render($content)
 	{
@@ -24,7 +24,7 @@ class ibftool_Form_Decorators_RS_DoubleNumber extends Zend_Form_Decorator_Abstra
 		
 		$markup = sprintf($this->_format, $id . "-label", $id, $label);
 		$markup .= '<dd id=' . $id . '-element>';
-		$markup .= "In 70 von 100 Fällen glaube ich wird der Ertrag, den ich mit meiner Vermögensaufteilung erzielen werde, zwischen -";
+		$markup .= "In 70 von 100 FÃ¤llen glaube ich wird der Ertrag, den ich mit meiner VermÃ¶gensaufteilung erzielen werde, zwischen -";
 		$markup .= sprintf($this->_button, $id . "[]", $id, $value[0]);
 		$markup .= "% und +";
 		$markup .= sprintf($this->_button, $id . "[]", $id, $value[1]);

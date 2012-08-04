@@ -21,9 +21,11 @@ class ibftool_Form_Decorators_RS_DecisiveTable extends Zend_Form_Decorator_Abstr
 		
 		$markup = sprintf($this->_format, $id . "-label", $id, $label);
 		
-		$markup .= "<table class='rs_decisivetable'>";
-		$markup .= "<tr><td colspan='2'>Risikobehaftete Anlage</td><td colspan='2'>Entscheidung</td><td>Sichere Anlage</td></tr>";
-		$markup .= "<tr><td>50% Wahrscheinlichkeit auf</td><td>50% Wahrscheinlichkeit auf</td><td>Ich bevorzuge die risikobehaftete Anlage</td><td>Ich bevorzuge die sichere Anlage</td><td>100% Wahrscheinlichkeit auf</td></tr>";
+		$markup .= "<table class='table table-condensed table-striped'>";
+		$markup .= "<thead>";
+		$markup .= "<tr><th colspan='2'>Risikobehaftete Anlage</th><th colspan='2'>Entscheidung</th><th>Sichere Anlage</th></tr>";
+		$markup .= "<tr><th>50% Wahrscheinlichkeit auf</th><th>50% Wahrscheinlichkeit auf</td><th>Ich bevorzuge die risikobehaftete Anlage</th><th>Ich bevorzuge die sichere Anlage</th><th>100% Wahrscheinlichkeit auf</th></tr>";
+		$markup .= "</thead>";
 		$i = 1;
 		$fieldid = 1;
 		
@@ -60,12 +62,53 @@ class ibftool_Form_Decorators_RS_DecisiveTable extends Zend_Form_Decorator_Abstr
 		}
 		
 		$markup .= "</table>";
-		$markup .= '<div id="dialog_special" style="display: none" title="Sind Sie sicher?">Im Vergleich zur sicheren Anlage (2%) bevorzugen Sie also die risikobehaftete Anlage (50%ige Wahrscheinlichkeit auf einen Ertrag von 50% (d.h. +5‘000 ECU)) bis zu einem möglichen Verlust von 50% (d.h. -5‘000 ECU). Ist das wirklich Ihre finale Entscheidung?</div>
-					<div id="dialog" style="display: none" title="Sind Sie sicher?">TEXT</div>
-					<div id="dialog_empty" style="display: none" title="Bitte kreuzen Sie ein Feld an">Sie müssen ihre Präferenz wählen.</div>
+		$markup .= '<div id="dialog" class="modal hide">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">Ã—</button>
+							<h3>Sind Sie sicher?</h3>
+						</div>
+						<div id="normal_body" class="modal-body">
+						Im Vergleich zur sicheren Anlage (2%) bevorzugen Sie also die risikobehaftete Anlage (50%ige Wahrscheinlichkeit auf einen Ertrag von 50% (d.h. +5\'000 ECU)) 
+						bis zu einem mÃ¶glichen Verlust von 50% (d.h. -5ï¿½000 ECU). Ist das wirklich Ihre finale Entscheidung?
+						</div>
+						<div class="modal-footer">
+							<a href="#" id="imsure" class="btn btn-primary">Ja, ich bin sicher</a>
+							<a href="#" class="btn" data-dismiss="modal">Abbrechen</a>
+						</div>
+					</div>
+					<div id="dialog_special" class="modal hide">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">Ã—</button>
+							<h3>Sind Sie sicher?</h3>
+						</div>
+						<div class="modal-body">
+						Im Vergleich zur sicheren Anlage (2%) bevorzugen Sie also die risikobehaftete Anlage (50%ige Wahrscheinlichkeit auf einen Ertrag von 50% (d.h. +5\'000 ECU)) 
+						bis zu einem mÃ¶glichen Verlust von 50% (d.h. -5\'000 ECU). Ist das wirklich Ihre finale Entscheidung?
+						</div>
+						<div class="modal-footer">
+							<a href="#" id="imsure" class="btn btn-primary">Ja, ich bin sicher</a>
+							<a href="#" class="btn" data-dismiss="modal">Abbrechen</a>
+						</div>
+					</div>
+					<div id="dialog_empty" class="modal hide">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">Ã—</button>
+							<h3>Bitte kreuzen Sie ein Feld an</h3>
+						</div>
+						<div class="modal-body">
+						Sie mÃ¼ssen ihre PrÃ¤ferenz wÃ¤hlen.
+						</div>
+						<div class="modal-footer">
+							<a href="#" class="btn" data-dismiss="modal">Okay</a>
+						</div>
+					</div>
 					
-					<span id="forward" class="button" style="margin: 20px; display: inline-block" onmouseover="mouseover_forward()" onmouseout="mouseout_forward()">Weiter</span>
+					<span id="forward" class="btn btn-primary" style="margin: 20px; display: inline-block">Weiter</span>
 					<script type="text/javascript">
+					
+					$("#imsure").click(function() {
+						$("#question").submit();
+					});
 					
 					$("input[type=radio]").click(function() {
 						for (var i = 0; i < $(this).attr("id"); i++) {
@@ -85,73 +128,29 @@ class ibftool_Form_Decorators_RS_DecisiveTable extends Zend_Form_Decorator_Abstr
 							$(":hidden[id=' . $id . ']").attr("value", $(this).attr("value"));
 						}
 						
-						$("#dialog").html("Im Vergleich zur sicheren Anlage bevorzugen Sie also die risikobehaftete Anlage (50%ige Wahrscheinlichkeit auf einen Ertrag von 50% (d.h. +5‘000 ECU)) sofern der mögliche Verlust " + (Number(chosenNumber) + 5) + "% nicht übersteigt; ab einem möglichen Verlust von " + (Number(chosenNumber)) + "% bevorzugen Sie die sichere Anlage. Ist das wirklich Ihre finale Entscheidung?")
+						$("#normal_body").html("Im Vergleich zur sicheren Anlage bevorzugen Sie also die risikobehaftete Anlage (50%ige Wahrscheinlichkeit auf einen Ertrag von 50% (d.h. +5\'000 ECU)) sofern der mÃ¶gliche Verlust " + (Number(chosenNumber) + 5) + "% nicht Ã¼bersteigt; ab einem mÃ¶glichen Verlust von " + (Number(chosenNumber)) + "% bevorzugen Sie die sichere Anlage. Ist das wirklich Ihre finale Entscheidung?")
 						
 					});
 					
 					 $(document).ready(function() {
-					 	$("#dialog").html("Im Vergleich zur sicheren Anlage bevorzugen Sie also die risikobehaftete Anlage (50%ige Wahrscheinlichkeit auf einen Ertrag von 50% (d.h. +5‘000 ECU)) sofern der mögliche Verlust " + (Number($(":hidden[id=' . $id . ']").attr("value"))+5) + "% nicht übersteigt; ab einem möglichen Verlust von " + (Number($(":hidden[id=' . $id . ']").attr("value"))) + "% bevorzugen Sie die sichere Anlage. Ist das wirklich Ihre finale Entscheidung?")
+					 	$("#normal_body").html("Im Vergleich zur sicheren Anlage bevorzugen Sie also die risikobehaftete Anlage (50%ige Wahrscheinlichkeit auf einen Ertrag von50% (d.h. +5\'000 ECU)) sofern der mÃ¶gliche Verlust " + (Number($(":hidden[id=' . $id . ']").attr("value"))+5) + "% nicht Ã¼bersteigt; ab einem mÃ¶glichen Verlust von " + (Number($(":hidden[id=' . $id . ']").attr("value"))) + "% bevorzugen Sie die sichere Anlage. Ist das wirklich Ihre finale Entscheidung?")
 					 	$("#Weiter").hide();
 					    
-					    $("#dialog").dialog({
-					    	bgiframe: true,
-					    	autoOpen: false,
-					    	height: 300,
-					    	modal: true,
-					    	buttons: {
-					    		Ja: function() {
-					    	      $("#question").submit();
-					    		  $(this).dialog("close");
-					    		},
-					    		Abbrechen: function() {
-					    			$(this).dialog("close");
-					    		}
-					    	}
-					    });
-					    
-					    $("#dialog_empty").dialog({
-					    	bgiframe: true,
-					    	autoOpen: false,
-					    	height: 300,
-					    	modal: true,
-					    	buttons: {
-					    		Abbrechen: function() {
-					    			$(this).dialog("close");
-					    		}
-					    	}
-					    });
-					    
-					     $("#dialog_special").dialog({
-					    	bgiframe: true,
-					    	autoOpen: false,
-					    	height: 300,
-					    	modal: true,
-					    	buttons: {
-					    		Ja: function() {
-					    	      $("#question").submit();
-					    		  $(this).dialog("close");
-					    		},
-					    		Abbrechen: function() {
-					    		  $(this).dialog("close");
-					    		}
-					    	}
-					    });
+					    $("#dialog").modal("hide");
+					    $("#dialog_empty").modal("hide");
+					    $("#dialog_special").modal("hide");
 					    
 					    $("#forward").click(function() {
 							if ($(":hidden[id=' . $id . ']").attr("value") == ' . $secondColumnArray[0] * $i . ') {
-								$("#dialog_special").dialog("open");
+								$("#dialog_special").modal("show");
 							} else if ($(":hidden[id=' . $id . ']").attr("value") == "") {
-								$("#dialog_empty").dialog("open");
+								$("#dialog_empty").modal("show");
 							} else {
-								$("#dialog").dialog("open");
+								$("#dialog").modal("show");
 							}
 						 });
 					    
 					  });
-					  
-					  	function mouseover_forward() { document.getElementById("forward").style.backgroundColor="#ababab"; }
-						function mouseout_forward() { document.getElementById("forward").style.backgroundColor="#ffffff"; } 
-					  	
 					</script>
 					
 

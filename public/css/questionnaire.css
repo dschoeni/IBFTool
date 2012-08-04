@@ -1,6 +1,6 @@
-/*
+/* /* 
 	Dirty Fix!
-*/
+
 label[for="88-8"] {
 	margin-left: 40px;
 }
@@ -17,9 +17,9 @@ label[for="91-8"] {
 	margin-left: 40px;
 }
 
-/*
+
 	Question Styles
-*/
+
 .53-label {
 	font-weight: bold;
 }
@@ -149,4 +149,97 @@ textarea {
 
 .note_nopad {
 	padding-left: 10px;
+} */
+
+dd {
+	margin-left: 0px;
+	padding-bottom: 20px;
+}
+
+dt label {
+	font-weight: bold;
+}
+
+dt label .optional {
+	font-weight: normal;
+}
+
+dt .note {
+	padding: 10px 0px 10px 0px;
+	font-weight: normal;
+}
+
+input[type=checkbox] {
+	margin: 5px;
+}
+
+input[type=radio] {
+	margin: 5px;
+}
+
+.amount {
+	font-size: 1.5em;
+	font-weight: bold;
+	margin-left: 25px;
+}
+
+textarea {
+	padding: 3px;
+	height: 120px;
+}
+
+.questionnaire_edit li {
+	margin-left: 30px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.trashbin {
+	margin: 20px;
+	width: 940px;
+	height: 100px;
+	border: 1px dotted #259bff;
+}
+
+.questionnaire_available {
+	border: 1px solid white;
+	padding: 5px;
+}
+
+.questionnaire_available:hover {
+	color: #259bff;
+}
+
+.admin_questionnaire_result td {
+	border: 1px dotted #259bff;
+}
+
+.questionnaire_payout {
+	margin-left: -23px;
+	padding-left: 20px;
+	border-left: 3px #f04747 solid;
+}
+
+.questionnaire_payout dt {
+}
+
+.questionnaire_payout_end {
+	width: 1000px;
+	margin-left: -10px;
+	margin-top: 20px;
+	height: 2px;
+	background: #f04747;
+}
+
+.rs_doublenumber {
+	width: 20px;
+}
+
+.rs_plotamount {
+	width: 20px;
+}
+
+.rs_notewithvalueinline {
+	position: relative;
+	top: -42px;
 }

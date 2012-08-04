@@ -1,48 +1,45 @@
 <h1>Administration - Treatments</h1>
-<h2>
-	<a
-		href="<?php echo $this->url(array("controller" => "admin_treatment", "action" => "new")) ?>">Neues
-		Treatment</a>
-</h2>
-<h2>Verfügbare Treatments</h2>
-<?php foreach($this->treatments as $treatment) : ?>
-<?php if($treatment->public) : ?>
-<div style="background-color: #BFFFB8">
-	<?php else :?>
-	<div style="background-color: #E8E8E8">
-		<?php endif; ?>
-		<h3>
-			<?php echo $treatment->name ?>
-		</h3>
-		<h4>
-			<span style="font-size: 12px"><?php echo $treatment->description ?><br />
-				Limit: <?php echo $treatment->usercount ?> / <?php echo $treatment->userlimit?><br />
-				Abgeschlossen: <?php echo $treatment->getUsersCompletedCount() ?> </span><br />
-			<a
-				href="<?php echo $this->url(array("controller" => "admin_treatment", "action" => "edit", "id" => $treatment->id)) ?>">
-				Editieren </a> &nbsp;|&nbsp; <a
-				href="<?php echo $this->url(array("controller" => "admin_treatment", "action" => "delete", "id" => $treatment->id)) ?>"
-				onClick="javascript:return confirm('Sind Sie sicher, dass sie dieses Treatment löschen möchten? Es gehen auch alle Resultate und Datensätze verloren!')">
-				Löschen </a> &nbsp;|&nbsp; <a
-				href="<?php echo $this->url(array("controller" => "admin_treatment", "action" => "reset", "id" => $treatment->id)) ?>"
-				onClick="javascript:return confirm('Sind Sie sicher, dass sie alle Resultate und Datensätze dieses Treatments löschen wollen? Diese Entscheidung ist unwiderruflich.')">
-				Zurücksetzen </a> &nbsp;|&nbsp;
+<p>
+<a href="/administration/treatment/new/"><button class="btn btn-primary">Neues Treatment</button></a>
+</p>
+<h3>VerfÃ¼gbare Treatments</h3>
+<table class="table table-striped">
 
-			<?php if($treatment->public) : ?>
-			<a
-				href="<?php echo $this->url(array("controller" => "admin_treatment", "action" => "lock", "id" => $treatment->id)) ?>"
-				onClick="javascript:return confirm('Sind Sie sicher, dass Sie dieses Treatment schliessen möchten? Neu registrierte Teilnehmer werden diesem Treatment dann nicht mehr zugewiesen.')">
-				Schliessen </a>
-			<?php else : ?>
-			<a
-				href="<?php echo $this->url(array("controller" => "admin_treatment", "action" => "unlock", "id" => $treatment->id)) ?>"
-				onClick="javascript:return confirm('Sind Sie sicher, dass Sie dieses Treatment öffnen möchten?')">
-				Öffnen </a>
-			<?php endif; ?>
-			
-			 &nbsp;|&nbsp; <a href="<?php echo $this->url(array("controller" => "admin_questionnaire", "action" => "result", "id" => $treatment->id, "format" => "excel")) ?>">
-				Excel </a>
-
-		</h4>
-	</div>
-	<?php endforeach; ?>
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Beschreibung</th>
+			<th>Abgeschlossen</th>
+			<th>Optionen</th>
+		</tr>
+	</thead>
+	<tbody>
+		<? foreach($this->treatments as $treatment) : ?>
+		<tr <? if(!$treatment->public) : ?> style="background-color: #FFB8B8;"
+<? endif; ?>>
+			<td><?= $treatment->id ?></td>
+			<td><a href="/administration/treatment/edit/id/<?= $treatment->id ?>"><?= $treatment->name ?></a></td>
+			<td><?= $treatment->description ?></td>
+			<td><?= $treatment->getUsersCompletedCount() ?></td>
+			<td>
+				<a href="/administration/treatment/delete/id/<?= $treatment->id ?>" 
+				onClick="javascript:return confirm('Sind Sie sicher, dass sie dieses Treatment l&ouml;schen m&ouml;chten? Es gehen auch alle Resultate und Datens&auml;tze verloren!')"><button class="btn btn-danger btn-mini">L&ouml;schen</button></a>
+				
+				<a href="/administration/treatment/reset/id/<?= $treatment->id ?>" 
+				onClick="javascript:return confirm('Sind Sie sicher, dass sie alle Resultate und Datens&auml;tze dieses Treatments l&ouml;schen wollen? Diese Entscheidung ist unwiderruflich.')"><button class="btn btn-warning btn-mini">Reset</button></a>
+				
+				<?php if($treatment->public) : ?>
+				<a href="/administration/treatment/lock/id/<?= $treatment->id ?>" 
+				onClick="javascript:return confirm('Sind Sie sicher, dass Sie dieses Treatment schliessen m&ouml;chten? Neu registrierte Teilnehmer werden diesem Treatment dann nicht mehr zugewiesen.')"><i class="icon-lock"></i></a> 
+				<?php else : ?> 
+				<a href="/administration/treatment/unlock/id/<?= $treatment->id ?>" 
+				onClick="javascript:return confirm('Sind Sie sicher, dass Sie dieses Treatment &ouml;ffnen m&ouml;chten?')"><button class="btn btn-mini">&Ouml;ffnen</button></a> 
+				<?php endif; ?>
+				
+				<a href="<?php echo $this->url(array("controller" => "administration_questionnaire", "action" => "result", "id" => $treatment->id, "format" => "excel")) ?>"><i class="icon-download-alt"></i></a>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>

@@ -63,7 +63,7 @@ $(document).ready(function(){
 			margin: [50, 30, 50, 50],
 		},
 		title: {
-			text: 'Ertr‰ge unter allen bisher gezogenen Szenarien'
+			text: 'Ertr√§ge unter allen bisher gezogenen Szenarien'
 		},
 		subtitle: {
 			text: ''
@@ -85,7 +85,7 @@ $(document).ready(function(){
 		yAxis: {
 			tickInterval: 2,
 			title: {
-				text: 'H‰ufigkeit'
+				text: 'H√§ufigkeit'
 			},
 			stackLabels: {
 				enabled: true,
@@ -128,7 +128,7 @@ $(document).ready(function(){
 			}
 		},
 		title: {
-			text: 'Ertr‰ge des/der zuletzt gezogenen Szenarien'
+			text: 'Ertr√§ge des/der zuletzt gezogenen Szenarien'
 		},
 		subtitle: {
 			text: ''
@@ -141,7 +141,7 @@ $(document).ready(function(){
 		yAxis: {
 			tickInterval: 1,
 			title: {
-				text: 'H‰ufigkeit'
+				text: 'H√§ufigkeit'
 			},
 			stackLabels: {
 				enabled: true,

@@ -36,7 +36,7 @@ $(function() {
 		activeClass: "ui-state-default",
 		hoverClass: "ui-state-hover",
 		drop: function( event, ui ) {
-			if(confirm('Dieses Modul wird in der jetzigen Konfiguration entfernt. Die Konfiguration wird dabei gelöscht und kann NICHT wiederhergestellt werden. Sind Sie sicher?')) {
+			if(confirm('Dieses Modul wird in der jetzigen Konfiguration entfernt. Die Konfiguration wird dabei gelÃ¶scht und kann NICHT wiederhergestellt werden. Sind Sie sicher?')) {
 				$(ui.draggable).remove();
 			}
 		}
@@ -50,12 +50,11 @@ $(function() {
 <div class="questionnaire_edit">
 
 	<div id="available_modules">
-		<h3>Verfügbare Module</h3>
+		<h3>Verf&uuml;gbare Module</h3>
 		<div>
 			<ul>
 				<?php foreach ($this->available_modules as $module) : ?>
-				<li class="questionnaire_available" id="<?php echo $module->id ?>"
-					last_used="<?php echo $module->id ?>"><?php echo $module->name ?></li>
+				<li class="questionnaire_available" id="<?php echo $module->id ?>" last_used="<?php echo $module->id ?>"><?php echo $module->name ?></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
@@ -77,21 +76,17 @@ $(function() {
 						</textarea>
 					</li>
 					<?php endforeach; ?>
-					<li class="placeholder">Gewünschtes Modul hier hineinziehen</li>
+					<li class="placeholder">Gew&uuml;nschtes Modul hier hineinziehen</li>
 				</ol>
 			</div>
 		</div>
 
 		<h3>Weitere Konfiguration</h3>
 		<p>
-			Name: <input name="name" type="text"
-				value="<?php echo $this->treatment->name ?>" /><br /> <br />
-			Beschreibung: <input name="description" type="text"
-				value="<?php echo $this->treatment->description ?>" /><br /> <br />
-			Userlimit: <input name="userlimit" type="text"
-				value="<?php echo $this->treatment->userlimit ?>" /><br /> <br />
-			Reihenfolge: <input name="order" type="text"
-				value="<?php echo $this->treatment->order ?>" />
+			<label>Name:</label><input name="name" type="text" value="<?php echo $this->treatment->name ?>">
+			<label>Beschreibung:</label><input name="description" type="text" value="<?php echo $this->treatment->description ?>">
+			<label>Userlimit:</label><input name="userlimit" type="text" value="<?php echo $this->treatment->userlimit ?>">
+			<label>Reihenfolge:</label><input name="order" type="text" value="<?php echo $this->treatment->order ?>">
 		</p>
 
 		<input type="submit" value="Speichern" />

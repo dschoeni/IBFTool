@@ -1,9 +1,10 @@
- <?php
+
+<?php
 /**
  * @author Dominik Sch�ni
  * @copyright 2008
  */
- 
+
 //Header IE Fix
 header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
 
@@ -11,29 +12,29 @@ header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT
 error_reporting(E_ALL|E_STRICT);
 ini_set('display_errors', 'on');
 
- // Include Path
- 
+// Include Path
+
 if (strpos($_SERVER["HTTP_HOST"], "elysian") !== false){
 	$path = "C:/Apache22/htdocs/ibftool/";
 } elseif (strpos($_SERVER["HTTP_HOST"], "84.75.38.246") !== false){
 	$path = "C:/Apache22/htdocs/ibftool/";
 } else {
-	$path = "D:/Development/GitHub/IBFTool/";	
+	$path = "D:/Development/GitHub/IBFTool/";
 }
 
 /*
- * 
- * 
- * 
- * 
- * M�nster-MLA: Path-Variable hier konfigurieren, sollte zum "ibftool"-Ordner auf dem Server zeigen.
- * $path  "/";
- * 
- * 
- * 
- * 
- * 
- */
+ *
+*
+*
+*
+* M�nster-MLA: Path-Variable hier konfigurieren, sollte zum "ibftool"-Ordner auf dem Server zeigen.
+* $path  "/";
+*
+*
+*
+*
+*
+*/
 
 ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR. $path. 'library' .PATH_SEPARATOR. $path . "application/models");
 
@@ -45,7 +46,7 @@ $autoloader->registerNamespace('ibftool_');
 $autoloader->registerNamespace('PHPExcel_');
 $autoloader->setFallbackAutoloader(true);
 
-Zend_Session::start();			
+Zend_Session::start();
 
 $config = ibftool_Starter::start($path."application/config/db_config.ini");
 
@@ -57,7 +58,6 @@ $front = Zend_Controller_Front::getInstance();
 $front->throwExceptions(true);
 
 // BaseUrl setzen
-//$front->setBaseUrl("/");
 
 //Routing
 //$front->getRouter()->addRoute('images', new Zend_Controller_Router_Route($config->route->images));
@@ -65,11 +65,13 @@ $front->throwExceptions(true);
 
 //Menu
 $front->registerPlugin(new Zend_Controller_Plugin_ActionStack());
+
 $front->addModuleDirectory('../application/modules');
 
 $view = new Zend_View();
-$view->setEncoding("UTF-8");
+$view->setEncoding("iso-8859-1");
 $view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
+$view->addHelperPath($path . "library/ibftool/View/Helper/", "ibftool_View_Helper");
 
 //JQuery von ZenX
 $view->jQuery()->setLocalPath("/js/jquery-1.7.2.min.js");
@@ -89,12 +91,12 @@ Zend_Controller_Action_HelperBroker::addHelper($treatment);
 //Cache deaktivieren
 $cachepath = $path . '/cache';
 $cache = Zend_Cache::factory(
-         'Core',
-         'File',
-         array(),
-         array(
-            "cache_dir" => $cachepath
-         ));
+		'Core',
+		'File',
+		array(),
+		array(
+				"cache_dir" => $cachepath
+		));
 Zend_Locale::setCache($cache);
 Zend_Translate::setCache($cache);
 

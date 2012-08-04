@@ -2,12 +2,20 @@
 class Questionnaire_Question extends Zend_Db_Table_Row {
 	
 	private $_form;
-
+	private $_answers = null;
+	
 	public function populateForm($form) {
 		$this->_form = $form;
 		
+		$className = "ibftool_Form_Element_" . $this->typ;
+		echo $className . "<br>";
+		$element = new $className($this->id, array("name" => $this->id, "label" => $this->text));
+		$element->setQuestion($this);
+		$this->_form->addElement($element);
+		
+		/*
 		$db = Zend_Db_Table::getDefaultAdapter();
-
+		
 		if ($this->typ == "text") {
 			$this->generateFreeText();
 		} elseif ($this->typ == "shorttext") {
@@ -37,13 +45,17 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		} elseif ($this->typ == "rs_value") {
 			$this->generateNoteWithValue();
 		} elseif ($this->typ == "rs_value2") {
-			$this->generateNoteWithValue2();
+			$this->generateNoteWithValueInline();
 		} elseif ($this->typ == "rs_valueTID") {
 			$this->generateNoteWithValueTreatmentId();
 		}elseif ($this->typ == "rs_dnumber") {
 			$this->generateRSDNumber();
 		} elseif ($this->typ == "countrycode") {
 			$this->generateCountryCode();
+		} elseif ($this->typ == "sc") {
+			$this->generateSingleChoice();
+		} elseif ($this->typ == "mc") {
+			$this->generateMultipleChoice();
 		}
 		
 		$config = Zend_Registry::get('config')->db;
@@ -55,177 +67,64 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 			return null;
 		}
 
-		if ($this->typ == "sc") {
-			$this->generateSingleChoice($answers);
-		} elseif ($this->typ == "mc") {
-			$this->generateMultipleChoice($answers);
-		} elseif ($this->typ == "sc_random") {
+		if ($this->typ == "sc_random") {
 			$this->generateSingleChoiceRandom($answers);
 		} elseif ($this->typ == "select") {
 			$this->generateSelect($answers);
 		}
+		
+		*/
+		//$this->_form->addElement("submit", "test", array("label" => "Weiter", "ignore" => true, "class" => "btn btn-primary", 'decorators' => array(array("ViewHelper"))));
+	}
+	
+	public function addToForm($element) {
+		$this->_form->addElement($element);
 	}
 	
 	private function generateSelect($answers) {
-		$select = new Zend_Form_Element_Select("select");
-		$select->setName($this->id);
-		$select->setLabel($this->text);
-		$select->setRequired(true);
-		$select->addErrorMessage("Bitte wählen Sie mindestens eine Antwortmöglichkeit aus");
-		$select->addMultiOption("", "");
-		
-		foreach($answers as $answer) {
-			$select->addMultiOption($answer["id"], $answer["text"]);
-		}
-		
-		$rowset = $this->getAnswersForQuestion($this->id);
-		$array = array();
-		
-		if ($rowset != null) {
-			foreach($rowset as $row) {
-				array_push($array, $row->questionnaire_answer);
-			}
-		}
-		
-		$select->setValue($array);
+		$select = new ibftool_Form_Element_Select("select", array("name" => $this->id, "label" => $this->text));
+		$select->setQuestion($this);
 		$this->_form->addElement($select);
 	}
 	
 	private function generateCountryCode() {
-		$select = new Zend_Form_Element_Select("select");
-		$select->setName($this->id);
-		$select->setLabel($this->text);
-		$select->setRequired(true);
-		$select->addErrorMessage("Bitte wählen Sie ein Land aus");
-		
-		$countries = new Countries();
-		$countriesRowSet = $countries->fetchAll();
-		
-		$select->addMultiOption("", "");
-		
-		foreach($countriesRowSet as $country) {
-			$select->addMultiOption($country->code, $country->name);
-		}
-		
-		$this->_form->addElement($select);
+		$countrycode = new ibftool_Form_Element_CountryCode("select", array("name" => $this->id, "label" => $this->text));
+		$this->_form->addElement($countrycode);
 	}
 
 	private function generateRSDecisiveTable() {
-		$radio = new Zend_Form_Element_Radio("scrow");
-		//$radio->setName($this->id);
-		$radio->setLabel($this->text);
-		$radio->setRequired(false);
-		$radio->setIgnore(true);
-
-		$configarray = explode("/", $this->style);
-
-		$ecu = $configarray[0];
-		$firstColumn = $configarray[1];
-		$secondColumn = $configarray[2];
-		$thirdColumn = $configarray[3];
-
-		$values = explode("#", $secondColumn);
-
-		for($i = 0; $i < count(explode("#", $firstColumn)); $i++) {
-			$radio->addMultiOption($i, $values[$i]);
-		}
-
-		$radio->addErrorMessage("Bitte wählen Sie mindestens eine Antwortmöglichkeit aus");
-		$radio->setValue($this->getAnswerForQuestion());
-
-		$radio->setDecorators(array(new ibftool_Form_Decorators_RS_DecisiveTable(array("id" => $this->id, "ecu" => $ecu, "firstColumn" => $firstColumn, 'secondColumn' => $secondColumn, 'thirdColumn' => $thirdColumn)), new Zend_Form_Decorator_Errors(), new ibftool_Form_Decorators_Payout(array("payout" => $this->payout))));
-		$this->_form->addElement($radio);
-
-		$hidden = new Zend_Form_Element_Hidden("hiddenrs");
-		$hidden->setName($this->id);
-		$hidden->setRequired(true);
-		$hidden->setValue($this->getAnswerForQuestion());
-		$this->_form->addElement($hidden);
+		$rs = new ibftool_Form_Element_RS_DecisiveTable("rs", array("label" => $this->text));
+		$rs->setQuestion($this);
+		$this->_form->addElement($rs);
 	}
 
 	private function generateNoteWithValue() {
-		$answer = $this->getAnswerForQuestionById($this->style);
-		$note = new ibftool_Form_Element_Note($this->id, array('label' => str_replace("#", "<b>" . $answer . "</b>", $this->text)));
-		$note->setRequired(false);
-
-		if ($this->style == "bold") {
-			$note->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt', 'class' => "note_bold"));
-		} else {
-			$note->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt', 'class' => "note"));
-		}
-		
-		$note->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
-
+		$note = new ibftool_Form_Element_RS_NoteWithValue("note", array("name" => $this->id, "label" => $this->text));
+		$note->setQuestion($this);
 		$this->_form->addElement($note);
 	}
-	
-	private function generateNoteWithValue2() {
-		$answer = $this->getAnswerForQuestionById($this->style);
-	
-		$note = new ibftool_Form_Element_Note($this->id, array('label' => str_replace("#", "<b>" . round($answer) . "</b>", $this->text)));
-		$note->setRequired(false);
-	
-		$note->addDecorator("Label" ,array("escape"=>false, 'tag' => 'span', 'class' => "note_nopad"));
-		$note->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
-	
+		
+	private function generateNoteWithValueInline() {
+		$note = new ibftool_Form_Element_RS_NoteWithValueInline("note", array("name" => $this->id, "label" => $this->text));
+		$note->setQuestion($this);
 		$this->_form->addElement($note);
 	}
 	
 	private function generateNoteWithValueTreatmentId() {
-		$array = explode("/", $this->style);
-		
-		$result = new Questionnaire_Results();
-		$row = $result->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $array[0], "treatments_id = ?" => $array[1]));
-		
-		$note = new ibftool_Form_Element_Note($this->id, array('label' => str_replace("#", "<b>" . round($row->questionnaire_answer) . "</b>", $this->text)));
-		$note->setRequired(false);
-		
-		$note->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt', 'class' => "note"));
-		$note->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
-		
+		$note = new ibftool_Form_Element_RS_NoteWithValueTID("note", array("name" => $this->id, "label" => $this->text));
+		$note->setQuestion($this);
 		$this->_form->addElement($note);
 	}
 
 	private function generateSingleChoiceInRowCaption() {
-		$radio = new Zend_Form_Element_Radio("scrow");
-		$radio->setName($this->id);
-		$radio->setLabel($this->text);
-		$radio->setSeparator("");
-		$radio->setRequired(true);
-
-		$configarray = explode("/", $this->style);
-		$firstAnswer = $configarray[0];
-		$lastAnswer = $configarray[1];
-		$leftString = $configarray[2];
-		$rightString = $configarray[3];
-
-
-		for($firstAnswer; $firstAnswer <= $lastAnswer; $firstAnswer++) {
-			$radio->addMultiOption($firstAnswer, $firstAnswer);
-		}
-
-		$radio->addErrorMessage("Bitte wählen Sie mindestens eine Antwortmöglichkeit aus");
-		$radio->setValue($this->getAnswerForQuestion());
-
-		$radio->setDecorators(array(new ibftool_Form_Decorators_SingleChoiceCaptioned(array("leftCaption"=>$leftString, 'rightCaption' => $rightString)), new Zend_Form_Decorator_Errors(), new ibftool_Form_Decorators_Payout(array("payout" => $this->payout))));
+		$radio = new ibftool_Form_Element_SingleChoiceInRowCaption("scrow", array("name" => $this->id, "label" => $this->text, "required" => "true"));
+		$radio->setQuestion($this);
 		$this->_form->addElement($radio);
 	}
 
-	private function generateSingleChoice($answers) {
-		$radio = new Zend_Form_Element_Radio("singlechoice");
-		$radio->setName($this->id);
-		$radio->setLabel($this->text);
-		$radio->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
-		$radio->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
-		$radio->setRequired(true);
-		$radio->addErrorMessage("Bitte wählen Sie mindestens eine Antwortmöglichkeit aus");
-
-		foreach($answers as $answer) {
-			$radio->addMultiOption($answer["id"], $answer["text"]);
-		}
-
-		$radio->setValue($this->getAnswerForQuestion());
-
+	private function generateSingleChoice() {
+		$radio = new ibftool_Form_Element_SingleChoice("singlechoice", array("name" => $this->id, "label" => $this->text, "required" => "true"));
+		$radio->setQuestion($this);
 		$this->_form->addElement($radio);
 	}
 
@@ -243,39 +142,14 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	}
 
 	private function generateShortText() {
-		$formfield = new Zend_Form_Element_Text("text");
-		$formfield->setName($this->id);
-		$formfield->setLabel($this->text);
-		$formfield->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
-		$formfield->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
-		$formfield->setRequired(true);
-		
-		$stringLengthValidator = new Zend_Validate_StringLength(0,25);
-		$stringLengthValidator->setMessage("Bitte überschreiten sie die maximale Länge von 25 Zeichen nicht.", "stringLengthTooLong");
-		
-		$notEmptyValidator = new Zend_Validate_NotEmpty();
-		$notEmptyValidator->setMessage("Dieses Feld darf nicht leer sein.");
-		
-		$formfield->addValidators(array($stringLengthValidator, $notEmptyValidator));
-		$formfield->autocomplete = "off";
-		$formfield->setValue($this->getAnswerForQuestion());
-
-		$this->_form->addElement($formfield);
+		$field = new ibftool_Form_Element_ShortText("text", array("name" => $this->id, "label" => $this->text, "required" => "true", "value" => $this->getAnswerForQuestion()));
+		$field->setQuestion($this);
+		$this->_form->addElement($field);
 	}
 
 	private function generateAge() {
-		$formfield = new Zend_Form_Element_Text("number");
-		$formfield->setName($this->id);
-		$formfield->setLabel($this->text);
-		$formfield->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
-		$formfield->setRequired(true);
-		$formfield->addValidator(new Zend_Validate_Between(16, 99));
-		$formfield->addErrorMessage("Bitte nur Zahlen eintragen. Das Mindestalter beträgt 16 Jahre.");
-		$formfield->autocomplete = "off";
-
-		$formfield->setValue($this->getAnswerForQuestion());
-
-		$this->_form->addElement($formfield);
+		$field = new ibftool_Form_Element_Age($this->id, array("label" => $this->text, "value" => $this->getAnswerForQuestion(), "required" => true));
+		$this->_form->addElement($field);
 	}
 
 	private function generateNumber() {
@@ -295,45 +169,14 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	}
 
 	private function generateRSDNumber() {
-		$formfield = new Zend_Form_Element_Text("dnumber");
-		$formfield->setName($this->id);
-		$formfield->setLabel($this->text);
-		$formfield->setDecorators(array(new ibftool_Form_Decorators_RS_DoubleNumber(), new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)), new Zend_Form_Decorator_Errors()));
-		
-		$formfield->setRequired(true);
-		$formfield->addValidator(new ibftool_Validate_DNumber_NotEmpty());
-		
-		$formfield->addErrorMessage("Bitte nur Zahlen eintragen. Um Kommazahlen einzugeben bitte einen Punkt verwenden: z.B. 1.5 (nicht 1,5)");
-		$formfield->autocomplete = "off";
-
-		$rowset = $this->getAnswersForQuestion($this->id);
-		$array = array();
-
-		if ($rowset != null) {
-			foreach($rowset as $row) {
-				array_push($array, $row->questionnaire_answer);
-			}
-		}
-
-		$formfield->setValue($array);
-
+		$formfield = new ibftool_Form_Element_RS_DoubleNumber("dnumber", array("name" => $this->id, "label" => $this->text, "required" => "true"));
+		$formfield->setQuestion($this);
 		$this->_form->addElement($formfield);
 	}
 
 	private function generateNumber1to100() {
-		$formfield = new Zend_Form_Element_Text("number");
-		$formfield->setName($this->id);
-		$formfield->setLabel($this->text);
-		$formfield->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
-		$formfield->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $this->payout)));
-		$formfield->setRequired(true);
-		$formfield->addValidator(new Zend_Validate_Float(new Zend_Locale('en_US')));
-		$formfield->addValidator(new Zend_Validate_Between(0, 100));
-		$formfield->addErrorMessage("Bitte nur Zahlen eintragen. Um Kommazahlen einzugeben bitte einen Punkt verwenden: z.B. 1.5 (nicht 1,5)");
-		$formfield->autocomplete = "off";
-
-		$formfield->setValue($this->getAnswerForQuestion());
-
+		$formfield = new ibftool_Form_Element_1To100("number", array("name" => $this->id, "label" => $this->text, "required" => "true", "value" => $this->getAnswerForQuestion()));
+		$formfield->setQuestion($this);
 		$this->_form->addElement($formfield);
 	}
 
@@ -362,7 +205,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	}
 
 	private function generateSingleChoiceInRow() {
-		$radio = new Zend_Form_Element_Radio("scrow");
+		$radio = new ibftool_Form_Element_SCRow("scrow");
 		$radio->setName($this->id);
 		$radio->setLabel($this->text);
 		$radio->setSeparator("");
@@ -374,7 +217,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 			$radio->addDecorator("Label" ,array('tag' => 'dt', 'class' => "scrow"));
 		}
 
-		$radio->addErrorMessage("Bitte wählen Sie mindestens eine Antwortmöglichkeit aus");
+		$radio->addErrorMessage("Bitte wï¿½hlen Sie mindestens eine Antwortmï¿½glichkeit aus");
 
 		$radio->addMultiOption(0, 0);
 		$radio->addMultiOption(1, 1);
@@ -401,7 +244,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 			$radio->addDecorator("Label" ,array('tag' => 'dt', 'class' => "scrow"));
 		}
 
-		$radio->addErrorMessage("Bitte wählen Sie mindestens eine Antwortmöglichkeit aus");
+		$radio->addErrorMessage("Bitte wï¿½hlen Sie mindestens eine Antwortmï¿½glichkeit aus");
 
 		$radio->addMultiOption(0, 0);
 		$radio->addMultiOption(1, 1);
@@ -433,7 +276,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 			$radio->addDecorator("Label" ,array('tag' => 'dt', 'class' => "scrow"));
 		}
 
-		$radio->addErrorMessage("Bitte wählen Sie eine Antwortmöglichkeit aus (1 = gar nicht, 7 = sehr stark)");
+		$radio->addErrorMessage("Bitte wï¿½hlen Sie eine Antwortmï¿½glichkeit aus (1 = gar nicht, 7 = sehr stark)");
 
 		$radio->addMultiOption(1, 1);
 		$radio->addMultiOption(2, 2);
@@ -461,7 +304,7 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 			$radio->addDecorator("Label" ,array('tag' => 'dt', 'class' => "scrow"));
 		}
 
-		$radio->addErrorMessage("Bitte wählen Sie eine Antwortmöglichkeit aus");
+		$radio->addErrorMessage("Bitte wï¿½hlen Sie eine Antwortmï¿½glichkeit aus");
 
 		$radio->addMultiOption(1, 1);
 		$radio->addMultiOption(2, 2);
@@ -470,35 +313,16 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		$radio->addMultiOption(5, 5);
 		$radio->addMultiOption(6, 6);
 		$radio->addMultiOption(7, 7);
-		$radio->addMultiOption(8, "Mir ist nicht bewusst geworden, dass sich die Feedback-Frequenz geändert hat");
+		$radio->addMultiOption(8, "Mir ist nicht bewusst geworden, dass sich die Feedback-Frequenz geï¿½ndert hat");
 
 		$radio->setValue($this->getAnswerForQuestion());
 
 		$this->_form->addElement($radio);
 	}
 
-	private function generateMultipleChoice($answers) {
-		$radio = new Zend_Form_Element_MultiCheckbox("multiplechoice");
-		$radio->setName($this->id);
-		$radio->setLabel($this->text);
-		$radio->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
-		$radio->setRequired(true);
-		$radio->addErrorMessage("Bitte wählen Sie mindestens eine Antwortmöglichkeit aus");
-
-		foreach($answers as $answer) {
-			$radio->addMultiOption($answer["id"], $answer["text"]);
-		}
-
-		$rowset = $this->getAnswersForQuestion($this->id);
-		$array = array();
-
-		if ($rowset != null) {
-			foreach($rowset as $row) {
-				array_push($array, $row->questionnaire_answer);
-			}
-		}
-
-		$radio->setValue($array);
+	private function generateMultipleChoice() {
+		$radio = new ibftool_Form_Element_MultipleChoice("multiplechoice", array("name" => $this->id, "label" => $this->text, "required" => "true"));
+		$radio->setQuestion($this);
 		$this->_form->addElement($radio);
 	}
 

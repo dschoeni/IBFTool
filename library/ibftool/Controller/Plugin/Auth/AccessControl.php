@@ -79,14 +79,15 @@ class ibftool_Controller_Plugin_Auth_AccessControl extends Zend_Controller_Plugi
 
 			if ($this->_auth->hasIdentity()) {
 				// angemeldet, aber keine Rechte -> Fehler!
-				$request->setModuleName('error');
-				$request->setControllerName('index');
+				$request->setModuleName('default');
+				$request->setControllerName('error');
 				$request->setActionName('noaccess');
 			} else {
 				// nicht angemeldet -> Login
-				$request->setModuleName('login');
-				$request->setControllerName('index');
+				$request->setModuleName('default');
+				$request->setControllerName('login');
 				$request->setActionName('index');
+				
 			}
 				
 		}

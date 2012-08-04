@@ -1,13 +1,18 @@
 <? 
+$this->doctype(Zend_View_Helper_Doctype::HTML5);
+$this->headMeta()->setCharset('utf-8');
 $this->headTitle("IBFTool");
 $this->headLink(array('rel' => 'shortcut icon', 'href' => '/favicon.ico'));
 
+// Twitter Bootstrap Stylesheet
 $this->headScript()->appendFile('/bootstrap/js/bootstrap.min.js');
 $this->headScript()->appendFile('/bootstrap/js/bootstrap-dropdown.js');
+$this->headScript()->appendFile('/bootstrap/js/bootstrap-modal.js');
 $this->headLink()->appendStylesheet('/bootstrap/css/bootstrap.min.css');
-//$this->headLink()->appendStylesheet('/css/questionnaire.css');
+
 $this->headLink()->appendStylesheet('/css/jquery-ui.css');
 $this->headLink()->appendStylesheet('/css/style.css');
+$this->headLink()->appendStylesheet('/css/questionnaire.css');
 
 $this->getHelper('BaseUrl')->setBaseUrl(($_SERVER["SERVER_PORT"] == 80 ? "http://" : "https://") . $_SERVER["HTTP_HOST"]);
 
@@ -32,20 +37,23 @@ $this->getHelper('BaseUrl')->setBaseUrl(($_SERVER["SERVER_PORT"] == 80 ? "http:/
 			</div>
 		</div>
 	</div>
-		<div class="container">
-		<div class="content">
+
+	<div class="content">
+	<div class="container">
 			<div class="row">
 				<?= $this->layout()->content; ?>
 			</div>
 		</div>
 	</div>
-
-
+	<br>
+	<div class="content">
 	<div class="container">
-		<div class="row">
-			<?= $this->partial("footer.phtml") ?>
+			<div class="row">
+				<?= $this->partial("footer.phtml") ?>
+			</div>
 		</div>
 	</div>
+	<br>
 	<?= $this->inlineScript(); ?>
 </body>
 </html>
