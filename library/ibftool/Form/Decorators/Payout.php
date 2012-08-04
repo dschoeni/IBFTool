@@ -7,7 +7,7 @@ class ibftool_Form_Decorators_Payout extends Zend_Form_Decorator_Abstract
 		$markupEnd = "";
 		
 		if ($this->getOption("payout") == 1) {
-			$markup = "<div class='questionnaire_payout'>";
+			$markup = 	 "<div class='questionnaire_payout'>";
 			$markupEnd = "</div>";
 		}
 

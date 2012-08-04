@@ -12,6 +12,7 @@ class Questionnaire_QuestionRowSet extends Zend_Db_Table_Rowset {
 		$submit->setIgnore(true);
 		$form->addElement($submit);
 		
+		//ibftool_Form_Helper::styleFormQuestionnaire($form);
 		return $form;
 
 	}

@@ -2,6 +2,20 @@
 class ibftool_Form_Helper {
 	private function __construct() { // Privater Konstruktor, Helper Klasse!
 	}
+	
+	public static function styleFormQuestionnaire(Zend_Form $form) {
+		$form->clearDecorators();
+		$form->loadDefaultDecorators();
+		
+		$form->removeDecorator("Form");
+		$form->removeDecorator("HtmlTag");
+		
+		foreach ($form->getElements() as $e) self::styleFormQuestionnaireElement($e);
+	}
+	
+	private static function styleFormQuestionnaireElement(Zend_Form_Element $element) {
+
+	}
 
 	public static function styleFormHorizontal(Zend_Form $form) {
 		$form->clearDecorators();
