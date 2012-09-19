@@ -19,7 +19,7 @@ class Administration_UserController extends Zend_Controller_Action {
 
 		if (!empty($_POST) && !empty($id)) {
 				
-			$thm = new TreatmentsHasModule();
+			$thm = new TreatmentsHasModules();
 			$rows = $thm->fetchAll(array("treatments_id = ?" => $id));
 				
 			foreach($rows as $row) {

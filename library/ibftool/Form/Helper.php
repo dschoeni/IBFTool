@@ -7,14 +7,37 @@ class ibftool_Form_Helper {
 		$form->clearDecorators();
 		$form->loadDefaultDecorators();
 		
-		$form->removeDecorator("Form");
 		$form->removeDecorator("HtmlTag");
+		$form->removeDecorator("DtDdWrapper");
+		$form->removeDecorator("Form");
+		$form->addDecorator("Form", array("class" => "form-horizontal"));
 		
 		foreach ($form->getElements() as $e) self::styleFormQuestionnaireElement($e);
 	}
 	
 	private static function styleFormQuestionnaireElement(Zend_Form_Element $element) {
+		$decorators = $element->getDecorators();
 
+		$element->removeDecorator("Label");
+		$element->removeDecorator("HtmlTag");
+		$element->removeDecorator("DtDdWrapper");
+
+		$element->addDecorator("Description", array("tag" => "p", "class" => "help-block", "escape" => false));
+		$element->addDecorator("Errors", array("class" => 'help-inline'));
+		$element->addDecorator('Label', array("class" => "control-label"));
+		$element->addDecorator('HtmlTag', array("tag" => "div", "class" => "controls"));
+		$element->addDecorator(array('DivControlGroup' => "HtmlTag"), array("tag" => "div", "class" => "control-group"));
+
+		if ($element instanceof Zend_Form_Element_Hidden) {
+			$element->getDecorator("DivControlGroup")->setOption("style", "display: none");
+		}
+
+		if ($element instanceof Zend_Form_Element_Submit) {
+			$element->setAttrib("class", "btn btn-primary");
+			$element->removeDecorator("DivControls");
+			$element->getDecorator("DivControlGroup")->setOption("class", "form-actions");
+		}
+		
 	}
 
 	public static function styleFormHorizontal(Zend_Form $form) {
@@ -37,7 +60,9 @@ class ibftool_Form_Helper {
 			$file = $decorators["Zend_Form_Decorator_File"];
 		}
 
-		$element->clearDecorators();
+		$element->removeDecorator("Label");
+		$element->removeDecorator("HtmlTag");
+		$element->removeDecorator("DtDdWrapper");
 
 		if ($file) {
 			$element->addDecorator($file);

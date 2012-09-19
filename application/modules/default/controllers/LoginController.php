@@ -11,8 +11,8 @@ class LoginController extends ibftool_Controller_Action {
 		$login = new ibftool_Form_Login();
 
 		if (!empty($_POST)) {
-			$login->getElement("email")->addError("Bitte �berpr�fen Sie Ihren Login-Namen.");
-			$login->getElement("password")->addError("Bitte �berpr�fen Sie Ihr Passwort.");
+			$login->getElement("email")->addError("Bitte überprüfen Sie Ihren Login-Namen.");
+			$login->getElement("password")->addError("Bitte überprüfen Sie Ihr Passwort.");
 		}
 
 		if (Zend_Registry::getInstance()->get("config")->ibftool->labormodus) {

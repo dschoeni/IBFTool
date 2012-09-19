@@ -1,0 +1,14 @@
+<? if ($this->persistdata) : ?>
+<div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  Frage wurde aktualisiert.
+</div>
+<? endif; ?>
+<h1>Questionnaire - Frage bearbeiten</h1>
+<?= $this->form ?>
+
+<h3>Vorschau</h3>
+<p>
+<?= $this->preview ?>
+</p>
+

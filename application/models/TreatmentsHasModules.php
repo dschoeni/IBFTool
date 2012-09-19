@@ -1,7 +1,8 @@
 <?php
-class TreatmentsHasModule extends ibftool_Db_Table_Abstract
+class TreatmentsHasModules extends ibftool_Db_Table_Abstract
 {
 	protected $_name = 'treatments_has_module';
+	protected $_rowClass = 'TreatmentHasModule';
 	protected $_referenceMap    = array(
 
 			'modules' => array(

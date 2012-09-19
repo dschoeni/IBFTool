@@ -1,6 +1,7 @@
 <?php
 class ibftool_Form extends Zend_Form {
-	protected function setValues(Zend_Db_Table_Row_Abstract $row) {
+	
+	public function setValues(Zend_Db_Table_Row_Abstract $row) {
 		$this->setValuesFromArray($row->toArray());
 	}
 

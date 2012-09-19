@@ -8,7 +8,6 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		$this->_form = $form;
 		
 		$className = "ibftool_Form_Element_" . $this->typ;
-		echo $className . "<br>";
 		$element = new $className($this->id, array("name" => $this->id, "label" => $this->text));
 		$element->setQuestion($this);
 		$this->_form->addElement($element);
@@ -353,6 +352,12 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	}
 
 	public function getAnswerForQuestion() {
+		
+		// To make rendering of individual form elements possible outside of a treatment (preview)
+		if (!ibftool_Controller_Action_Helper_Treatment::isTreatmentOngoing()) {
+			return;
+		}
+		
 		$result = new Questionnaire_Results();
 		$row = $result->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $this->id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID()));
 
@@ -364,6 +369,11 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	}
 	
 	public function getAnswerForQuestionInTreatment($id) {
+		// To make rendering of individual form elements possible outside of a treatment (preview)
+		if (!ibftool_Controller_Action_Helper_Treatment::isTreatmentOngoing()) {
+			return;
+		}
+		
 		$result = new Questionnaire_Results();
 		$row = $result->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $this->id, "treatments_id = ?" => $id));
 	
@@ -375,6 +385,11 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	}
 	
 	public function getAnswerForQuestionNoTreatment() {
+		// To make rendering of individual form elements possible outside of a treatment (preview)
+		if (!ibftool_Controller_Action_Helper_Treatment::isTreatmentOngoing()) {
+			return;
+		}
+		
 		$result = new Questionnaire_Results();
 		$row = $result->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $this->id));
 	
@@ -386,6 +401,11 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	}
 
 	public function getAnswerForQuestionById($id) {
+		// To make rendering of individual form elements possible outside of a treatment (preview)
+		if (!ibftool_Controller_Action_Helper_Treatment::isTreatmentOngoing()) {
+			return;
+		}
+		
 		$result = new Questionnaire_Results();
 		$row = $result->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID()));
 
@@ -397,6 +417,11 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 	}
 
 	public function getAnswersForQuestion($id) {
+		// To make rendering of individual form elements possible outside of a treatment (preview)
+		if (!ibftool_Controller_Action_Helper_Treatment::isTreatmentOngoing()) {
+			return;
+		}
+		
 		$result = new Questionnaire_Results();
 		$rows = $result->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "questionnaire_question_id = ?" => $id, "treatments_id = ?" => ibftool_Controller_Action_Helper_Treatment::getID()));
 

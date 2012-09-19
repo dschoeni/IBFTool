@@ -1,0 +1,53 @@
+<h1>Questionnaire - Fragen verwalten</h1>
+<div class="btn-toolbar">
+	<div class="btn-group">
+		<a href="/administration/questionnaire_questions/new/"><button class="btn btn-primary">Neue Frage</button></a>
+	</div>
+	<div class="btn-group">
+		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Filtern nach Treatment ...
+			<span class="caret"></span>
+		</a>
+	  	<ul class="dropdown-menu">
+	  		<? foreach($this->treatments as $treatment) : ?>
+		    <li><a href="/administration/questionnaire_questions/index/treatment_id/<?= $treatment->id ?>"><?= $treatment->name ?></a></li>
+		    <? endforeach; ?>
+	  </ul>
+	</div>
+</div>
+
+<h3>Verfügbare Fragen</h3>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>ID</th>
+			<th>Text</th>
+			<th>Typ</th>
+			<th>Payout</th>
+			<th>Style</th>
+		</tr>
+	</thead>
+	<tbody>
+		<? foreach($this->questions as $question) : ?>
+		<tr>
+					<td>
+			<div class="btn-group">
+			  <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu">
+			    <li><a href="/administration/questionnaire_questions/edit/id/<?= $question->id ?>">Editieren</a></li>
+			    <li class="divider"></li>
+			    <li><a href="/administration/questionnaire_questions/delete/id/<?= $question->id ?>">Löschen</a></li>
+			  </ul>
+			</div>
+			</td>
+			<td><?= $question->id ?></td>
+			<td><?= substr($question->text, 0, 30) . "..." ?></td>
+			<td><?= $question->typ ?></td>
+			<td><?= $question->payout ?></td>
+			<td><?= substr($question->style, 0, 10) . "..." ?></td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>

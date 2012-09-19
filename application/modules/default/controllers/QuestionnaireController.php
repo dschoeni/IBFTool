@@ -144,9 +144,6 @@ class QuestionnaireController extends Zend_Controller_Action {
 				 * If the form was not valid, redisplay it with the necessary error messages.
 				*/
 				$this->_helper->redirector("index", "questionnaire");
-				// 				$this->view->assign("current_page", $questionnaire_session->page);
-				// 				$this->view->assign("pages", count($questionnaire_session->pages));
-				// 				$this->view->assign("form", $form);
 			}
 		}
 
