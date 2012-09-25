@@ -168,8 +168,8 @@ pip-log.txt
 ############
 
 dbdumps
-docs
 application/config/
+docs/dotless/
 userpwlist.xlsx
 cache
 

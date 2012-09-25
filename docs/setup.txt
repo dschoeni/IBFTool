@@ -1,0 +1,24 @@
+Setupinfos:
+
+### Apachekonfiguration ###
+- mod_rewrite in httpd.conf aktivieren
+- Alias kreieren:
+--- Einfügen in httpd.conf des Apache
+
+	/ibftool "<PATHOFSERVER>/ibftool/public"
+
+    	<Directory "<PATHOFSERVER>/ibftool/public">
+        AllowOverride All
+        Order Deny,Allow
+        Allow from all
+    	</Directory>
+
+### Skriptkonfiguration ###
+- Bootstrapper ($path-Variable) anpassen im File "public/index.php"
+--- Ist im Code noch näher beschrieben
+
+Zu beachten: Das Skript verwendet das Zend PHP Framework. Weiterführende Informationen zu den Vorraussetzungen des Frameworks gibts unter
+http://framework.zend.com/manual/de/requirements.introduction.html
+
+### Datenbanksetup ###
+- DB-Konfiguration im File "application/config/db_config.ini" eintragen (abschnitt: [production : developer])
