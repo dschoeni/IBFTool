@@ -88,6 +88,9 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 $treatment = new ibftool_Controller_Action_Helper_Treatment();
 Zend_Controller_Action_HelperBroker::addHelper($treatment);
 
+$contextHelper = new ibftool_Controller_Action_Helper_CompleteContext();
+Zend_Controller_Action_HelperBroker::addHelper($contextHelper);
+
 //Cache deaktivieren
 $cachepath = $path . '/cache';
 $cache = Zend_Cache::factory(
