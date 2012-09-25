@@ -11,6 +11,15 @@ $('#chartTab a').click(function (e) {
 	  $(this).tab('show');
 	});
 
+$("#buyPermission").click(function() {
+	 $("#buyPermission").addClass('disabled');
+});
+
+$("#sellPermission").click(function() {
+	 $("#sellPermission").addClass('disabled');
+});
+
+
 
 var currentRound = -1;
 
@@ -21,19 +30,12 @@ var chart = new Highcharts.Chart({
 		margin: [50, 30, 50, 50],
 		width: 460,
 	},
-	title: {
-		text: 'Pricedevelopment of Permissions'
-	},
-	subtitle: {
-		text: ''
-	},
-	tooltip: {
-		enabled: false
-	},
+	title: { text: 'Pricedevelopment of Permissions' },
+	subtitle: { text: '' },
+	tooltip: { enabled: true },
 	xAxis: {
 		min: 0,
 		max: 20,
-
 		allowDecimals: false,
 		labels: {
             formatter: function() {
@@ -44,7 +46,6 @@ var chart = new Highcharts.Chart({
 	yAxis: {
 		min: 0,
 		max: 500,
-		
 		title: {
 			text: 'Price'
 		},
@@ -57,12 +58,8 @@ var chart = new Highcharts.Chart({
 			color: '#808080'
 		}]
 	},
-	legend: {
-		enabled: false
-	},
-	exporting: {
-		enabled: false
-	},
+	legend: { enabled: false },
+	exporting: { enabled: false },
 	series: [{
 		data: [],
 		type: "line",
@@ -91,6 +88,10 @@ function poll(){
                 });
     			chart.redraw();
     	    }, dataType: "json"});
+    		
+    		$("#buyPermission").removeClass('disabled');
+    		$("#sellPermission").removeClass('disabled');
+    		
     	}
     	
         $('#responseData').text(JSON.stringify(data));
