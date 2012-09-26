@@ -18,6 +18,8 @@ if (strpos($_SERVER["HTTP_HOST"], "elysian") !== false){
 	$path = "C:/Apache22/htdocs/ibftool/";
 } elseif (strpos($_SERVER["HTTP_HOST"], "84.75.38.246") !== false){
 	$path = "C:/Apache22/htdocs/ibftool/";
+} elseif (strpos($_SERVER["HTTP_HOST"], "ibftoollaptop") !== false) {
+	$path = "D:/GitHub/IBFTool/";
 } else {
 	$path = "D:/Development/GitHub/IBFTool/";
 }
