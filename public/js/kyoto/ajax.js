@@ -12,11 +12,27 @@ $('#chartTab a').click(function (e) {
 	});
 
 $("#buyPermission").click(function() {
-	 $("#buyPermission").addClass('disabled');
+	$("#buyPermission").addClass('disabled');
+	$.ajax({ url: "/kyoto/buy?format=json&price=" + $("#buyPrice").val() + "&quantity=" + $("#buyQuantity").val(), success: function(data){
+		if(data.result == "success") {
+
+		} else {
+		  $("#buyPermission").removeClass('disabled');
+		  alert(data.result);
+		}
+    }, dataType: "json"});
 });
 
 $("#sellPermission").click(function() {
-	 $("#sellPermission").addClass('disabled');
+	$("#sellPermission").addClass('disabled');
+	$.ajax({ url: "/kyoto/sell?format=json&price=" + $("#sellPrice").val() + "&quantity=" + $("#sellQuantity").val(), success: function(data){
+		if(data.result == "success") {
+
+		} else {
+		  $("#sellPermission").removeClass('disabled');
+		  alert(data.result);
+		}
+    }, dataType: "json"});
 });
 
 
@@ -28,7 +44,7 @@ var chart = new Highcharts.Chart({
 		renderTo: 'permissionPriceChart',
 		type: 'line',
 		margin: [50, 30, 50, 50],
-		width: 460,
+		width: 460
 	},
 	title: { text: 'Pricedevelopment of Permissions' },
 	subtitle: { text: '' },
@@ -50,7 +66,7 @@ var chart = new Highcharts.Chart({
 			text: 'Price'
 		},
 		stackLabels: {
-			enabled: true,
+			enabled: true
 		},
 		plotLines: [{
 			value: 0,
@@ -62,7 +78,7 @@ var chart = new Highcharts.Chart({
 	exporting: { enabled: false },
 	series: [{
 		data: [],
-		type: "line",
+		type: "line"
 	}]
 });
 

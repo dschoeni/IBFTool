@@ -12,6 +12,8 @@ class KyotoController extends Zend_Controller_Action {
 	protected function addContexts() {
 		$this->context->addActionContext("update", "json");
 		$this->context->addActionContext("updatepollution", "json");
+		$this->context->addActionContext("buy", "json");
+		$this->context->addActionContext("sell", "json");
 	}
 
 
@@ -83,6 +85,94 @@ class KyotoController extends Zend_Controller_Action {
 		$player->type = "NGO";
 
 		$player->save();
+	}
+	
+	
+	// TODO: Only one offer per round can be made
+	public function buyAction() {
+		Zend_Layout::getMvcInstance()->disableLayout();
+		
+		$players = new Kyoto_Players();
+		$player = $players->fetchRow(array("ibftool_users_id" =>  Zend_Auth::getInstance()->getIdentity()->id));
+		
+		$sessions = new Kyoto_Sessions();
+		$session = $sessions->fetchRow(array("ibftool_treatments_id" =>  ibftool_Controller_Action_Helper_Treatment::getID()));
+
+		// Check if all necessary parameters are given.
+		if (!$this->_hasParam("quantity") || !$this->_hasParam("price")) {
+			$this->view->result = "failed";
+			return;
+		}
+		
+		$quantity = $this->_getParam("quantity");
+		$price = $this->_getParam("price");
+		
+		// Check if we have enough money to purchase something
+		if (($quantity * $price) > $player->balance) {
+			$this->view->result = "insufficient balance";
+			return;
+		}
+		
+		// Insert Offer into database
+		$offers = new Kyoto_Offers();
+		$offer = $offers->fetchNew();
+		
+		$offer->ibftool_kyoto_sessions_id = $session->id;
+		$offer->ibftool_kyoto_players_id = $player->id; 
+		$offer->quantity = $quantity;
+		$offer->price = $price;
+		$offer->buy = 1;
+		
+		$offer->save();
+		
+		$this->view->result = "success";
+		$this->view->offer = $offer->toArray();
+			
+	}
+	
+	/*
+	 * TODO: Only one offer per round can be made
+	 * Additionally, most of the checks performed here could be done in JS on the client, to reduce DB-load
+	 */
+	public function sellAction() {
+		Zend_Layout::getMvcInstance()->disableLayout();
+		
+		$players = new Kyoto_Players();
+		$player = $players->fetchRow(array("ibftool_users_id" =>  Zend_Auth::getInstance()->getIdentity()->id));
+		
+		$sessions = new Kyoto_Sessions();
+		$session = $sessions->fetchRow(array("ibftool_treatments_id" =>  ibftool_Controller_Action_Helper_Treatment::getID()));
+
+		// Check if all necessary parameters are given.
+		if (!$this->_hasParam("quantity") || !$this->_hasParam("price")) {
+			$this->view->result = "failed";
+			return;
+		}
+		
+		$quantity = $this->_getParam("quantity");
+		$price = $this->_getParam("price");
+		
+		// Check if we have enough money to purchase something
+		if ($quantity > $player->permissions) {
+			$this->view->result = "not enough permissions";
+			return;
+		}
+		
+		// Insert Offer into database
+		$offers = new Kyoto_Offers();
+		$offer = $offers->fetchNew();
+		
+		$offer->ibftool_kyoto_sessions_id = $session->id;
+		$offer->ibftool_kyoto_players_id = $player->id; 
+		$offer->quantity = $quantity;
+		$offer->price = $price;
+		$offer->buy = 1;
+		
+		$offer->save();
+		
+		$this->view->result = "success";
+		$this->view->offer = $offer->toArray();
+			
 	}
 
 }
