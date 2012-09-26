@@ -16,4 +16,5 @@ class Kyoto_Session extends Zend_Db_Table_Row {
 		$this->timestamp = date("Y-m-d H:i:s");
 		*/
 	}
+	
 }

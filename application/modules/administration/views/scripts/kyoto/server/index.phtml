@@ -2,5 +2,9 @@
 <p>
 Please keep this site running during the Experiment, otherwise the experiment will stop.
 </p>
-Rounds: <span id="currentround"><?= $this->session->currentround ?></span>
+<p>
+<button class="btn btn-primary" id="startGame">Start</button> <button class="btn btn-primary" id="pauseGame">Pause</button>
+</p>
+Rounds: <span id="currentround"><?= $this->session->currentround ?></span><br>
+Time left: <span id="timer"></span>
 

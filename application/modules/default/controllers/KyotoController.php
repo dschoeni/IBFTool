@@ -14,8 +14,8 @@ class KyotoController extends Zend_Controller_Action {
 		$this->context->addActionContext("updatepollution", "json");
 		$this->context->addActionContext("buy", "json");
 		$this->context->addActionContext("sell", "json");
+		$this->context->addActionContext("changetechnology", "json");
 	}
-
 
 	public function preDispatch() {
 		if (ibftool_Controller_Action_Helper_Treatment::getCurrentModule() != "kyoto") {
@@ -34,11 +34,14 @@ class KyotoController extends Zend_Controller_Action {
 
 		if ($player->type == "NGO") {
 			$this->render("ngo");
+		} else if ($player->type == "HighPolluter") {
+			$this->render("polluter");
 		}
 	}
 
 	public function updateAction() {
 		Zend_Layout::getMvcInstance()->disableLayout();
+		
 		$players = new Kyoto_Players();
 		$player = $players->fetchRow(array("ibftool_users_id" =>  Zend_Auth::getInstance()->getIdentity()->id));
 
@@ -48,22 +51,34 @@ class KyotoController extends Zend_Controller_Action {
 
 		$player->lastPoll = date("Y-m-d H:i:s");
 		$player->save();
-
+		
+		$sessions = new Kyoto_Sessions();
+		$session = $sessions->fetchRow(array("ibftool_treatments_id" =>  ibftool_Controller_Action_Helper_Treatment::getID()));
+		
 		// TOOD: Make this dynamic
 		$this->view->hasStarted = true;
 
 		// TODO: Make rounds dynamic
-		$this->view->round = 1;
 		$this->view->registered = true;
 		$this->view->playerdata = $player->toArray();
-		$treatmentId = ibftool_Controller_Action_Helper_Treatment::getID();
+		$this->view->session = $session->toArray();
 	}
 
 	public function updatepollutionAction() {
 		Zend_Layout::getMvcInstance()->disableLayout();
 		
+		$players = new Kyoto_Players();
+		$player = $players->fetchRow(array("ibftool_users_id" =>  Zend_Auth::getInstance()->getIdentity()->id));
+		
+		$sessions = new Kyoto_Sessions();
+		$session = $sessions->fetchRow(array("ibftool_treatments_id" =>  ibftool_Controller_Action_Helper_Treatment::getID()));
+		
+		$this->view->playerdata = $player->toArray();
+		$this->view->session = $session->toArray();
+		$this->view->pollution = $player->getPollution()->toArray();
+		
 		// TODO: Get Prices dynamically from Datebase
-		$this->view->pollution = array("minimum" => 100, "maximum" => 500, "current" => 235, "development" => array(
+		$this->view->otherpollution = array("minimum" => 100, "maximum" => 500, "current" => 235, "development" => array(
 				"[1, 50]",
 				"[2, 60]",
 				"[3, 70]",
@@ -74,16 +89,20 @@ class KyotoController extends Zend_Controller_Action {
 	}
 
 	private function registerPlayer() {
+		$sessions = new Kyoto_Sessions();
+		$session = $sessions->fetchRow(array("ibftool_treatments_id" =>  ibftool_Controller_Action_Helper_Treatment::getID()));
+		
 		$players = new Kyoto_Players();
 		$player = $players->fetchNew();
 
 		$player->ibftool_users_id = Zend_Auth::getInstance()->getIdentity()->id;
 		$player->ibftool_kyoto_sessions_id = 1;
+		
 		$player->balance = 2500;
-		$player->pollution = 0;
+		$player->pollution = null;
 		$player->permissions = 0;
 		$player->type = "NGO";
-
+		
 		$player->save();
 	}
 	
@@ -173,6 +192,15 @@ class KyotoController extends Zend_Controller_Action {
 		$this->view->result = "success";
 		$this->view->offer = $offer->toArray();
 			
+	}
+	
+	public function changetechnologyAction() {
+		Zend_Layout::getMvcInstance()->disableLayout();
+		$players = new Kyoto_Players();
+		$player = $players->fetchRow(array("ibftool_users_id" =>  Zend_Auth::getInstance()->getIdentity()->id));
+		$player->changeTechnology($this->_getParam("round"));
+		
+		$this->view->result = "success";
 	}
 
 }

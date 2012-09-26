@@ -10,7 +10,7 @@ class Administration_Kyoto_ServerController extends Zend_Controller_Action {
 	}
 
 	protected function addContexts() {
-		$this->context->addActionContext("server", "json");
+		$this->context->addActionContext("nextround", "json");
 	}
 	
 	public function indexAction() {
@@ -28,11 +28,12 @@ class Administration_Kyoto_ServerController extends Zend_Controller_Action {
 		$sessions = new Kyoto_Sessions();
 		// TODO Make Treatmentselection dynamically
 		$session = $sessions->fetchRow(array("ibftool_treatments_id" =>  1));
-		$session->round++;
+		$session->currentround++;
+		$session->currentRoundTime = time();
 		$session->save();
 		
-		$this->view->round = $session->round;
-		$this->view->result = success;
+		$this->view->currentround = $session->currentround;
+		$this->view->result = "success";
 		return;
 	}
 	

@@ -1,7 +1,92 @@
+<div class="modal hide fade" id="startScreen">
+	<div class="modal-header">
+		<h3 id="myModalLabel">Welcome</h3>
+	</div>
+	<div class="modal-body">
+		<p>You're playing as a Polluter.</p>
+	</div>
+	<div class="modal-footer">
+		<button id="startPolling" class="btn btn-primary">Connect</button>
+	</div>
+</div>
+
+
 <h1>Kyoto Game - Polluter</h1>
-<div id="responseData"></div>
-<div id="startPolling" class="btn">Start Polling</div>
+<div class="row">
+	<div class="span3">
+		<h3>Information</h3>
+		<p>
+			Balance: <span id="player_balance">#BALANCEVALUE</span><br>
+			Permissions: <span id="player_permissions">#PERMISSIONS</span>
+		</p>
+	</div>
+	<div class="span3">
+		<h3>Others Pollution</h3>
+		<p>
+			Minimum: <span id="otherplayers_minimum">#MINPOl</span><br> Maximum:
+			<span id="otherplayers_maximum">#MAXPOL</span><br> Current: <span
+				id="otherplayers_current">#CURPOL</span>
+		</p>
+		
+		<h3>My Pollution</h3>
+		<p>
+			Minimum: <span id="pollution_minimum">#MINPOl</span><br> 
+			Maximum: <span id="pollution_maximum">#MAXPOL</span><br> 
+			Current: <span id="pollution_current">#CURPOL</span>
+		</p>
+	</div>
+	<div class="span2 offset4">
+		<p>
+			Round: <span id="round">1</span><br> Time: <span id="timer">60</span>
+		</p>
+	</div>
+</div>
 
 <div class="row">
+	<div class="span6">
+		<ul class="nav nav-tabs" id="chartTab">
+			<li class="active"><a href="#pricetab">Price</a></li>
+			<li><a href="#permissiontab">Pollution</a></li>
+		</ul>
 
+		<div class="tab-content">
+			<div class="tab-pane" id="pricetab">
+				<div id="permissionPriceChart"></div>
+			</div>
+			<div class="tab-pane" id="permissiontab">...</div>
+		</div>
+	</div>
+	<div class="span3">
+		<h3>Buying</h3>
+		<p>
+			<label>Price:</label>
+			<input id="buyPrice" type="text">
+			<label>Quantity:</label>
+			<input id="buyQuantity" type="text">
+			<br>
+			<button id="buyPermission" class="btn btn-success">Place Buyorder</button>
+		</p>
+		<h3>Selling</h3>
+		<p>
+			<label>Price:</label>
+			<input id="sellPrice" type="text">
+			<label>Quantity:</label>
+			<input id="sellQuantity" type="text">
+			<br>
+			<button id="sellPermission" class="btn btn-success">Place Sellorder</button>
+		</p>
+	</div>
+	<div class="span3">
+		<h3>Realized Trades</h3>
+		<p>
+			#Here go the Trades#
+		</p>
+		<h3>Change Technology</h3>
+		<button id="changeTechnology" class="btn btn-large btn-success">Change Technology</button>
+	</div>
+</div>
+
+<br><br>
+<h4>Debug</h4>
+<div class="well well-small" id="responseData">
 </div>
