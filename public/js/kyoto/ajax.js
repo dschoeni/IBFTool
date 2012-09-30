@@ -37,6 +37,51 @@ $("#sellPermission").click(function() {
     }, dataType: "json"});
 });
 
+
+var pollutionChart = new Highcharts.Chart({
+	chart: {
+		renderTo: 'pollutionChart',
+		type: 'line',
+		margin: [50, 30, 50, 50],
+		width: 460
+	},
+	title: { text: 'Total Pollution' },
+	subtitle: { text: '' },
+	tooltip: { enabled: true },
+	xAxis: {
+		min: 0,
+		max: 20,
+		allowDecimals: false,
+		labels: {
+            formatter: function() {
+                return this.value;
+            }
+        }
+	},
+	yAxis: {
+		min: 0,
+		max: 500,
+		title: {
+			text: 'Price'
+		},
+		stackLabels: {
+			enabled: true
+		},
+		plotLines: [{
+			value: 0,
+			width: 1,
+			color: '#808080'
+		}]
+	},
+	legend: { enabled: false },
+	exporting: { enabled: false },
+	series: [{
+		data: [],
+		type: "line"
+	}]
+});
+
+
 var chart = new Highcharts.Chart({
 	chart: {
 		renderTo: 'permissionPriceChart',
@@ -94,9 +139,16 @@ function poll(){
             	$('#otherplayers_maximum').text(data.otherpollution.maximum);
             	$('#otherplayers_current').text(data.otherpollution.current);
             	
+            	pollutionChart.series[0].remove();
+            	pollutionChart.addSeries({
+                    data: JSON.parse("[" + data.otherpollution.development + "]"),
+                    type: "line"
+                });
+            	pollutionChart.redraw();
+            	
             	chart.series[0].remove();
             	chart.addSeries({
-                    data: JSON.parse("[" + data.otherpollution.development + "]"),
+                    data: JSON.parse("[" + data.price.development + "]"),
                     type: "line"
                 });
     			chart.redraw();

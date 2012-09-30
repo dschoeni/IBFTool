@@ -79,13 +79,22 @@ class KyotoController extends Zend_Controller_Action {
 		
 		// TODO: Get Prices dynamically from Datebase
 		$this->view->otherpollution = array("minimum" => 100, "maximum" => 500, "current" => 235, "development" => array(
+				"[1, 0]",
+				"[2, 50]",
+				"[3, 100]",
+				"[4, 150]",
+				"[5, 220]",
+				"[6, 230]"
+			));
+		
+		$this->view->price = array("development" => array(
 				"[1, 50]",
 				"[2, 60]",
 				"[3, 70]",
 				"[4, 110]",
 				"[5, 50]",
 				"[6, 300]"
-			));
+		));
 	}
 
 	private function registerPlayer() {

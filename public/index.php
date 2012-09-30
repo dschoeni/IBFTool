@@ -71,7 +71,6 @@ $front->registerPlugin(new Zend_Controller_Plugin_ActionStack());
 $front->addModuleDirectory('../application/modules');
 
 $view = new Zend_View();
-$view->setEncoding("iso-8859-1");
 $view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
 $view->addHelperPath($path . "library/ibftool/View/Helper/", "ibftool_View_Helper");
 

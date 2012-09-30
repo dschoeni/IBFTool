@@ -18,8 +18,11 @@ class Kyoto_Pollution {
 	}
 
 	public function setPollution($round) {
-
+		// TODO Code the right function
+		$this->pollution_history[$round] = $round*50;
 	}
+	
+	
 
 	public function toArray() {
 		return array("pollution" => $this->pollution, 
