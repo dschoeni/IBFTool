@@ -50,7 +50,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 	}
 
 	public function roundAction() {
-		$this->view->headLink()->appendStylesheet('/ibftool/_files/css/mlaexperiment.css');
+		$this->view->headLink()->appendStylesheet('/css/mlaexperiment.css');
 
 		$doc = $this->getConfigDoc();
 
@@ -150,7 +150,7 @@ class MlaexperimentController extends Zend_Controller_Action {
 				$high_prob_rate = $doc->getElementsByTagName("high_prob_rate")->item(0)->nodeValue;
 				$low_prob_rate = $doc->getElementsByTagName("low_prob_rate")->item(0)->nodeValue;
 
-				$fileinput = file('_files/excel/mla_random.csv') or die ("cannot open required inputfile.");
+				$fileinput = file('excel/mla_random.csv') or die ("cannot open required inputfile.");
 				$csv_lines = explode(";", $fileinput[$group]);
 
 				echo $csv_lines[$values["round"]+1];

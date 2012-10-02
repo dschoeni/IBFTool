@@ -25,7 +25,7 @@ class ibftool_Form_MLAExperiment extends Zend_Form {
 		
 		$slider = new ZendX_JQuery_Form_Element_Slider("investment");
 		$slider->setRequired(true);
-		$slider->setLabel("<span class='investment-label-null'>0 Cent</span><span class='investment-label-hundred'>40 Cent</span>");
+		$slider->setLabel("<div class='row'><span class='span4'>0 Cent</span><span class='span2' style='text-align: right'>40 Cent</span></div>");
 		$slider->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
 		$slider->setJQueryParams(array(
 		  'min' => 0,
@@ -50,6 +50,7 @@ class ibftool_Form_MLAExperiment extends Zend_Form {
 		
 		$submit = new Zend_Form_Element_Submit("Weiter");
 		$submit->setIgnore(true);
+		$submit->class = "btn btn-primary";
 		$submit->removeDecorator('DtDdWrapper');
 		
 		$this->addElement($submit);
