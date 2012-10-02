@@ -1,12 +1,11 @@
 <h1>Experiment zu Investitionsentscheidungen</h1>
 <br />
-<h1>Investitionsbetrag</h1>
+<h3>Investitionsbetrag</h3>
 
-
-<div class="wrapper">
-	<div class="left_5050">
+<div class="row">
+	<div class="span6">
 		<div id="success">
-			<h1>Erfolg</h1>
+			<h3>Erfolg</h3>
 			<?php if ($this->result) : ?>
 
 			<?php if ($this->outcome == ($this->cycle_length * $this->money)) : ?>
@@ -39,18 +38,17 @@
 			<?php endif; ?>
 			<br /> <br />
 
-			<div id="forward" class="button" onmouseover="mouseover_forward()"
-				onmouseout="mouseout_forward()">Weiter</div>
+			<div id="forward" class="btn btn-primary">Weiter</div>
 
 			<?php endif; ?>
 
 		</div>
 	</div>
 
-	<div class="right_5050">
-		<h1>Risikoprofil der riskanten Anlage</h1>
+	<div class="span6">
+		<h3>Risikoprofil der riskanten Anlage</h3>
 		<p>
-			<img src="/ibftool/_files/images/riskprofile_250_small.png" />
+			<img src="/images/riskprofile_250_small.png" />
 		</p>
 	</div>
 </div>
@@ -63,10 +61,7 @@ $('.ui-slider-handle').hide();
 </script>
 
 <script>
-function mouseover_forward() { document.getElementById("forward").style.backgroundColor='#ababab'; }
-function mouseout_forward() { document.getElementById("forward").style.backgroundColor='#ffffff'; } 
-
 $('#forward').click(function() {
-	window.location = "<?php echo $this->url(array("controller" => "mlaexperiment2", "action" => "fin")) ?>"
+	window.location = "<?php echo $this->url(array("controller" => "mlaexperiment", "action" => "fin")) ?>"
   });
 </script>
