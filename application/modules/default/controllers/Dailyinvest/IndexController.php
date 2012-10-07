@@ -18,7 +18,7 @@ class Dailyinvest_indexController extends Zend_Controller_Action {
 			$this->_helper->redirector("result", "dailyinvest_index");
 		}
 		
-		$lastround = $rounds->fetchAll(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id), "created DESC", 1);
+		$lastround = $rounds->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id), "created DESC");
 		
 		$config = ibftool_Controller_Action_Helper_Treatment::getCurrentConfig();
 
@@ -27,7 +27,7 @@ class Dailyinvest_indexController extends Zend_Controller_Action {
 		$this->view->money = 1;
 		$this->view->form = $form;
 		
-		if ($lastround->count() > 0) {
+		if ($lastround != null) {
 			$this->view->lastround = $lastround;
 		}
 		
@@ -39,9 +39,7 @@ class Dailyinvest_indexController extends Zend_Controller_Action {
 				$array = array(-0.5, 0.5, -0.25, 0.25);
 				$yield = $array[$random];
 		
-				$count = $lastround->count();
-		
-				if ($count == 0) {
+				if ($lastround == null) {
 					$money = 1;
 					$played_rounds = 0;
 				} else {

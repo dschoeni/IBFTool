@@ -1,4 +1,11 @@
 <h1>Experiment zu Investitionsentscheidungen</h1>
+<? if($this->lastround) : ?>
+<div class="alert alert-info">
+<button type="button" class="close" data-dismiss="alert">×</button>
+Deine Rendite vom letzten Investitionsentscheid war <?= $this->lastround->yield ?> CHF, du hast also <?= $this->lastround->yield + $this->lastround->money ?> CHF erzielt.
+</div>
+<? endif; ?>
+
 <h3>Investitionsbetrag</h3>
 <p>
 	Es steht Ihnen folgender Betrag zur Verfügung:
