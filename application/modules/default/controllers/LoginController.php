@@ -2,7 +2,7 @@
 class LoginController extends ibftool_Controller_Action {
 	
 	public function indexAction() {
-
+		
 		if (Zend_Auth::getInstance()->hasIdentity()) {
 			$this->_redirect("index/");
 		}
@@ -28,7 +28,6 @@ class LoginController extends ibftool_Controller_Action {
 		$this->view->assign("login", $login);
 		$this->view->assign("registration", $registration);
 
-
 	}
 
 	/**
@@ -41,7 +40,7 @@ class LoginController extends ibftool_Controller_Action {
 	}
 
 	/**
-	 * Hier wird dem Benutzer eine Fehlermeldung angezeigt, falls sein Login fehlschl�gt.
+	 * Hier wird dem Benutzer eine Fehlermeldung angezeigt, falls sein Login fehlschlägt.
 	 */
 	public function errorAction(){
 		$this->view->assign("form", new ibftool_Form_Login());

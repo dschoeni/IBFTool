@@ -1,21 +1,33 @@
-<h1>Investmentspiel - Runde <?php echo $this->round+1?></h1>
+<h1>Experiment zu Investitionsentscheidungen</h1>
+<h3>Investitionsbetrag</h3>
+<p>
+	Es steht Ihnen folgender Betrag zur Verfügung:
+	<?php echo $this->money ?>
+	CHF
+</p>
+
 <div class="row">
 	<div class="span6">
-		<h2>Einsatz</h2>
-		<p>
-			In der Runde
-			<?php echo $this->round+1?>
-			folgenden Betrag zur Verfügung:
-			<?php echo $this->money ?>
+		<div id="formdiv" style="height: 270px;">
+			<h3>Einsatz</h3>
 			<?php echo $this->form ?>
-		</p>
+		</div>
 	</div>
 
 	<div class="span6">
-		<h2>Risikoprofil des Investments</h2>
-		<p></p>
+		<h3>Risikoprofil der riskanten Anlage</h3>
+		<p>
+			<img src="/images/riskprofile_250_small.png" />
+		</p>
 	</div>
 </div>
+
+<div class="clearboth"></div>
+
+<script>
+document.getElementById('Weiter').style.display = 'none';
+$('.ui-slider-handle').hide();
+</script>
 
 <script>
 function runden(x) {

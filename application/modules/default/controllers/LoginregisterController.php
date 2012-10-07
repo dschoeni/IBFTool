@@ -18,8 +18,8 @@ class LoginregisterController extends ibftool_Controller_Action {
 		}
 
 		if (!empty($_POST)) {
-			$login->getElement("email")->addError("Bitte ¸berpr¸fen Sie Ihre E-Mail Adresse.");
-			$login->getElement("password")->addError("Bitte ¸berpr¸fen Sie Ihr Passwort.");
+			$login->getElement("email")->addError("Bitte √ºberpr√ºfen Sie Ihre E-Mail Adresse.");
+			$login->getElement("password")->addError("Bitte √ºberpr√ºfen Sie Ihr Passwort.");
 		}
 
 

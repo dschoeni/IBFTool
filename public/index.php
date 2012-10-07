@@ -1,35 +1,31 @@
-
 <?php
 /**
- * @author Dominik Sch�ni
+ * @author Dominik Schöni
  * @copyright 2008
  */
 
 //Header IE Fix
-header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
+//header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
 
 // Error Reporting
 error_reporting(E_ALL|E_STRICT);
 ini_set('display_errors', 'on');
 
 // Include Path
-
-if (strpos($_SERVER["HTTP_HOST"], "elysian") !== false){
-	$path = "C:/Apache22/htdocs/ibftool/";
-} elseif (strpos($_SERVER["HTTP_HOST"], "84.75.38.246") !== false){
-	$path = "C:/Apache22/htdocs/ibftool/";
-} elseif (strpos($_SERVER["HTTP_HOST"], "ibftoollaptop") !== false) {
+if (strpos($_SERVER["HTTP_HOST"], "ibftoollaptop") !== false) {
 	$path = "D:/GitHub/IBFTool/";
+} elseif (strpos($_SERVER["HTTP_HOST"], "theelysianfields") > 0) {
+	ini_set('include_path', " ");
+	$path = "/var/www/ibf.theelysianfields.ch/ibftool/";
 } else {
 	$path = "D:/Development/GitHub/IBFTool/";
 }
-
 /*
  *
 *
 *
 *
-* M�nster-MLA: Path-Variable hier konfigurieren, sollte zum "ibftool"-Ordner auf dem Server zeigen.
+* Münster-MLA: Path-Variable hier konfigurieren, sollte zum "ibftool"-Ordner auf dem Server zeigen.
 * $path  "/";
 *
 *
@@ -38,8 +34,7 @@ if (strpos($_SERVER["HTTP_HOST"], "elysian") !== false){
 *
 */
 
-ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR. $path. 'library' .PATH_SEPARATOR. $path . "application/models");
-
+ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . $path. 'library' .PATH_SEPARATOR. $path . "application/models");
 require_once 'Zend/Loader/Autoloader.php';
 require_once 'ZendX/JQuery.php';
 
@@ -50,7 +45,7 @@ $autoloader->setFallbackAutoloader(true);
 
 Zend_Session::start();
 
-$config = ibftool_Starter::start($path."application/config/db_config.ini");
+$config = ibftool_Starter::start($path . "application/config/db_config.ini");
 
 // Zend Layout initialisieren
 Zend_Layout::startMvc();
@@ -68,7 +63,7 @@ $front->throwExceptions(true);
 //Menu
 $front->registerPlugin(new Zend_Controller_Plugin_ActionStack());
 
-$front->addModuleDirectory('../application/modules');
+$front->addModuleDirectory($path . 'application/modules');
 
 $view = new Zend_View();
 $view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');

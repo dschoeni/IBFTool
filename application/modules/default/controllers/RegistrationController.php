@@ -32,7 +32,7 @@ class RegistrationController extends Zend_Controller_Action {
 
 				$data = array(
 						'email'	=> $values["email"],
-						'userhash' => $hash,
+						'userhash' => $values["email"],
 						'password' => hash("sha1", $password),
 						'verified' => 0,
 						'role' => 'member',
@@ -44,6 +44,11 @@ class RegistrationController extends Zend_Controller_Action {
 				if (empty($row)) {
 					$row = $table->createRow($data);
 					$row->save();
+					
+					$treatmentshasusers = new TreatmentsHasUsers();
+					//$saveRow = $table->fetchRow(array("email = ?" => $values["email"]));
+					$thu = $treatmentshasusers->createRow(array('treatments_id' => 19, 'users_id' => $row->id));
+					$thu->save();
 
 					//$config = array('ssl' => 'tls', 'port' => 587, 'auth' => 'login', 'username' => '', 'password' => '');
 					//$transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
@@ -54,15 +59,16 @@ class RegistrationController extends Zend_Controller_Action {
 					$mailstring .= "Ihr Passwort zum Login: ";
 					$mailstring .= $password;
 
-					$mailstring .= "\nSie können sich mit Ihrer E-Mail-Adresse und diesem Passwort hier für den Test einloggen: www.bhfs.ch/trader";
+					$mailstring .= "\nBitten bestätigen Sie ihre E-Mail Adresse mit folgendem Link: http://" . $_SERVER['SERVER_NAME'] . "/registration/confirm/userhash/" . $hash;
 					$mailstring .= "\nViel Erfolg!";
 
-					$mail = new Zend_Mail();
+					$mail = new Zend_Mail('utf-8');
 					$mail->addTo($values["email"]);
 					$mail->setSubject(Zend_Registry::getInstance()->get("config")->ibftool->title . " - Bestätigung der Accounterstellung");
 					$mail->setFrom("trader@bf.uzh.ch", "IBFTool - Uni Zürich");
 					$mail->setBodyText($mailstring);
-					$mail->send($transport);
+					//$mail->send($transport);
+					$mail->send();
 						
 					$this->_helper->redirector("success", "registration");
 
@@ -82,7 +88,6 @@ class RegistrationController extends Zend_Controller_Action {
 
 	public function confirmAction() {
 		$userhash = $this->_getParam("userhash");
-
 		$this->view->assign("verified", false);
 
 		if (!empty($userhash)) {

@@ -23,6 +23,7 @@ class ibftool_Controller_Plugin_Auth_Acl extends Zend_Acl
     $this->add(new Zend_Acl_Resource('rs_plot'));
     $this->add(new Zend_Acl_Resource('rs_calculation'));
     $this->add(new Zend_Acl_Resource('admin_install'));
+    $this->add(new Zend_Acl_Resource('dailyinvest_index'));
     
 
 
@@ -50,6 +51,7 @@ class ibftool_Controller_Plugin_Auth_Acl extends Zend_Acl
     $this->allow('member', 'module');
     $this->allow('member', 'rs_plot');
     $this->allow('member', 'rs_calculation');
+    $this->allow('member', 'dailyinvest_index');
     $this->deny('member', 'registration');  
     
     $this->allow('admin', null);

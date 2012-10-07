@@ -38,14 +38,19 @@ class ibftool_Controller_Plugin_Auth_AccessControl extends Zend_Controller_Plugi
 					$storage = $this->_auth->getStorage();
 
 					// die gesamte Tabellenzeile in der Session speichern,
-					// wobei das Passwort unterdr�ckt wird
+					// wobei das Passwort unterdrückt wird
 
 					$users = new Users();
 					$row = $users->fetchRow(array("userhash = ?" => $email));
 
 					$row->verify();
+					$row->password = "";
 
 					$storage->write($row);
+					
+					if (Zend_Registry::getInstance()->get("config")->ibftool->savesession) {
+						Zend_Session::rememberMe("1512000");
+					}
 
 					//$storage->write($authAdapter->getResultRowObject(null, 'password'));
 				}
