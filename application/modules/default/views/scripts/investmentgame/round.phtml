@@ -1,43 +1,22 @@
-<h1>
-	Investmentspiel - Runde
-	<?php echo $this->round+1?>
-</h1>
-<div class="wrapper">
-	<div class="left_5050">
-		<h1>Einsatz</h1>
+<h1>Investmentspiel - Runde <?php echo $this->round+1?></h1>
+<div class="row">
+	<div class="span6">
+		<h2>Einsatz</h2>
 		<p>
 			In der Runde
 			<?php echo $this->round+1?>
-			folgenden Betrag zur Verfügung:
+			folgenden Betrag zur VerfÃ¼gung:
 			<?php echo $this->money ?>
 			<?php echo $this->form ?>
 		</p>
 
-		<script>
-$(document).ready(function() {
-	$( "#mla-slider" ).slider({ disabled: true });
-	$('.ui-slider-handle').hide();
-  });
-</script>
-
-		<span class='mla-slider-null'>0</span><span class='mla-slider-hundred'>100</span>
-		<div id="mla-slider"></div>
 	</div>
 
-
-
-	<div class="right_5050">
-		<h1>Risikoprofil des Investments</h1>
+	<div class="span6">
+		<h2>Risikoprofil des Investments</h2>
 		<p></p>
 	</div>
 </div>
-
-<div class="clearboth"></div>
-
-<script>
-document.getElementById('Weiter').style.display = 'none';
-$('.ui-slider-handle').hide();
-</script>
 
 <script>
 function runden(x) {
@@ -46,17 +25,18 @@ function runden(x) {
 	  return k.substring(0, k.indexOf('.') + 3);
 	}
 
-function getformcontent() {
+function setSliderAmount() {
 	var values = {};
 	$.each($('#mlaexperiment').serializeArray(), function(i, field) {
 	    values[field.name] = field.value;
 	});
-	
+
 	$('.ui-slider-handle').show();
 	document.getElementById('Weiter').style.display = '';
-	$("#mla-slider").slider("value", values["amount"]);
-
-
+	document.getElementById('investment').value = values["amount"];
+	$("#investment-slider").slider("values", 0, values["amount"]);
 }
+
+document.getElementById('amount').focus();
 
 </script>
