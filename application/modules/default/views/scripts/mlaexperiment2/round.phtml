@@ -1,27 +1,23 @@
-
 <h1>Experiment zu Investitionsentscheidungen</h1>
-<br />
-<h1>Investitionsbetrag</h1>
+<h3>Investitionsbetrag</h3>
 <p>
 	In der Runde
 	<?php echo $this->round+1?>
-	steht Ihnen folgender Betrag zur Verfügung:
+	steht Ihnen folgender Betrag zur VerfÃ¼gung:
 	<?php echo $this->money ?>0 Euro
 </p>
 
-<div class="wrapper">
-	<div class="left_5050">
+<div class="row">
+	<div class="span6">
 		<div id="formdiv" style="height: 270px;">
-			<h1>Einsatz</h1>
+			<h3>Einsatz</h3>
 			<?php echo $this->form ?>
 		</div>
 		<br /> <br />
 		<div id="success">
-			<h1>Erfolg</h1>
+			<h3>Erfolg</h3>
 			<?php if ($this->result) : ?>
-
 			<?php if ($this->outcome == ($this->cycle_length * $this->money)) : ?>
-
 			<?php if ($this->cycle_length == 1) : ?>
 			Sie haben in der letzten Runde weder einen Gewinn noch einen Verlust
 			gemacht.
@@ -30,10 +26,9 @@
 			<?php echo $this->cycle_length ?>
 			Runden weder einen Gewinn noch einen Verlust gemacht.
 			<?php endif;?>
-
 			<?php else : ?>
 			<?php if ($this->cycle_length == 1) : ?>
-			In der letzten Runde haben Sie insgesamt einen
+			In der letzten Runde haben Sie einen
 			<?php else : ?>
 			In den letzten
 			<?php echo $this->cycle_length ?>
@@ -50,8 +45,7 @@
 			<?php endif; ?>
 			<br /> <br />
 
-			<div id="forward_round" class="button"
-				onmouseover="mouseover_forward()" onmouseout="mouseout_forward()">Weiter</div>
+			<div id="forward_round" class="btn btn-primary">Weiter</div>
 
 			<script>
 document.getElementById('amount').disabled = true;
@@ -62,7 +56,6 @@ $('#forward_round').click(function() {
 	document.getElementById('amount').disabled = false;
 	$('#investment-slider').slider( 'option', 'disabled', false );
 });
-
 		</script>
 
 			<?php endif; ?>
@@ -70,10 +63,10 @@ $('#forward_round').click(function() {
 		</div>
 	</div>
 
-	<div class="right_5050">
-		<h1>Risikoprofil der riskanten Anlage</h1>
+	<div class="span6">
+		<h3>Risikoprofil der riskanten Anlage</h3>
 		<p>
-			<img src="/ibftool/_files/images/riskprofile_250_small.png" />
+			<img src="/images/riskprofile_250_small.png" />
 		</p>
 	</div>
 </div>
@@ -103,9 +96,6 @@ function setSliderAmount() {
 	document.getElementById('investment').value = values["amount"];
 	$("#investment-slider").slider("values", 0, values["amount"]);
 }
-
-function mouseover_forward() { document.getElementById("forward_round").style.backgroundColor='#ababab'; }
-function mouseout_forward() { document.getElementById("forward_round").style.backgroundColor='#ffffff'; } 
 
 document.getElementById('amount').focus();
 

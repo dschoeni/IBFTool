@@ -2,18 +2,17 @@
 		5</b>
 </span>
 <br />
-<p>Sie müssen vor jeder Runde erneut festlegen, wie viel Sie in die
+<p>Sie mÃ¼ssen vor jeder Runde erneut festlegen, wie viel Sie in die
 	riskante Anlageform investieren. Aber Sie erhalten erst nach Ablauf von
-	jeweils drei Runden Auskunft darüber, in welcher Höhe Sie einen Gewinn
+	jeweils drei Runden Auskunft darÃ¼ber, in welcher HÃ¶he Sie einen Gewinn
 	oder Verlust erwirtschaftet haben.</p>
-<p>Ihre Eingaben können Sie entweder über die Tastatur tätigen oder Sie
-	benutzen die Maus und stellen den Betrag über den Schieberegler ein.
-	Bitte beachten Sie, dass Sie nur ganze Cent-Beträge (ohne Komma)
-	eingeben können.</p>
-<div id="forward" class="button" style="float: right"
-	onmouseover="mouseover_forward()" onmouseout="mouseout_forward()">Weiter</div>
-<div id="back" class="button" onmouseover="mouseover_back()"
-	onmouseout="mouseout_back()">Zurück</div>
+<p>Ihre Eingaben kÃ¶nnen Sie entweder Ã¼ber die Tastatur tÃ¤tigen oder Sie
+	benutzen die Maus und stellen den Betrag Ã¼ber den Schieberegler ein.
+	Bitte beachten Sie, dass Sie nur ganze Cent-BetrÃ¤ge (ohne Komma)
+	eingeben kÃ¶nnen.</p>
+	
+<div id="forward" class="btn btn-primary" style="float: right">Weiter</div>
+<div id="back" class="btn btn-primary">ZurÃ¼ck</div>
 
 <script>
 $('#forward').click(function() {
@@ -23,9 +22,4 @@ $('#forward').click(function() {
 $('#back').click(function() {
 	window.location = "<?php echo $this->url(array("controller" => "mlaexperiment", "action" => "introduction2")) ?>"
   });
-
-function mouseover_forward() { document.getElementById("forward").style.backgroundColor='#ababab'; }
-function mouseout_forward() { document.getElementById("forward").style.backgroundColor='#ffffff'; } 
-function mouseover_back() { document.getElementById("back").style.backgroundColor='#ababab'; }
-function mouseout_back() { document.getElementById("back").style.backgroundColor='#ffffff'; } 
 </script>

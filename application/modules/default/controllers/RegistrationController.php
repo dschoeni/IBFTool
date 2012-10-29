@@ -18,7 +18,7 @@ class RegistrationController extends Zend_Controller_Action {
 
 			/*
 			 $validator = new Zend_Validate_Identical($_POST['password']);
-			$validator->setMessage('Die Kennwörter stimmen nicht überein!');
+			$validator->setMessage('Die Kennwï¿½rter stimmen nicht ï¿½berein!');
 			$pwd = $form->getElement('password_check');
 			$pwd->addValidator($validator);
 			*/
@@ -45,27 +45,25 @@ class RegistrationController extends Zend_Controller_Action {
 					$row = $table->createRow($data);
 					$row->save();
 
-					$config = array('ssl' => 'tls', 'port' => 587, 'auth' => 'login', 'username' => 'info@theelysianfields.ch', 'password' => '2S1m72JnNcoSYFwWoyWk');
-					$transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
-
+					//$config = array('ssl' => 'tls', 'port' => 587, 'auth' => 'login', 'username' => '', 'password' => '');
+					//$transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
 						
-					$mailstring = "Vielen Dank für Ihre Registrierung zu den Behavioral Finance Tests der Universität Zürich!";
+					$mailstring = "Vielen Dank fÃ¼r Ihre Registrierung!";
 
 					$mailstring .= "\n\n";
 					$mailstring .= "Ihr Passwort zum Login: ";
 					$mailstring .= $password;
 
-					$mailstring .= "\nSie können sich mit Ihrer E-Mail-Adresse und diesem Passwort hier für den Test einloggen: www.bhfs.ch/trader";
+					$mailstring .= "\nSie kÃ¶nnen sich mit Ihrer E-Mail-Adresse und diesem Passwort hier fÃ¼r den Test einloggen: www.bhfs.ch/trader";
 					$mailstring .= "\nViel Erfolg!";
 
 					$mail = new Zend_Mail();
 					$mail->addTo($values["email"]);
-					$mail->setSubject(Zend_Registry::getInstance()->get("config")->ibftool->title . " - Bestätigung der Accounterstellung");
-					$mail->setFrom("trader@bf.uzh.ch", "Behavioral Finance Test Uni Zürich");
+					$mail->setSubject(Zend_Registry::getInstance()->get("config")->ibftool->title . " - BestÃ¤tigung der Accounterstellung");
+					$mail->setFrom("trader@bf.uzh.ch", "IBFTool - Uni ZÃ¼rich");
 					$mail->setBodyText($mailstring);
 					$mail->send($transport);
 						
-
 					$this->_helper->redirector("success", "registration");
 
 				} else {
@@ -96,7 +94,6 @@ class RegistrationController extends Zend_Controller_Action {
 				$row->verify();
 				$this->view->assign("verified", true);
 			}
-
 		}
 
 	}
@@ -104,6 +101,5 @@ class RegistrationController extends Zend_Controller_Action {
 	public function successAction() {
 
 	}
-
 
 }

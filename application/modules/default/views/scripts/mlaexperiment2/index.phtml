@@ -6,19 +6,15 @@
 <p>herzlich willkommen! Vor 2 Wochen haben Sie den ersten
 	Experimentteil absolviert, heute folgt der zweite Teil, der ca. 25
 	Minuten dauern wird (inkl. Lesen dieser Anleitung). Bitte lesen Sie die
-	Anleitung sehr sorgfältig durch, auch wenn Ihnen Teile hiervon schon
+	Anleitung sehr sorgfÃ¤ltig durch, auch wenn Ihnen Teile hiervon schon
 	bekannt vorkommen. Sollte es in irgendeiner Form Unklarheiten geben,
-	können Sie sich jederzeit an den Experimentleiter wenden.</p>
-<div id="back" class="button" style="float: left; display: none;"
-	onmouseover="mouseover_back()" onmouseout="mouseout_back()">Zurück</div>
-<div id="forward" class="button" onmouseover="mouseover_forward()"
-	onmouseout="mouseout_forward()">Weiter</div>
+	kÃ¶nnen Sie sich jederzeit an den Experimentleiter wenden.</p>
+	
+<div id="forward" class="btn btn-primary" style="float: right">Weiter</div>
 
 <script>
 $('#forward').click(function() {
 	window.location = "<?php echo $this->url(array("controller" => "mlaexperiment2", "action" => "part1introduction")) ?>"
   });
 
-function mouseover_forward() { document.getElementById("forward").style.backgroundColor='#ababab'; }
-function mouseout_forward() { document.getElementById("forward").style.backgroundColor='#ffffff'; } 
 </script>
