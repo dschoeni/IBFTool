@@ -27,15 +27,16 @@ class RegistrationController extends Zend_Controller_Action {
 				$values = $form->getValues();
 
 				$n = rand(10e16, 10e20);
-				$password = base_convert($n, 10, 36);
+				//$password = base_convert($n, 10, 36);
 				$hash = hash("sha1", time());
 
 				$data = array(
 						'email'	=> $values["email"],
-						'userhash' => $hash,
-						'password' => hash("sha1", $password),
-						'verified' => 0,
+						'userhash' => $values["email"],
+						'password' => hash("sha1", $values["email"]),
+						'verified' => 1,
 						'role' => 'member',
+						'grp' => rand(1,2),
 				);
 
 				$table = new Users();
@@ -47,12 +48,13 @@ class RegistrationController extends Zend_Controller_Action {
 					
 					$treatmentshasusers = new TreatmentsHasUsers();
 					//$saveRow = $table->fetchRow(array("email = ?" => $values["email"]));
-					$thu = $treatmentshasusers->createRow(array('treatments_id' => 19, 'users_id' => $row->id));
+					$thu = $treatmentshasusers->createRow(array('treatments_id' => 21, 'users_id' => $row->id));
 					$thu->save();
 
 					//$config = array('ssl' => 'tls', 'port' => 587, 'auth' => 'login', 'username' => '', 'password' => '');
 					//$transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
 						
+					/*
 					$mailstring = "Vielen Dank für Ihre Registrierung!";
 
 					$mailstring .= "\n\n";
@@ -63,14 +65,15 @@ class RegistrationController extends Zend_Controller_Action {
 					$mailstring .= "\nViel Erfolg!";
 
 					$mail = new Zend_Mail('utf-8');
-					$mail->addTo($values["email"]);
-					$mail->setSubject(Zend_Registry::getInstance()->get("config")->ibftool->title . " - Bestätigung der Accounterstellung");
-					$mail->setFrom("trader@bf.uzh.ch", "IBFTool - Uni Zürich");
+					$mail->addTo("ibftool@theelysianfields.ch");
+					$mail->setSubject("Bestätigung der Accounterstellung");
+					$mail->setFrom("ibftool@bf.uzh.ch", "IBFTool - Uni Zürich");
 					$mail->setBodyText($mailstring);
 					//$mail->send($transport);
 					$mail->send();
+					*/
 						
-					$this->_helper->redirector("success", "registration");
+					$this->_helper->redirector("index", "");
 
 				} else {
 					$form->getElement("email")->addError("Die eingegebene E-Mail Adresse wird bereits verwendet.");
