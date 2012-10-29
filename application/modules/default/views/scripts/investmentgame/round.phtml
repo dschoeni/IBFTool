@@ -1,41 +1,153 @@
+<?php /*
 <h1>Investmentspiel - Runde <?php echo $this->round+1?></h1>
 <div class="row">
-	<div class="span6">
-		<h2>Einsatz</h2>
-		<p>
-			In der Runde
-			<?php echo $this->round+1?>
-			folgenden Betrag zur Verfügung:
-			<?php echo $this->money ?>
-			<?php echo $this->form ?>
-		</p>
-	</div>
+<div class="span6">
+<h2>Einsatz</h2>
+<p>
+In der Runde
+<?php echo $this->round+1?>
+folgenden Betrag zur Verfügung:
+<?php echo $this->money ?>
+<?php echo $this->form ?>
+</p>
+</div>
 
-	<div class="span6">
-		<h2>Risikoprofil des Investments</h2>
-		<p></p>
-	</div>
+<div class="span6">
+<h2>Risikoprofil des Investments</h2>
+<p></p>
+</div>
 </div>
 
 <script>
 function runden(x) {
-	  var k = (Math.round(x * 100) / 100).toString();
-	  k += (k.indexOf('.') == -1)? '.00' : '00';
-	  return k.substring(0, k.indexOf('.') + 3);
-	}
+var k = (Math.round(x * 100) / 100).toString();
+k += (k.indexOf('.') == -1)? '.00' : '00';
+return k.substring(0, k.indexOf('.') + 3);
+}
 
 function setSliderAmount() {
-	var values = {};
-	$.each($('#mlaexperiment').serializeArray(), function(i, field) {
-	    values[field.name] = field.value;
-	});
+var values = {};
+$.each($('#mlaexperiment').serializeArray(), function(i, field) {
+		values[field.name] = field.value;
+		});
 
-	$('.ui-slider-handle').show();
-	document.getElementById('Weiter').style.display = '';
-	document.getElementById('investment').value = values["amount"];
-	$("#investment-slider").slider("values", 0, values["amount"]);
+$('.ui-slider-handle').show();
+document.getElementById('Weiter').style.display = '';
+document.getElementById('investment').value = values["amount"];
+$("#investment-slider").slider("values", 0, values["amount"]);
 }
 
 document.getElementById('amount').focus();
 
 </script>
+*/
+?>
+
+
+<h1>Investmentspiel - Runde <?php echo $this->round+1?></h1>
+<div class="row">
+<div class="span8">
+<hr>
+<?php if ($this->group == 1 || $this->group == 2) : ?>
+<h3>Renditen</h3>
+	Die riskante Anlage besitzt vier gleich wahrscheinliche Renditen:<br>
+	<b>
+	<?php echo $this->rates[1] ?>
+	%,
+	<?php echo $this->rates[2] ?>
+	%,
+	<?php echo $this->rates[3] ?>
+	% und
+	<?php echo $this->rates[4] ?>
+	%
+	</b>
+</p>
+<?php endif; ?>
+<hr>
+<!-- Aktuelles Vermögen -->
+<h3>Aktuelles Vermögen</h3>
+<?php if ($this->round == 0) : ?>
+<p>
+	Ihr aktuelles Vermögen beträgt <span style="font-size: 1.5em; font-weight: bold;"><?php echo $this->startingmoney ?>.00 CHF</span>.
+</p>
+<script>
+var money = <?php echo $this->startingmoney ?>;
+</script>
+<?php else : ?>
+<p>
+	Ihr aktuelles Vermögen beträgt <span style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->money ?> CHF</span>.
+</p>
+<script>
+var money = "<?php echo $this->row->money ?>";
+</script>
+<?php endif; ?>
+<!-- ENDE Aktuelles Vermögen -->
+<hr>
+<!-- Investment nächster Runde -->
+<p>
+	Welchen Anteil wollen Sie in Runde
+	<?php echo $this->round+1 ?>
+	in die riskante Anlage investieren? (0-100%)?
+</p>
+<?php echo $this->form ?>
+
+<?php if (!$this->round == 0) : ?>
+<div class="alert alert-info">
+	In Runde
+	<?php echo $this->round ?>
+	haben Sie
+	<?php echo $this->row->investment ?>
+	% (=
+	<?php echo round(($this->row->investment/100)*$this->lastmoney, 2) ?>
+	von
+	<?php echo $this->lastmoney ?>
+	CHF) in die riskante Anlage investiert.
+	<br><br>
+	<?php if ($this->row->outcome > 0) : ?>
+	Dies hat eine Rendite von <span
+		style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->yield ?>%</span>
+	erzielt. <br /> Sie erzielen einen <b>Gewinn</b>:
+	<?php echo round(($this->row->investment/100)*$this->lastmoney, 2) ?>
+	CHF *
+	<?php echo $this->row->yield ?>
+	% = <span style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->outcome ?>
+		CHF</span>
+
+	<?php endif;?>
+	<?php if ($this->row->outcome < 0) : ?>
+	Dies hat eine Rendite von <span
+		style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->yield ?>%</span>
+	erzielt. <br /> Sie erleiden einen <b>Verlust</b>:
+	<?php echo round(($this->row->investment/100)*$this->lastmoney, 2) ?>
+	CHF *
+	<?php echo $this->row->yield ?>
+	% = <span style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->outcome ?>
+		CHF</span>
+
+	<?php endif;?>
+	<?php if ($this->row->outcome == 0) : ?>
+	Dies hat eine Rendite von <span
+		style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->yield ?>%</span>
+	erzielt. <br /> Sie haben weder Gewinn noch Verlust erzielt.
+	<?php endif;?>
+</div>
+<?php endif; ?>
+
+
+</div>
+</div>
+
+
+<script>
+document.getElementById('Weiter').style.display = 'none';
+$('.ui-slider-handle').hide();
+
+function runden(x) {
+	  var k = (Math.round(x * 100) / 100).toString();
+	  k += (k.indexOf('.') == -1)? '.00' : '00';
+	  return k.substring(0, k.indexOf('.') + 3);
+	}
+</script>
+
+
+

@@ -12,7 +12,7 @@ class ibftool_Form_InvestmentGame extends Zend_Form {
 		$round->setDecorators(array('ViewHelper'));
 		$this->addElement($round);
 		
-		$amount = new ibftool_Form_Element_Note("amount");
+		$amount = new ibftool_Form_Element_Note("amount", array("autocomplete" => "off"));
 		$amount->setRequired(false);
 		$amount->setLabel("Investment: ");
 		$amount->addValidator(new Zend_Validate_Between(0, 100));

@@ -1,14 +1,125 @@
-<span style="text-align: right; float: right;">Anleitung:<b> Seite 1 von 1</b> </span>
+<div>
+<div id="site1">
+<span style="text-align: right; float: right;">Anleitung:<b> Seite 1 von 2</b></span>
 <h1>Investmentspiel</h1>
+<p>
+Bitte lesen Sie die folgenden Instruktionen sorgfältig durch!
+</p>
+<br />
+<p>
+Im Folgenden bitten wir Sie, wiederholt Anlageentscheidungen zu treffen. Um Ihnen einen Anreiz zu geben, sorgfältig über Ihre 
+Entscheidungen nachzudenken, statten wir Sie mit einem Anfangsvermögen von <?php echo $this->money ?> CHF aus. Je nach Ihren Entscheidungen 
+und Ihrem Investmenterfolg können aus den <?php echo $this->money ?> CHF mehr oder weniger werden. 
+</p>
+<p>
+Wir werden 5 Teilnehmer <b>zufällig</b> – 
+insbesondere <b>unabhängig von ihren Investitionsentscheidungen</b> – auslosen und diesen Teilnehmern genau den 
+Betrag auszahlen, den sie am Ende erzielt haben. Sie sollten daher sorgfältig über Ihre Entscheidungen nachdenken. 
+</p>
+<p>
+Sie werden insgesamt <?php echo $this->rounds ?> Runden spielen. In jeder Runde müssen entscheiden,
+wie viel Sie von Ihrem Vermögen in eine riskante Anlage investieren.<br>
 
-<p>Anleitung folgt</p>
+<?php if ($this->group == 1 || $this->group == 2) :?>
+Das Risikoprofil dieser Anlage ist für alle <?php echo $this->rounds ?> Runden identisch und sieht folgendermaßen aus:
+<?php else : ?>
+Das Risikoprofil dieser Anlage ist für alle <?php echo $this->rounds ?> Runden identisch, d.h. die möglichen Renditen und ihre
+Wahrscheinlichkeiten ändern sich während der <?php echo $this->rounds ?> Runden nicht.
+</p><p>Die Renditen und ihre Wahrscheinlichkeiten werden Ihnen nicht explizit
+mitgeteilt, d.h. Sie müssen sie während des Spiels in Erfahrung bringen.
+<?php endif; ?>
 
-<div id="back" class="btn btn-primary"
-	style="float: left; display: none;">Zur�ck</div>
-<div id="forward" class="btn btn-primary">Weiter</div>
+</p>
+<?php if ($this->group == 1 || $this->group == 2) : ?>
+<p>
+Die Anlage erzielt <b>zufällig</b> eine von vier möglichen Renditen. Die vier Renditen sind <b>alle gleich wahrscheinlich</b>. 
+</p>
+<?php endif; ?>
+<?php if ($this->group == 1) : ?>
+<p style="border: 1px solid black; padding: 10px;">
+In 1 von 4 Fällen (25% Wahrscheinlichkeit) erzielen Sie eine Rendite von <b><?php echo $this->rates[1] ?>%</b>. <br/><br/>
+In 1 von 4 Fällen (25% Wahrscheinlichkeit) erzielen Sie eine Rendite von <b><?php echo $this->rates[2] ?>%</b>. <br/><br/>
+In 1 von 4 Fällen (25% Wahrscheinlichkeit) erzielen Sie eine Rendite von <b><?php echo $this->rates[3] ?>%</b>. <br/><br/>
+In 1 von 4 Fällen (25% Wahrscheinlichkeit) erzielen Sie eine Rendite von <b><?php echo $this->rates[4] ?>%</b>.
+</p>
+<?php endif; ?>
+<?php if ($this->group == 2) : ?>
+<p style="border: 1px solid black; padding: 10px;">
+In 1 von 4 Fällen (25% Wahrscheinlichkeit) erzielen Sie eine Rendite von <b><?php echo $this->rates[1] ?>%</b>. <br/><br/>
+In 1 von 4 Fällen (25% Wahrscheinlichkeit) erzielen Sie eine Rendite von <b><?php echo $this->rates[2] ?>%</b>. <br/><br/>
+In 1 von 4 Fällen (25% Wahrscheinlichkeit) erzielen Sie eine Rendite von <b><?php echo $this->rates[3] ?>%</b>. <br/><br/>
+In 1 von 4 Fällen (25% Wahrscheinlichkeit) erzielen Sie eine Rendite von <b><?php echo $this->rates[4] ?>%</b>.
+</p>
+<?php endif; ?>
+<p>
+Ihre nicht investierten Beträge behalten Sie, sie werden nicht verzinst. Die Gewinne und Verluste werden zu Ihrem Vermögen hinzugefügt/abgezogen und Sie nehmen das neue Vermögen in die nächste Runde. Ihr Vermögen verändert sich also nur durch Ihre Gewinne und Verluste bei der riskanten Anlage. Wenn Sie während der gesamten <?php echo $this->rounds ?> Runden nie etwas investieren, behalten Sie Ihre <?php echo $this->money ?> CHF. 
+</p>
+</div>
+
+<div id="site2" style="display: none">
+<span style="text-align: right; float: right;">Anleitung:<b> Seite 1 von 2</b></span>
+<h1>Investmentspiel</h1>
+<p>
+<?php if ($this->group == 1 || $this->group == 2) : ?>
+Die tatsächlichen Ergebnisse der riskanten Anlage werden zufällig und individuell für Sie durch den Computer unter Berücksichtigung der angegebenen Wahrscheinlichkeiten bestimmt. Wir möchten betonen, dass es hierbei keinerlei Manipulationen gibt! Sie können sich darauf verlassen, dass die Ergebnisse Ihrer Investitionen gemäß den vorgegebenen Wahrscheinlichkeiten ausgespielt werden. Die Ausspielungen der verschiedenen Runden sind dabei unabhängig voneinander, d. h. Ergebnisse früherer Runden haben keinen Einfluss auf die Ergebnis-Wahrscheinlichkeiten in späteren Runden.
+<?php else : ?>
+Die tatsächlichen Ergebnisse der riskanten Anlage werden zufällig und
+individuell für Sie durch den Computer unter Berücksichtigung der ihnen unbekannten, aber konstanten, Wahrscheinlichkeiten bestimmt. Wir
+möchten betonen, dass es hierbei keinerlei Manipulationen gibt! Sie können sich darauf verlassen, dass die Ergebnisse Ihrer Investitionen
+gemäß den konstanten Wahrscheinlichkeiten ausgespielt werden. Die Ausspielungen der verschiedenen Runden sind dabei unabhängig voneinander, 
+d. h. Ergebnisse früherer Runden haben keinen Einfluss auf die Ergebnis-Wahrscheinlichkeiten in späteren Runden.
+<?php endif; ?>
+</p>
+<p>
+Drei Beispiele sollen das Prinzip verdeutlichen:
+</p>
+<blockquote>
+1. Beispiel: <br/><br/>
+Sie investieren in der ersten Runde nichts in die riskante Anlage. Dann behalten Sie die <?php echo $this->money ?> CHF, machen also weder Gewinn noch Verlust, egal wie sich die riskante Anlage entwickelt. In der nächsten Runde haben Sie (Ihre nicht investierten) <?php echo $this->money ?> CHF zu Verfügung.
+</blockquote>
+<br />
+<blockquote>
+2. Beispiel: <br/><br/>
+Sie investieren in der ersten Runde 75% Ihrer <?php echo $this->money ?> CHF, also <?php echo $this->money*0.75 ?> CHF, in die riskante Anlage. Angenommen, diese erzielt eine Rendite von + 14%, so erzielen Sie einen Gewinn von 14% x <?php echo $this->money*0.75 ?> CHF = <?php echo $this->money*0.75*0.14 ?> CHF und aus Ihren <?php echo $this->money*0.75 ?> CHF werden <?php echo $this->money*0.75 + $this->money*0.75*0.14 ?>  CHF. Zusammen mit Ihren nicht investierten <?php echo $this->money*0.25 ?> CHF steht Ihnen in der Folgerunde ein Betrag von <?php echo $this->money + $this->money*0.75*0.14 ?> CHF zur Verfügung.
+</blockquote>
+<br />
+<blockquote>
+3. Beispiel: <br/><br/>
+Sie investieren in der ersten Runde 75% Ihrer <?php echo $this->money ?> CHF, also <?php echo $this->money*0.75 ?> CHF, in die riskante Anlage. Angenommen, diese erzielt eine Rendite von – 11%, so erleiden Sie einen Verlust von 11% x <?php echo $this->money*0.75 ?> CHF = <?php echo $this->money*0.75*0.11 ?> CHF und aus Ihren <?php echo $this->money*0.75 ?> CHF werden <?php echo $this->money*0.75 - $this->money*0.75*0.11 ?> CHF. Zusammen mit Ihren nicht investierten <?php echo $this->money*0.25 ?> CHF steht Ihnen in der Folgerunde ein Betrag von <?php echo $this->money - $this->money*0.75*0.11 ?> CHF zur Verfügung.
+</blockquote>
+<p>
+Klicken Sie auf „Weiter“, um zu beginnen.
+</p>
+</div>
+</div>
+
+<div id="back" class="btn btn-primary" style="display: none; float: left;">Zurück</div>
+<div id="forward" style="float: right" class="btn btn-primary" onmouseover="mouseover_forward()">Weiter</div>
 
 <script>
 $('#forward').click(function() {
-	window.location = "<?php echo $this->url(array("controller" => "investmentgame", "action" => "round")) ?>"
+	if ( $('#site2').is(':visible')){
+		window.location = "<?php echo $this->url(array("controller" => "investmentgame", "action" => "round")) ?>"
+	}
+	$('#back').fadeIn('slow', function() {
+	    // Animation complete
+	  }); 
+	$('#site1').fadeOut('slow', function() {
+		$('#site2').fadeIn('slow', function() {
+		    // Animation complete
+		  }); 
+		});
   });
+
+$('#back').click(function() {
+	$('#back').fadeOut('slow', function() {
+	    // Animation complete
+	  }); 
+	
+	$('#site2').fadeOut('slow', function() {
+		$('#site1').fadeIn('slow', function() {
+		    // Animation complete
+		  }); 
+		});
+	  });
 </script>

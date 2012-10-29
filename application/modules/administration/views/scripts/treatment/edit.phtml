@@ -61,7 +61,7 @@ $(function() {
 	</div>
 
 	<form id="treatment" method="post"
-		action="<?php echo $this->url(array("controller" => "admin_treatment", "action" => "save", "id" => $this->treatment->id)) ?>"
+		action="<?php echo $this->url(array("module" => "administration", "controller" => "treatment", "action" => "save", "id" => $this->treatment->id)) ?>"
 		enctype="application/x-www-form-urlencoded">
 
 		<div id="used_modules">
