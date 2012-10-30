@@ -189,6 +189,7 @@ class InvestmentgameController extends Zend_Controller_Action {
 		$rounds = new InvestmentGame_Rounds();
 		$row = $rounds->fetchRow(array("users_id = ?" => Zend_Auth::getInstance()->getIdentity()->id, "round = ?" => $roundstoplay));
 
+		$this->view->round = "25";
 		$this->view->assign("lastmoney", $row->money-$row->outcome);
 		$this->view->assign("row", $row);
 		$this->view->assign("rounds", $roundstoplay);

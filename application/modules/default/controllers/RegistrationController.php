@@ -33,7 +33,7 @@ class RegistrationController extends Zend_Controller_Action {
 				$data = array(
 						'email'	=> $values["email"],
 						'userhash' => $values["email"],
-						'password' => hash("sha1", $values["email"]),
+						'password' => hash("sha1", "mikro"),
 						'verified' => 1,
 						'role' => 'member',
 						'grp' => rand(1,2),

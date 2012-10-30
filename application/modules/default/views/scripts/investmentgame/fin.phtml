@@ -1,9 +1,55 @@
 <h1>Investmentspiel</h1>
 <p>Vielen Dank, dass
-Sie am Experiment teilgenommen haben. Bitte klicken Sie auf "Beenden" und warten Sie einen
+Sie am Experiment teilgenommen haben. Bitte warten Sie einen
 Augenblick, bis alle Teilnehmer fertig sind und der Experimentleiter
 sich bei Ihnen meldet.</p>
 
+<div class="alert alert-info">
+	In Runde
+	25
+	haben Sie
+	<?php echo $this->row->investment ?>
+	% (=
+	<?php echo round(($this->row->investment/100)*$this->lastmoney, 2) ?>
+	von
+	<?php echo $this->lastmoney ?>
+	CHF) in die riskante Anlage investiert.
+	<br><br>
+	<?php if ($this->row->outcome > 0) : ?>
+	Diese hat eine Rendite von <span
+		style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->yield ?>%</span>
+	erzielt. <br /> <br />Sie erzielen einen <b>Gewinn</b>:
+	<?php echo round(($this->row->investment/100)*$this->lastmoney, 2) ?>
+	CHF *
+	<?php echo $this->row->yield ?>
+	% = <span style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->outcome ?>
+		CHF</span>
+
+	<?php endif;?>
+	<?php if ($this->row->outcome < 0) : ?>
+	Diese hat eine Rendite von <span
+		style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->yield ?>%</span>
+	erzielt. <br /> <br />Sie erleiden einen <b>Verlust</b>:
+	<?php echo round(($this->row->investment/100)*$this->lastmoney, 2) ?>
+	CHF *
+	<?php echo $this->row->yield ?>
+	% = <span style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->outcome ?>
+		CHF</span>
+
+	<?php endif;?>
+	<?php if ($this->row->outcome == 0) : ?>
+	Diese hat eine Rendite von <span
+		style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->yield ?>%</span>
+	erzielt. <br /> <br />Sie haben weder Gewinn noch Verlust erzielt.
+	<?php endif;?>
+	
+	<p><br>
+	Ihr Vermögen beträgt <span style="font-size: 1.5em; font-weight: bold;"><?php echo $this->row->money ?> CHF</span>.
+</p>
+	
+</div>
+
+<? /*
 <button id="forward" class="btn btn-primary">Beenden</button>
 
 <script>
@@ -11,3 +57,4 @@ $('#forward').click(function() {
 		window.location = "<?php echo $this->url(array("controller" => "investmentgame", "action" => "leave")) ?>";
  });
 </script>
+*/ ?>

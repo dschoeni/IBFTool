@@ -45,7 +45,7 @@ class ibftool_Form_InvestmentGame extends Zend_Form {
 		
 		$slider = new ZendX_JQuery_Form_Element_Slider("investment");
 		$slider->setRequired(true);
-		$slider->setLabel("<span style=''>0 Rappen</span><span style='float: right'>100 Rappen</span>");
+		$slider->setLabel("<span style=''>0 %</span><span style='float: right'>100 %</span>");
 		$slider->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
 		$slider->setJQueryParams(array(
 		  'min' => 0,

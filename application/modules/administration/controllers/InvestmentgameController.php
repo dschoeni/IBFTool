@@ -33,7 +33,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 		$users = $users->fetchAll();
 		$results = $results->fetchAll();
 
-		for($i = 1; $i <= 20; $i++) {
+		for($i = 1; $i <= 25; $i++) {
 			$string .= "<td style='width: 100px'>$i</td>";
 		}
 
@@ -42,7 +42,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 		foreach($users as $user) {
 			$answerarray[$user["email"]] = array();
 
-			for($i = 1; $i <= 20; $i++) {
+			for($i = 1; $i <= 25; $i++) {
 				$answerarray[$user["email"]][$i] = array();
 			}
 
@@ -69,7 +69,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 		foreach($users as $user) {
 			// Investment
 			
-			if (empty($answerarray[$user["email"]][20])) {
+			if (empty($answerarray[$user["email"]][25])) {
 				$style = "color: red";
 			} else {
 				$style = "color: green";
@@ -80,7 +80,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 			$string .= "<td>" . $user["registration_time"] . "</td>";
 			$string .= "<td style='width: 50px'>" . @$answerarray[$user["email"]][1][0]["group"] . "</td>";
 
-			for($i = 1; $i <= 20; $i++) {
+			for($i = 1; $i <= 25; $i++) {
 				$string .= "<td style='width: 100px'>" . @$answerarray[$user["email"]][$i][0]["investment"] . "</td>";
 			}
 			$string .= "</tr>";
@@ -96,13 +96,19 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 		foreach($users as $user) {
 
 			// Yield
+			
+			if (empty($answerarray[$user["email"]][25])) {
+				$style = "color: red";
+			} else {
+				$style = "color: green";
+			}
 
-			$string .= "<tr>";
+			$string .= "<tr style='{$style}'>";
 			$string .= "<td style='width: 150px'>" . $user["email"] . "</td>";
 			$string .= "<td>" . $user["registration_time"] . "</td>";
 			$string .= "<td style='width: 50px'>" . @$answerarray[$user["email"]][1][0]["group"] . "</td>";
 
-			for($i = 1; $i <= 20; $i++) {
+			for($i = 1; $i <= 25; $i++) {
 				$string .= "<td style='width: 150px'>" . @$answerarray[$user["email"]][$i][0]["yield"] . "</td>";
 			}
 			$string .= "</tr>";
@@ -118,12 +124,19 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 		foreach($users as $user) {
 
 			// Money
-			$string .= "<tr>";
+			
+			if (empty($answerarray[$user["email"]][25])) {
+				$style = "color: red";
+			} else {
+				$style = "color: green";
+			}
+			
+			$string .= "<tr style='{$style}'>";
 			$string .= "<td style='width: 150px'>" . $user["email"] . "</td>";
 			$string .= "<td>" . $user["registration_time"] . "</td>";
 			$string .= "<td style='width: 50px'>" . @$answerarray[$user["email"]][1][0]["group"] . "</td>";
 
-			for($i = 1; $i <= 20; $i++) {
+			for($i = 1; $i <= 25; $i++) {
 				$string .= "<td style='width: 150px'>" . @$answerarray[$user["email"]][$i][0]["money"] . "</td>";
 			}
 			$string .= "</tr>";
