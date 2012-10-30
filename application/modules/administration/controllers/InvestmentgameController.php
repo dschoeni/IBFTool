@@ -50,7 +50,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 		$string .= "<tr>";
 		$string .= "<td style='width: 100px'>Investment: </td>";
-		for($i = 1; $i <= 21; $i++) {
+		for($i = 1; $i <= 22; $i++) {
 			$string .= "<td style='width: 100px'></td>";
 		}
 		$string .= "</tr>";
@@ -71,7 +71,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 		$string .= "<tr>";
 		$string .= "<td style='width: 100px'>Yield: </td>";
-		for($i = 1; $i <= 21; $i++) {
+		for($i = 1; $i <= 22; $i++) {
 			$string .= "<td style='width: 100px'></td>";
 		}
 		$string .= "</tr>";
@@ -93,7 +93,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 		$string .= "<tr>";
 		$string .= "<td style='width: 100px'>Money: </td>";
-		for($i = 1; $i <= 21; $i++) {
+		for($i = 1; $i <= 22; $i++) {
 			$string .= "<td style='width: 100px'></td>";
 		}
 		$string .= "</tr>";
