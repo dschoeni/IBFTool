@@ -11,17 +11,18 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 		$config = Zend_Registry::get('config')->db;
 		$prefix = $config->table_prefix;
 
-		$users = $db->query("SELECT id, email FROM ibftool_users");
-		$results = $db->query("SELECT u.grp, u.email, r.money, r.yield, r.investment, r.round FROM ibftool_investmentgame_results r INNER JOIN ibftool_users u ON r.users_id = u.id ORDER BY u.id, r.round");
+		$users = $db->query("SELECT id, registration_time, email FROM ibftool_users");
+		$results = $db->query("SELECT u.registration_time, u.grp, u.email, r.money, r.yield, r.investment, r.round FROM ibftool_investmentgame_results r INNER JOIN ibftool_users u ON r.users_id = u.id ORDER BY u.registration_time, r.round");
 
 		$string = "<tr>";
 		$string .= "<td style='width: 100px'>Subject</td>";
-		$string .= "<td style='width: 100px'>Group</td>";
+		$string .= "<td style='width: 100px'>Time</td>";
+		$string .= "<td style='width: 100px'>G</td>";
 
 		$users = $users->fetchAll();
 		$results = $results->fetchAll();
 
-		for($i = 1; $i <= 25; $i++) {
+		for($i = 1; $i <= 20; $i++) {
 			$string .= "<td style='width: 100px'>$i</td>";
 		}
 
@@ -30,7 +31,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 		foreach($users as $user) {
 			$answerarray[$user["email"]] = array();
 
-			for($i = 1; $i <= 25; $i++) {
+			for($i = 1; $i <= 20; $i++) {
 				$answerarray[$user["email"]][$i] = array();
 			}
 
@@ -49,7 +50,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 		$string .= "<tr>";
 		$string .= "<td style='width: 100px'>Investment: </td>";
-		for($i = 1; $i <= 26; $i++) {
+		for($i = 1; $i <= 21; $i++) {
 			$string .= "<td style='width: 100px'></td>";
 		}
 		$string .= "</tr>";
@@ -59,9 +60,10 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 			$string .= "<tr>";
 			$string .= "<td style='width: 150px'>" . $user["email"] . "</td>";
+			$string .= "<td style='width: 50px'>" . $user["registration_time"] . "</td>";
 			$string .= "<td style='width: 50px'>" . $answerarray[$user["email"]][1][0]["group"] . "</td>";
 
-			for($i = 1; $i <= 25; $i++) {
+			for($i = 1; $i <= 20; $i++) {
 				$string .= "<td style='width: 100px'>" . $answerarray[$user["email"]][$i][0]["investment"] . "</td>";
 			}
 			$string .= "</tr>";
@@ -69,7 +71,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 		$string .= "<tr>";
 		$string .= "<td style='width: 100px'>Yield: </td>";
-		for($i = 1; $i <= 26; $i++) {
+		for($i = 1; $i <= 21; $i++) {
 			$string .= "<td style='width: 100px'></td>";
 		}
 		$string .= "</tr>";
@@ -80,9 +82,10 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 			$string .= "<tr>";
 			$string .= "<td style='width: 150px'>" . $user["email"] . "</td>";
+			$string .= "<td style='width: 50px'>" . $user["registration_time"] . "</td>";
 			$string .= "<td style='width: 50px'>" . $answerarray[$user["email"]][1][0]["group"] . "</td>";
 
-			for($i = 1; $i <= 25; $i++) {
+			for($i = 1; $i <= 20; $i++) {
 				$string .= "<td style='width: 150px'>" . $answerarray[$user["email"]][$i][0]["yield"] . "</td>";
 			}
 			$string .= "</tr>";
@@ -90,7 +93,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 		$string .= "<tr>";
 		$string .= "<td style='width: 100px'>Money: </td>";
-		for($i = 1; $i <= 26; $i++) {
+		for($i = 1; $i <= 21; $i++) {
 			$string .= "<td style='width: 100px'></td>";
 		}
 		$string .= "</tr>";
@@ -98,12 +101,12 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 		foreach($users as $user) {
 
 			// Money
-				
 			$string .= "<tr>";
 			$string .= "<td style='width: 150px'>" . $user["email"] . "</td>";
+			$string .= "<td style='width: 50px'>" . $user["registration_time"] . "</td>";
 			$string .= "<td style='width: 50px'>" . $answerarray[$user["email"]][1][0]["group"] . "</td>";
 
-			for($i = 1; $i <= 25; $i++) {
+			for($i = 1; $i <= 20; $i++) {
 				$string .= "<td style='width: 150px'>" . $answerarray[$user["email"]][$i][0]["money"] . "</td>";
 			}
 			$string .= "</tr>";

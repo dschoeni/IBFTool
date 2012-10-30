@@ -1,14 +1,13 @@
 <h1>Investmentspiel</h1>
-<p>[ENDTEXT]</p>
+<p>Vielen Dank, dass
+Sie am Experiment teilgenommen haben. Bitte klicken Sie auf "Beenden" und warten Sie einen
+Augenblick, bis alle Teilnehmer fertig sind und der Experimentleiter
+sich bei Ihnen meldet.</p>
 
-<div id="forward" class="button" onmouseover="mouseover_forward()"
-	onmouseout="mouseout_forward()">Weiter</div>
+<button id="forward" class="btn btn-primary">Beenden</button>
 
 <script>
 $('#forward').click(function() {
-		window.location = "<?php echo $this->url(array("controller" => "investmentgameassets", "action" => "leave")) ?>";
+		window.location = "<?php echo $this->url(array("controller" => "investmentgame", "action" => "leave")) ?>";
  });
-
-function mouseover_forward() { document.getElementById("forward").style.backgroundColor='#ababab'; }
-function mouseout_forward() { document.getElementById("forward").style.backgroundColor='#ffffff'; } 
 </script>

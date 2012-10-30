@@ -18,7 +18,8 @@ class ibftool_Form_InvestmentGame extends Zend_Form {
 		$amount->addValidator(new Zend_Validate_Between(0, 100));
 		$amount->addValidator(new Zend_Validate_Digits());
 		$amount->addErrorMessage("Bitte tragen sie eine Zahl von 0 bis 100 ein.");
-		$amount->addDecorator(new ibftool_Form_Decorators_Currency(array("currency" => "Rappen")));
+		$amount->addDecorator(new ibftool_Form_Decorators_Currency(array("currency" => "%")));
+		$amount->setAttrib("style", "width: 50px");
 		$this->addElement($amount);
 		
 		/*
