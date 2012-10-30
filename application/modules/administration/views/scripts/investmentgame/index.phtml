@@ -1,0 +1,18 @@
+<button id="startPolling" class="btn btn-primary">Liveresultate</button>
+<div id="responseData"></div>
+
+<script type="text/javascript">
+
+$("#startPolling").click(function() {
+	 $("#startPolling").hide();
+	  poll();
+});
+
+function poll() {
+	setInterval(function() {
+$.ajax({ url: "/administration/investmentgame/result?format=html", context: $("#responseData") ,success: function(data){
+	$("#responseData").html(data);
+}, dataType: "html"});
+	}, 5000);
+}
+</script>

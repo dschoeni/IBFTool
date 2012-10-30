@@ -1,12 +1,23 @@
 <?php
 class Administration_InvestmentgameController extends Zend_Controller_Action {
 
+	public function init() {
+		$this->context = $this->_helper->getHelper('CompleteContext');
+		$this->addContexts();
+		$this->context->initContext();
+	}
+	
+	protected function addContexts() {
+		$this->context->addActionContext("result", "html");
+	}
+	
 	public function indexAction() {
 
 	}
 
 	public function resultAction() {
-
+		Zend_Layout::getMvcInstance()->disableLayout();
+		
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$config = Zend_Registry::get('config')->db;
 		$prefix = $config->table_prefix;
@@ -16,7 +27,7 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 		$string = "<tr>";
 		$string .= "<td style='width: 100px'>Subject</td>";
-		$string .= "<td style='width: 100px'>Time</td>";
+		$string .= "<td style='width: 200px'>Time</td>";
 		$string .= "<td style='width: 100px'>G</td>";
 
 		$users = $users->fetchAll();
@@ -57,14 +68,20 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 		foreach($users as $user) {
 			// Investment
+			
+			if (empty($answerarray[$user["email"]][20])) {
+				$style = "color: red";
+			} else {
+				$style = "color: green";
+			}
 
-			$string .= "<tr>";
+			$string .= "<tr style='{$style}'>";
 			$string .= "<td style='width: 150px'>" . $user["email"] . "</td>";
-			$string .= "<td style='width: 50px'>" . $user["registration_time"] . "</td>";
-			$string .= "<td style='width: 50px'>" . $answerarray[$user["email"]][1][0]["group"] . "</td>";
+			$string .= "<td>" . $user["registration_time"] . "</td>";
+			$string .= "<td style='width: 50px'>" . @$answerarray[$user["email"]][1][0]["group"] . "</td>";
 
 			for($i = 1; $i <= 20; $i++) {
-				$string .= "<td style='width: 100px'>" . $answerarray[$user["email"]][$i][0]["investment"] . "</td>";
+				$string .= "<td style='width: 100px'>" . @$answerarray[$user["email"]][$i][0]["investment"] . "</td>";
 			}
 			$string .= "</tr>";
 		}
@@ -82,11 +99,11 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 
 			$string .= "<tr>";
 			$string .= "<td style='width: 150px'>" . $user["email"] . "</td>";
-			$string .= "<td style='width: 50px'>" . $user["registration_time"] . "</td>";
-			$string .= "<td style='width: 50px'>" . $answerarray[$user["email"]][1][0]["group"] . "</td>";
+			$string .= "<td>" . $user["registration_time"] . "</td>";
+			$string .= "<td style='width: 50px'>" . @$answerarray[$user["email"]][1][0]["group"] . "</td>";
 
 			for($i = 1; $i <= 20; $i++) {
-				$string .= "<td style='width: 150px'>" . $answerarray[$user["email"]][$i][0]["yield"] . "</td>";
+				$string .= "<td style='width: 150px'>" . @$answerarray[$user["email"]][$i][0]["yield"] . "</td>";
 			}
 			$string .= "</tr>";
 		}
@@ -103,16 +120,17 @@ class Administration_InvestmentgameController extends Zend_Controller_Action {
 			// Money
 			$string .= "<tr>";
 			$string .= "<td style='width: 150px'>" . $user["email"] . "</td>";
-			$string .= "<td style='width: 50px'>" . $user["registration_time"] . "</td>";
-			$string .= "<td style='width: 50px'>" . $answerarray[$user["email"]][1][0]["group"] . "</td>";
+			$string .= "<td>" . $user["registration_time"] . "</td>";
+			$string .= "<td style='width: 50px'>" . @$answerarray[$user["email"]][1][0]["group"] . "</td>";
 
 			for($i = 1; $i <= 20; $i++) {
-				$string .= "<td style='width: 150px'>" . $answerarray[$user["email"]][$i][0]["money"] . "</td>";
+				$string .= "<td style='width: 150px'>" . @$answerarray[$user["email"]][$i][0]["money"] . "</td>";
 			}
 			$string .= "</tr>";
 		}
-
-		$this->view->assign("result", $string);
+		
+		
+		$this->view->result = $string;
 	}
 
 	public function resetAction() {
