@@ -2,12 +2,19 @@
 class Administration_Questionnaire_QuestionsController extends Zend_Controller_Action {
 
 	public function indexAction() {
+		$treatments = new Treatments();
+		$treatments = $treatments->fetchAll();
+		
+		$this->view->treatments = $treatments;
+		
 		$questions = new Questionnaire_Questions();
 
 		if ($this->_hasParam("treatment_id")) {
 			$treatmentid = $this->_getParam("treatment_id");
 
 			$thm = new TreatmentsHasModules();
+			
+			// Moduleid 1 = Questionnaire-Modul
 			$thm = $thm->fetchAll(array("module_id = ?" => 1, "treatments_id = ?" => $treatmentid));
 				
 			$pagesarray = array();
@@ -25,6 +32,12 @@ class Administration_Questionnaire_QuestionsController extends Zend_Controller_A
 				}
 			}
 			
+			// If there are no pages -> Empty array
+			if (empty($pagesarray)) {
+				$this->view->questions = array();
+				return;				
+			}
+			
 			$questionsperpage = new Questionnaire_PageHasQuestions();
 			$questionsperpage = $questionsperpage->fetchAll(array('page_id IN (?)' => $pagesarray));
 			$questions = $questions->fetchAll(array('id IN (?)' => $questionsperpage->toArray()));
@@ -35,10 +48,6 @@ class Administration_Questionnaire_QuestionsController extends Zend_Controller_A
 
 		$this->view->questions = $questions;
 
-		$treatments = new Treatments();
-		$treatments = $treatments->fetchAll();
-
-		$this->view->treatments = $treatments;
 	}
 
 	public function editAction() {
