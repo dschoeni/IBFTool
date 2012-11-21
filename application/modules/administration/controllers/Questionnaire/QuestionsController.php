@@ -59,6 +59,7 @@ class Administration_Questionnaire_QuestionsController extends Zend_Controller_A
 		$question = new Questionnaire_Questions();
 		$question = $question->find($id);
 		$question = $question->current();
+		$question->typ = strtolower($question->typ);
 		$form->setValues($question);
 
 		$this->view->form = $form;

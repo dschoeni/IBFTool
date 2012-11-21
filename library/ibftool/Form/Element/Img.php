@@ -1,0 +1,14 @@
+<?php
+class ibftool_Form_Element_Img extends Zend_Form_Element_Xhtml  implements ibftool_Form_Element_Interface_Questionnaire
+{
+    function init() {
+    	$this->required = false;
+	}
+	
+	public function setQuestion($question) {
+		$this->clearDecorators();
+		$this->addDecorator("Label" ,array("escape"=>false, 'tag' => 'dt'));
+		$this->addDecorator(new ibftool_Form_Decorators_Payout(array("payout" => $question->payout)));
+		$this->setLabel("<img src='/_files/images/" . $question->text . "' />");
+	}
+}

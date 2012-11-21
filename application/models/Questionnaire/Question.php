@@ -1,4 +1,10 @@
 <?php
+
+/*
+ * This class creates instances of all the questions that get provided in the rowset. It does this via a magic call on the "typ" of question.
+ * The other generate* -methods in this class are just for reference, in case not all types of questions have been ported to the new architecture. They should not be used anymore.
+ */
+
 class Questionnaire_Question extends Zend_Db_Table_Row {
 	
 	private $_form;
@@ -75,6 +81,10 @@ class Questionnaire_Question extends Zend_Db_Table_Row {
 		*/
 		//$this->_form->addElement("submit", "test", array("label" => "Weiter", "ignore" => true, "class" => "btn btn-primary", 'decorators' => array(array("ViewHelper"))));
 	}
+	
+	/*
+	 * Following generate* -methods are DEPRECATED and can be removed when it is clear, that they are not being used anymore.
+	 */
 	
 	public function addToForm($element) {
 		$this->_form->addElement($element);
