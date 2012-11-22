@@ -33,6 +33,7 @@ class Administration_TreatmentController extends Zend_Controller_Action {
 
 	public function saveAction() {
 		$id = $this->_getParam("id");
+		var_dump($_POST);
 
 		if (!empty($_POST) && !empty($id)) {
 
@@ -54,9 +55,11 @@ class Administration_TreatmentController extends Zend_Controller_Action {
 
 			$treatment->save();
 
+			
 			foreach($rows as $row) {
 				$row->delete();
 			}
+			
 
 			$i = 0;
 				
@@ -68,6 +71,8 @@ class Administration_TreatmentController extends Zend_Controller_Action {
 							'config' =>  $val,
 							'order' => $i
 					);
+					
+					var_dump($data);
 						
 					$row = $thm->createRow($data);
 					$row->save();
@@ -77,7 +82,7 @@ class Administration_TreatmentController extends Zend_Controller_Action {
 			}
 		}
 		
-		$this->_redirect("/administration/treatment/edit/" . $id);
+		$this->_redirect("/administration/treatment/edit/id/" . $id);
 	}
 
 	public function resetAction() {

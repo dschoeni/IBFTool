@@ -83,10 +83,13 @@ class Administration_Questionnaire_QuestionsController extends Zend_Controller_A
 
 	public function newAction() {
 		$form = new ibftool_Form_Administration_Question();
+		
+		$element = $form->getElement("treatment_id");
+		
 
 		if (!empty($_POST) && $form->isValid($this->_getAllParams())) {
 			$form->persistData();
-			$this->_redirect("/administration/questionnaire_question/index");
+			$this->_redirect("/administration/questionnaire_questions/index");
 		}
 
 		$this->view->form = $form;
